@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Updating R</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+<h1>Updating R and RStudio</h1>
+
+<!--
+<div class="alert alert-info"><b>Cheatsheets.</b>We have gathered different cheatsheets that can be helpful during the workshop as well as to help you as you use your new skills.  You can access these cheatsheets at this URL. <a href="https://uofi.box.com/v/ricworkshops-cheatsheets">https://uofi.box.com/v/ricworkshops-cheatsheets</a></div>
+-->
+
+<div>
+
+<ul class="nav nav-tabs" role="tablist">
+	<li role="presentation" class="active"><a href="#upgrade" aria-controls="upgrade" role="tab" data-toggle="tab">Updating R and RStudio</a></li>
+	<li role="presentation"><a href="#install" aria-controls="install" role="tab" data-toggle="tab">Fresh installation</a></li>
+	<li role="presentation"><a href="#r_tools" aria-controls="r_tools" role="tab" data-toggle="tab">R tools installation/update</a></li>
+</ul>
+
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane active" id="upgrade">
+
+<h2>Updating R</h2>
+
+<h3>Windows</h3>
+
+<p>To update R on Windows, try using the package <code>installr</code> (only for Windows)</p>
+
+<ol>
+<li>Open R and install and load installr. 
+<pre>&gt; install.packages("installr")
+&gt; library(installr)</pre></li>
+<li>In R, execute the <code>updateR()</code> function. This will start the updating process of your R installation by: “finding the latest R version, downloading it, running the installer, deleting the installation file, copy and updating old packages to the new R installation.”</li>
+</ol>
+
+<h3>macOS</h3>
+
+<p>On Mac, you can simply download and install the newest version of R from <a href="https://cloud.r-project.org/bin/macosx/" target="_blank">https://cloud.r-project.org/bin/macosx/</a>.  When you restart RStudio, it will use the updated version of R.</p>
+
+<!--
+<ol>
+<li>Download the R-3.6.2 installation package.
+<dl>
+<dt>Windows</dt><dd>Go to <a href="https://cran.r-project.org/bin/windows/base/old/3.6.2/">https://cran.r-project.org/bin/windows/base/old/3.6.2/</a> and click the <u>Download R 3.6.2 for Windows</u> link</dd>
+<dt>macOS</dt><dd>Download <a href="https://cloud.r-project.org/bin/macosx/el-capitan/base/R-3.6.2.pkg">https://cloud.r-project.org/bin/macosx/el-capitan/base/R-3.6.2.pkg</a>. This version of R requires macOS 10.11 (El Capitan) or higher.</dd></li>
+<li>When the file finishes downloading, double-click to install. You should be able to click “Next” to all dialogs to finish the installation.</li>
+<li>To update packages, open RStudio and go to <b>Tools</b> &gt; <b>Check for Package Updates</b>. If updates are available, select <b>All</b>, and click <span class="btn btn-sm btn-default">Install Updates</span>.
+</ol>
+-->
+
+<h2>Updating RStudio</h2>
+
+<p>From within RStudio, go to <b>Help</b> &gt; <b>Check for Updates</b> to install newer version of RStudio.</p>
+
+</div>
+
+<div role="tabpanel" class="tab-pane" id="install">
+<h2>Fresh Installation</h2>
+
+<p>If you do not have R and/or RStudio installed on you laptop, use the following links to install R and RStudio.</p>
+
+<h3>R installation</h3>
+<dl>
+<dt>Windows</dt><dd><a href="https://cran.rstudio.com/bin/windows/base/" target="_blank">https://cran.rstudio.com/bin/windows/base/</a></dd>
+<dt>MacOS</dt><dd><a href="https://cloud.r-project.org/bin/macosx/" target="_blank">https://cloud.r-project.org/bin/macosx/</a></dd>
+<!--
+<dt>Windows</dt><dd>Go to <a href="https://cran.r-project.org/bin/windows/base/old/3.6.2/">https://cran.r-project.org/bin/windows/base/old/3.6.2/</a></dd>
+<dt>macOS</dt><dd><a href="https://cloud.r-project.org/bin/macosx/el-capitan/base/R-3.6.2.pkg">https://cloud.r-project.org/bin/macosx/el-capitan/base/R-3.6.2.pkg</a>. This version of R requires macOS 10.11 (El Capitan) or higher.</dd>
+-->
+<dt>Linux</dt><dd>It is recommend to install via the package management system for your OS.  If you have any questions, send an email to <a href="mailto:cribioinfo@uic.edu?subject=Introduction to R software">cribioinfo@uic.edu</a></dd>
+</dl>
+
+<p>Once you have R installed, please install RStudio.  The website <a href="https://www.rstudio.com/products/rstudio/download/#download" target="_blank">https://www.rstudio.com/products/rstudio/download/#download</a> has installation instructions and links to the installers for different operating systems.</p>
+
+</div>
+
+<div role="tabpanel" class="tab-pane" id="r_tools">
+<h2>R tools installation/upgrade</h2>
+
+<p>This is a set of tools that allows R to compile certain packages.  Please use the link that corresponds to the operating system on your laptop.  Please note, you may need to reboot your machine after installing Rtools.</p>
+
+<dl>
+<dt>Windows</dt><dd><a href="https://cran.rstudio.com/bin/windows/Rtools/">https://cran.rstudio.com/bin/windows/Rtools/</a> We recommend installing rtools40-x86_64.exe, <i>UNLESS</i> you have a 32-bit system.</dd>
+<dt>macOS</dt><dd><a href="https://mac.r-project.org/tools/">https://mac.r-project.org/tools/</a>. Install Xcode (from Apple App Store) and GNU Fortran compiler v8.2.</dd>
+</dl> 
+
+</div>
+</div>
+
+</div>
+
+<p>Any questions? Send an email to <a href="mailto:cribioinfo@uic.edu?subject=RIC Spring Workshop">cribioinfo@uic.edu</a></p>
+<div>
+</body>
+</html>
+

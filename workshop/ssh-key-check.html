@@ -1,0 +1,100 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+      <script charset="utf8" src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+      <script charset="utf8" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+      <script src="ssh-fingerprint.js" type="text/javascript"></script>
+      <script src="md5.min.js" type="text/javascript"></script>
+      <title>Check SSH key</title>
+      <script type="text/javascript">
+	// Function to check the SSH Key
+	async function checkKey(input_obj) { 
+    		$('#ssh_fingerprint').html('');
+		// Get the SSH key
+		var ssh_key = input_obj.val();
+
+		// Clean up and new line characters
+		var ssh_key_clean = ssh_key.replace(/(\r\n|\n|\r)/gm, "");
+		
+		if ( ssh_key_clean != ssh_key) {
+			input_obj.val(ssh_key_clean);
+		}
+
+		ssh_key = ssh_key_clean;
+		var ssh = undefined;
+		try { 
+		    ssh = SSH.parseKeyType(SSH.parseElements(SSH.parseBlock(ssh_key)));
+		} catch (err) { 
+			
+		}
+
+		if ( ssh == undefined ) { 
+    		    $('#ssh_fingerprint').html('<strong>ERROR!</strong> Input SSH public key is not formatted properly.');
+		} else {
+    		   var sha_digest = await window.crypto.subtle.digest('SHA-256', ssh.bytes);
+    		   sha_digest = new Uint8Array(sha_digest);
+    		   var md5_digest = md5(ssh.bytes);
+    
+    		   var key_details = ( ssh.comment != undefined ? ssh.comment + "\n" : "" ) + "SSH-" + ssh.kty + " " + (ssh.size * 8) + "\n" +
+    			"SHA256: " + Enc.bufToBase64(sha_digest).replace(/=+$/g, '') + "\n" +
+    			"MD5: " + md5_digest.match(/.{2}/g).join(":");
+    
+    		    $('#ssh_fingerprint').html(key_details);
+		}
+	}
+
+        function binl2str(bin) {
+            var str = "";
+            var mask = (1 << 16) - 1;
+            for(var i = 0; i < bin.length * 32; i += 16) {
+                str += String.fromCharCode((bin[i>>5] >>> (i % 32)) & mask);
+            }
+            return str;
+        }
+      </script>
+   </head>
+   <body>
+	<div id="content" class="container">
+          <h1>SSH Public Key Check</h1>
+	  <p>This form will check the format of a SSH public key and provide the associated MD5 and SHA256 fingerprints for the key. 
+             The public key must be the SSH public keyfile format.  The following is an example of a SSH public in the proper format.</p>
+
+<div class="row">
+<div class="col-lg-offset-2">
+<pre style="margin-left:40px; width:43em; background-color:#ddd;">
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSU
+GPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3
+Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XA
+t3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/En
+mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
+NrRFi9wrf+M7Q== user@somwhere.com
+</pre>
+</div>
+</div>
+	  <form>
+	  <div class="row">
+	    <div class="col-lg-12">
+	    <div class="form-group">
+	      <label for="ssh_key">SSH Public Key</label>
+              <textarea class="form-control" style="word-break: break-all" id="ssh_key" name="ssh_key" rows=5 cols=50 wrap="soft"></textarea>
+	    </div>
+            </div>
+          </div>
+	  <div class="row">
+	    <div class="col-lg-12 text-right">
+              <button type="button" class="btn btn-primary" onclick="checkKey($('#ssh_key'))">Check key</button>
+            </div>
+          </div>
+	  <div class="row">
+	    <div class="col-lg-12">
+		<b>Key details</b>
+		<pre id="ssh_fingerprint" class="margin: 20px 0px; width:75%; overflow-wrap:break-word; word-break:normal; white-space: pre-wrap"></pre></div>
+          </div>
+          </form>
+	</div>
+	<script>
+	</script>
+
+</body>
+</html>
