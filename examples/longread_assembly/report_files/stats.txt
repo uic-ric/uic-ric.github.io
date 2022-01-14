@@ -1,0 +1,2 @@
+Sample	Statistic	Count	TotalLength	Longest	N50	N75	L50	L75
+sample1	Value	2	2797143	2757963	2757963	39180	1	2

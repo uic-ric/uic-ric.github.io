@@ -1,0 +1,3 @@
+chromosome	length	avg.coverage	max.cov	min.cov	cov.90	cov.75	cov.50
+tig1	2760900	432	2736	0	93	214	395
+tig56	39246	368.5	3656	0	20	78	201

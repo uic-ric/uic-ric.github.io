@@ -1,0 +1,10 @@
+Level 1 category	Counts	Percent
+09100 Metabolism	130178	41.02%
+09180 Brite Hierarchies	95904	30.22%
+09120 Genetic Information Processing	25125	7.92%
+09160 Human Diseases	18578	5.85%
+09130 Environmental Information Processing	16423	5.18%
+09150 Organismal Systems	10861	3.42%
+09140 Cellular Processes	10739	3.38%
+09190 Not Included in Pathway or Brite	9476	2.99%
+Unassigned	36	< 1%

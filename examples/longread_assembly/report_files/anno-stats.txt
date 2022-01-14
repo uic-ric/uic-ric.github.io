@@ -1,0 +1,2 @@
+Sample	contigs	bases	CDS	rRNA	tRNA	tmRNA
+sample1	2	2800146	2571	19	61	1

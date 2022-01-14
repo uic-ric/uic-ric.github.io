@@ -1,0 +1,3 @@
+Contig	% IDY	Length raw	Length polished
+tig1	99.70	2757963	2760900
+tig56	99.32	39180	39246
