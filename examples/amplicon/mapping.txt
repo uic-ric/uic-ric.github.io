@@ -1,0 +1,11 @@
+SampleID	InputFileName
+Sample009	sequences/Sample009.fastq.gz
+Sample005	sequences/Sample005.fastq.gz
+Sample010	sequences/Sample010.fastq.gz
+Sample002	sequences/Sample002.fastq.gz
+Sample006	sequences/Sample006.fastq.gz
+Sample001	sequences/Sample001.fastq.gz
+Sample008	sequences/Sample008.fastq.gz
+Sample004	sequences/Sample004.fastq.gz
+Sample003	sequences/Sample003.fastq.gz
+Sample007	sequences/Sample007.fastq.gz

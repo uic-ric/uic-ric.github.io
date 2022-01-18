@@ -1,0 +1,11 @@
+Sample	Assembled reads	Discarded reads	Not assembled reads	Percent passed
+Sample001	79076	0	639	99.20%
+Sample002	75442	8	454	99.39%
+Sample003	110474	0	841	99.24%
+Sample004	93706	4	665	99.29%
+Sample005	68268	2	555	99.19%
+Sample006	74593	2	528	99.29%
+Sample007	133187	2	881	99.34%
+Sample008	85918	2	635	99.26%
+Sample009	54762	0	319	99.42%
+Sample010	66041	4	444	99.33%
