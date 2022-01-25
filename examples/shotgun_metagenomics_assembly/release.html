@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Release</title>
+<link rel="stylesheet" type="text/css" href="/css/base.css">
+<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<style>
+
+<!-- a.brand:hover { color: white; text-decoration:none; } -->
+<!-- a.brand { font-family: Georgia, "Times New Roman", Times, serif } -->
+
+</style>
+<header><h1>RRC Data Portal</h1></header>
+
+<div>
+
+<h1>Release - Results from your metagenomic assembly</h1>
+<p><strong>Project:</strong> Example project<br>
+<strong>Released by:</strong> RIC Analyst (cribioinfo@uic.edu)<br>
+<strong>Date:</strong> Jan 11, 2019.</p>
+
+<pre style="margin: 20px 0px; width:75%; overflow-wrap:break-word; word-break:normal; white-space: pre-wrap">Results from a metagenomic co-assembly of all samples.   For the assembly all samples were combined into a single sequence dataset for assembly.  After assembly, the sequence data for each sample individually was mapped back to the contigs to determine read counts per sample.  In addition, the contigs were annotated using Prokka.</pre>
+
+<table class="table" style="width:70%">
+<tr>
+	<th>File Name</th>
+	<th>File Type</th>
+	<th>Description</th>
+</tr>
+<tr><td><a href="report.html">report.html</a></td>
+<td>report</td>
+<td>Basic processing report</td>
+</tr>			
+<tr><td><a href="contigs_counts.txt">contigs_counts.txt</a></td>
+<td>result</td>
+<td>Raw sequence counts for each contig</td>
+</tr>			
+<tr><td><a href="contigs_data.txt">contigs_data.txt</a></td>
+<td>result</td>
+<td>Details of assembled contigs</td>
+</tr>			
+<tr><td><a href="contigs_geneAnnotation.txt">contigs_geneAnnotation.txt</a></td>
+<td>result</td>
+<td>Table of putative gene annotations for all contigs</td>
+</tr>			
+<tr><td><a href="contigs_KEGG_annotation.txt">contigs_KEGG_annotation.txt</a></td>
+<td>result</td>
+<td>Table of putative ortholog annotations for all contigs</td>
+</tr>			
+<tr><td><a href="metagenomic_assembly.summary.txt">metagenomic_assembly.summary.txt</a></td>
+<td>report</td>
+<td>Summary of metagenomic assembly</td>
+</tr>			
+<tr><td><a href="metagenomic_assembly.zip">metagenomic_assembly.zip</a></td>
+<td>result</td>
+<td>Contigs from the assembly (zipped FASTA format)</td>
+</tr>			
+
+</table>
+</div>
+</body>
+</html>
+
