@@ -1,8 +1,2 @@
 Feature	Counts
-contigs	80631
-bases	286295262
-CDS	270681
-CRISPR	104
-rRNA	275
-tRNA	3718
-tmRNA	62
+CDS	5
