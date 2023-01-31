@@ -1,0 +1,2 @@
+Sample	Estimated Number of Cells	Number of Cells With Productive V-J Spanning Pair	Median TRA UMIs per Cell	Median TRB UMIs per Cell	Number of Read Pairs	Valid Barcodes	Reads Mapped to Any V(D)J Gene	Reads Mapped to TRA	Reads Mapped to TRB
+sc5p_v2_mm_balbc_T_1k_t	785	618	5	11	6289407	97.4%	94.2%	21.0%	73.1%

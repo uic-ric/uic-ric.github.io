@@ -1,0 +1,2 @@
+Sample	Estimated Number of Cells	Median UMI Counts per Cell	Median Genes per Cell	Number of Reads	Sequencing Saturation	Valid Barcodes	Reads Mapped Confidently to Genome	Reads Mapped Confidently to Transcriptome
+sc5p_v2_mm_balbc_T_1k_5gex	992	3976	1649	97505715	91.9%	94.4%	85.1%	65.6%

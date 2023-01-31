@@ -1,0 +1,3 @@
+	Starting Cells	Retained Cells	Fraction
+sample1	2214	1713	0.773712737127371
+sample2	2026	1072	0.529121421520237

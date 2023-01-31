@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Release</title>
+<link rel="stylesheet" type="text/css" href="/css/base.css">
+<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<style>
+
+<!-- a.brand:hover { color: white; text-decoration:none; } -->
+<!-- a.brand { font-family: Georgia, "Times New Roman", Times, serif } -->
+
+</style>
+<header><h1>RRC Data Portal</h1></header>
+
+<div>
+
+<h1>Release - Results from your scRNA-seq project</h1>
+<p><strong>Project:</strong> My scRNA-seq project<br>
+<strong>Released by:</strong> RIC Analyst (cribioinfo@uic.edu)<br>
+<strong>Date:</strong> Fri, Jul 5, 03:16 PM,2019.</p>
+
+<pre style="margin: 20px 0px; width:75%; overflow-wrap:break-word; word-break:normal; white-space: pre-wrap">Results for single-cell demultiplexing and clustering analysis. </pre>
+
+<table class="table" style="width:70%">
+<tr><th>File Name</th> <th>File Type</th> <th>Description</th> </tr>
+<tr><td><a href="report.html">report.html</a></td> <td>report</td> <td>Quantification report</td> </tr>
+<tr><td><a href="sample1_matrix/matrix.mtx.gz">sample1_matrix/matrix.mtx.gz</a></td> <td>result</td> <td>Sample 1, Gene expression counts table in MatrixMarket format</td> </tr>
+<tr><td><a href="sample1_matrix/barcodes.tsv.gz">sample1_matrix/barcodes.tsv.gz</a></td> <td>result</td> <td>Sample 1, List of cell barcodes for counts table</td> </tr>
+<tr><td><a href="sample1_matrix/features.tsv.gz">sample1_matrix/features.tsv.gz</a></td> <td>result</td> <td>Sample 1, List of gene IDs and names for counts table</td> </tr>
+<tr><td><a href="sample2_matrix/matrix.mtx.gz">sample2_matrix/matrix.mtx.gz</a></td> <td>result</td> <td>Sample 2, Gene expression counts table in MatrixMarket format</td> </tr>
+<tr><td><a href="sample2_matrix/barcodes.tsv.gz">sample2_matrix/barcodes.tsv.gz</a></td> <td>result</td> <td>Sample 2, List of cell barcodes for counts table</td> </tr>
+<tr><td><a href="sample2_matrix/features.tsv.gz">sample2_matrix/features.tsv.gz</a></td> <td>result</td> <td>Sample 2, List of gene IDs and names for counts table</td> </tr>
+<tr><td><a href="cellQC.pdf">cellQC.pdf</a></td> <td>result</td> <td>QC stats: # reads, # genes, and % mitochondrial expression per cell</td> </tr>
+<tr><td><a href="cellQC.txt">cellQC.txt</a></td> <td>result</td> <td>QC results: # of cells retained after filtering</td> </tr>
+<tr><td><a href="variableGenes.pdf">variableGenes.pdf</a></td> <td>result</td> <td>Plot of variable genes</td> </tr>
+<tr><td><a href="PC_heatmap.pdf">PC_heatmap.pdf</a></td> <td>result</td> <td>Heatmap of PC signal per gene and cell</td> </tr>
+<tr><td><a href="cluster_tSNE-orig.ident.pdf">cluster_tSNE-orig.ident.pdf</a></td> <td>result</td>tSNE plot colored by sample <td></td> </tr>
+<tr><td><a href="cluster_tSNE-res0.5.pdf">cluster_tSNE-res0.5.pdf</a></td> <td>result</td> <td>tSNE plot colored by cluster</td> </tr>
+<tr><td><a href="cluster_topHeatmap-res0.5.pdf">cluster_topHeatmap-res0.5.pdf</a></td> <td>result</td> <td>Heatmap of top differentially expresed genes per cluster</td> </tr>
+<tr><td><a href="cluster_stats.xlsx">cluster_stats.xlsx</a></td> <td>result</td> <td>Differential statistics and sample composition statistics per cluster</td> </tr>
+</table>
+
+</div>
+</body>
+</html>
