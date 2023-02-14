@@ -3,68 +3,172 @@
 <head>
 <title>UIC Research Informatics Core</title>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<style>
+.nav { overflow-y: hidden !important }
+
+.scroll-header  { padding-top: 80px; }
+</style>
+
 </head>
-<body>
-<div class="container">
-<h1>UIC Research Informatics Core</h1>
+<body style="position:relative">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="height:60px; background-color: #41b6eb;">
+    <div class="container-fluid">
+      <a class="navbar-brand mb-0 h1" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 68.6566" style="height:50px">
+  <title>University of Illinois Chicago</title>
+  <g id="full-rgb">
+    <g id="logoMark">
+      <rect id="logoMark_PathItem_" data-name="logoMark <PathItem>" x="31.7455" y="24.1714" width="6.7174" height="22.3922" style="fill: #fff"></rect>
+      <path id="logoMark_PathItem_2" data-name="logoMark <PathItem>" d="M20.9464,37.54a4.7676,4.7676,0,0,1-.757,3.1632,3.24,3.24,0,0,1-2.6327.9214,3.24,3.24,0,0,1-2.6357-.9214,4.7673,4.7673,0,0,1-.7576-3.1632V24.1714H7.4444V37.41c0,3.1288.3308,4.6412,1.2211,6.1589,1.4817,2.4694,5.4315,3.423,8.8912,3.423,3.4544,0,7.4074-.9536,8.8882-3.423.89-1.5177,1.2211-3.03,1.2211-6.1589V24.1714h-6.72Z" style="fill: #fff"></path>
+      <path id="logoMark_PathItem_3" data-name="logoMark <PathItem>" d="M52.884,41.5255c-2.8642,0-4.3148-2.3059-4.3148-6.16,0-3.8819,1.4506-6.2527,4.3148-6.2527,2.1075,0,3.3256,1.2831,3.8875,3.4554l5.8254-2.7981c-1.1194-2.9308-4.2782-5.9919-9.6123-5.9919-6.9811,0-11.2619,4.709-11.2619,11.5873,0,6.85,4.05,11.5925,11.1294,11.5925,5.103,0,8.2988-2.4688,9.8783-6.06L56.638,38.7266A3.7235,3.7235,0,0,1,52.884,41.5255Z" style="fill: #fff"></path>
+      <path id="logoMark_CompoundPathItem_" data-name="logoMark <CompoundPathItem>" d="M34.3313,0a34.3283,34.3283,0,1,0,34.33,34.3282A34.3291,34.3291,0,0,0,34.3313,0ZM14.921,40.7031a3.24,3.24,0,0,0,2.6357.9214,3.24,3.24,0,0,0,2.6327-.9214,4.7676,4.7676,0,0,0,.757-3.1632V24.1714h6.72V37.41c0,3.1288-.3315,4.6412-1.2211,6.1589-1.4808,2.4694-5.4338,3.423-8.8882,3.423-3.46,0-7.4095-.9536-8.8912-3.423-.89-1.5177-1.2211-3.03-1.2211-6.1589V24.1714h6.719V37.54A4.7673,4.7673,0,0,0,14.921,40.7031Zm16.8245,5.8605V24.1714h6.7174V46.5636Zm21.1066.3949c-7.08,0-11.1294-4.7424-11.1294-11.5925,0-6.8783,4.2808-11.5873,11.2619-11.5873,5.3341,0,8.4929,3.0611,9.6123,5.9919l-5.8254,2.7981c-.5619-2.1723-1.78-3.4554-3.8875-3.4554-2.8642,0-4.3148,2.3708-4.3148,6.2527,0,3.8536,1.4506,6.16,4.3148,6.16a3.7235,3.7235,0,0,0,3.754-2.7989L62.73,40.8984C61.1509,44.49,57.9551,46.9585,52.8521,46.9585Z" style="fill: #d50032"></path>
+    </g>
+  </g>
+	</svg> <b>Research Informatics Core</b>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+	<ul class="navbar-nav">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active scroll-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/uic-ric/uic-ric.github.io/wiki">Public Wiki</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link scroll-link" href="#results">Example Results</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+	<script>
+		var offset=80;
+		/*$('#navbarNav a.scroll-link').click(function(event) {
+			event.preventDefault();
+    			$($(this).attr('href'))[0].scrollIntoView();
+    			scrollBy(0, -offset);
+		});
+		*/
+	</script>
 
-<h2><a href="https://github.com/uic-ric/uic-ric.github.io/wiki">Public Wiki pages</a></h2>
+  <div class="container">
+      <div data-bs-spy="scroll" data-bs-target="#navbarNav" data-bs-offset="80" tabindex="0" style="overflow-y:scroll">
+    <h2 id="about" class="scroll-header">About us</h2>
+    <p align="justify">The Research Informatics Core (RIC), located in the Molecular Biology Research Building at the University of Illinois-Chicago (UIC), provides a broad spectrum of bioinformatics services to the UIC and Chicago-area research communities, including genomics, transcriptomics, epigenomics, metagenomics, metabolomics, and proteomics analysis, as well as applications in statistical analysis, systems biology, and machine learning.</p>
+    <p align="justify">To request a consultation, please fill out a service request form at RRC CrossLabs:&nbsp;<a href="http://go.uic.edu/ric">go.uic.edu/ric</a> (you will need to sign in).</p>
+    <p align="justify">To inquire about bioinformatics services, please&nbsp;<a href="mailto:cribioinfo@uic.edu">contact us</a>.</p>
+    </hr>
 
-<h2>Example Results</h2>
+    <h2 id="results" class="scroll-header">Example results</h2>
+      <div class="accordion" id="results_list">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#results_amp" aria-expanded="true" aria-controls="results_amp">Amplicon metagenomics (DADA2)</button>
+          </h2>
+	  <div id="results_amp" class="accordion-collapse collapse">
+            <div class="accordion-body">
+	      <p>The end result of these bioinformatics services is to provide investigators basic information concerning the abundance of taxa present in the samples sequenced using a targeted amplicon, e.g. 16S or ITS. The basic bioinformatic analysis includes basic processing of raw sequence data including read merging, adapter &amp; quality trimming, chimeric checking and processing using DADA2 to generate a table of abundance data and associated taxonomic annotations.</p>
+	       <ul class="list-inline">
+                <li class="list-inline-item"><a class="btn btn-outline-primary" href="examples/amplicon/report.html">Report</a></li>
+		<li class="list-inline-item"><a class="btn btn-outline-dark" href="examples/amplicon">All files</a></li>
+              </ul>
+            </div>
+          </div>
+	</div>
 
-<ul>
-<li>Amplicon metagenomics (DADA2)
-  <ul><li><a href="examples/amplicon/report.html">Report</a></li>
-  <li><a href="examples/amplicon">All files</a></li>
-</ul></li>
-<li>RNAseq (eukaryotic/spliced)<ul>
-  <li><a href="examples/rnaseq/report.html">Report</a></li>
-  <li><a href="examples/rnaseq">All files</a></li>
-  <li><a href="examples/rnaseq/release_diff.html">Example differential analysis</a> - <b>NOTE</b>: Differential analysis of the data are a separate service not included with basic processing of the data.</li>
-</ul></li>
-<li>Single-cell RNAseq
-  <ul>
-    <li>Basic processing (Cellranger) of 10X gene expression
-      <ul>
-	<li><a href="examples/scRNAseq/report.html">Report</a></li>
-  	<li><a href="examples/scRNAseq/release_demux.html">All files</a></li>
-      </ul></li>
-    <li>Basic processing (Cellranger) of 10X gene expression and immune profiling data
-      <ul>
-	<li><a href="examples/scRNAseq/10x_gex_vdj/report.html">Report</a></li>
-  	<li><a href="examples/scRNAseq/10x_gex_vdj">All files</a></li>
-      </ul></li>
-    <li>Analyses of processed data. <b>NOTE</b>: Analysis of the data are a separate service not included with basic processing of the data.
-      <ul>
-       <li><a href="examples/scRNAseq/release_clustering.html">Analyses (filtering, clustering and differential analysis)</a></li>
-       <li><a href="examples/scRNAseq/differential">Sample enrichment analyses</a></li>
-     </ul></li>
-  </ul>
-</li>
-<li>Long-read prokaryotic genome assembly
-  <ul><li><a href="examples/longread_assembly/report.html">Report</a></li>
-  <li><a href="examples/longread_assembly/">All files</a></li>
-</ul></li>
-<li>Shotgun metagenomics (read based annotation)
-  <ul><li><a href="examples/shotgun_metagenomics/report.html">Report</a></li>
-  <li><a href="examples/shotgun_metagenomics">All files</a></li>
-</ul></li>
-<li>Shotgun metagenomics (assembly)
-  <ul><li><a href="examples/shotgun_metagenomics_assembly/report.html">Report</a></li>
-  <li><a href="examples/shotgun_metagenomics_assembly">All files</a></li>
-</ul></li>
-</ul>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#results_rnaseq_spliced" aria-expanded="true" aria-controls="results_rnaseq_spliced">RNAseq (eukaryotic/spliced)</button>
+          </h2>
+	  <div id="results_rnaseq_spliced" class="accordion-collapse collapse">
+            <div class="accordion-body">
+	       <ul class="list-inline">
+                <li class="list-inline-item"><a class="btn btn-outline-primary" href="examples/rnaseq/report.html">Report</a></li>
+		<li class="list-inline-item"><a class="btn btn-outline-dark" href="examples/rnaseq">All files</a></li>
+              </ul>
+	      <div class="alert alert-warning"><b>NOTE</b>: Differential analysis of the data are a separate service not included with basic processing of the data.</div>
+	      <ul class="list-inline">
+		    <li class="list-inline-item"><a class="btn btn-outline-success" href="examples/rnaseq/release_diff.html">Example differential analysis</a></li>
+              </ul>
+            </div>
+          </div>
+	</div>
 
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#results_scrnaseq" aria-expanded="true" aria-controls="results_scrnaseq">Single-cell RNAseq</button>
+          </h2>
+	  <div id="results_scrnaseq" class="accordion-collapse collapse">
+            <div class="accordion-body">
+	      <h5>Basic processing (Cellranger) of 10X gene expression</h5>
+	      <ul class="list-inline">
+                <li class="list-inline-item"><a class="btn btn-outline-primary" href="examples/scRNAseq/report.html">Report</a></li>
+		<li class="list-inline-item"><a class="btn btn-outline-dark" href="examples/scRNAseq/release_demux.html">All files</a></li>
+              </ul>
+	      <h5>Basic processing (Cellranger) of 10X gene expression and immune profiling data</h5>
+	      <ul class="list-inline">
+                <li class="list-inline-item"><a class="btn btn-outline-primary" href="examples/scRNAseq/10x_gex_vdj/report.html">Report</a></li>
+		<li class="list-inline-item"><a class="btn btn-outline-dark" href="examples/scRNAseq/10x_gex_vdj">All files</a></li>
+              </ul>
+
+	      <h5>Analyses of processed data.</h5>
+	      <div class="alert alert-warning"><b>NOTE</b>: Analysis of the data are a separate service not included with basic processing of the data.</div>
+	      <ul class="list-inline">
+                <li class="list-inline-item"><a class="btn btn-outline-success" href="examples/scRNAseq/clustering/report.html">Analyses (filtering, clustering and differential analysis)</a></li>
+                <li class="list-inline-item"><a class="btn btn-outline-success" href="examples/scRNAseq/differential">Sample enrichment analyses</a></li>
+              </ul>
+            </div>
+          </div>
+	</div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#results_lrassy" aria-expanded="true" aria-controls="results_lrassy">Long-read prokaryotic genome assembly</button>
+          </h2>
+	  <div id="results_lrassy" class="accordion-collapse collapse">
+            <div class="accordion-body">
+		    <p><i>De novo</i> genome assembly using both long read, i.e. PacBIO or Nanopore data, and short-read (Illumina) data.</p>
+	       <ul class="list-inline">
+                <li class="list-inline-item"><a class="btn btn-outline-primary" href="examples/longread_assembly/report.html">Report</a></li>
+		<li class="list-inline-item"><a class="btn btn-outline-dark" href="examples/longread_assembly">All files</a></li>
+              </ul>
+            </div>
+          </div>
+	</div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#results_sms" aria-expanded="true" aria-controls="results_sms">Shotgun metagenomics</button>
+          </h2>
+	  <div id="results_sms" class="accordion-collapse collapse">
+            <div class="accordion-body">
+	      <h5>Read based annotation</h5>
+	      <p>Pipeline generates taxonomic and functional gene annotations for each sequenced read and then generates counts summaries for the annotations.</p>
+	      <ul class="list-inline">
+                <li class="list-inline-item"><a class="btn btn-outline-primary" href="examples/shotgun_metagenomics/report.html">Report</a></li>
+		<li class="list-inline-item"><a class="btn btn-outline-dark" href="examples/shotgun_metagenomics">All files</a></li>
+              </ul>
+	      <h5>Metagenomic assembly</h5>
+	      <p>Contigs are assembled, <i>de novo</i> from the sequence data.  The resulting contigs are annotated taxonomically and putative gene features, i.e. open reading frames, are detected and annotated.  Quantitative insights (read counts) are generated by aligning the sequence data for each sample to the assembled metagenome and then computing number of reads aligned to the contigs as well as the detected gene features.</p>
+	      <ul class="list-inline">
+                <li class="list-inline-item"><a class="btn btn-outline-primary" href="examples/shotgun_metagenomics_assembly/report.html">Report</a></li>
+		<li class="list-inline-item"><a class="btn btn-outline-dark" href="examples/shotgun_metagenomics_assembly">All files</a></li>
+              </ul>
+            </div>
+          </div>
+	</div>
+      </div>
+    </div>
 </div>
 </body>
 </html>
