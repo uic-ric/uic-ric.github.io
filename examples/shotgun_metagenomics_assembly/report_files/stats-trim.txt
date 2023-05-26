@@ -1,6 +1,6 @@
 Sample	Trim passed	Ambig dropped	Trim filter dropped	Trim length dropped	Percent passed	Mean Length	Mean Trimmed Length	Quality trimmed bp
-Sample_A	25542556	9463	0	365	99.96%	302.0	301.3	0
-Sample_B	20100424	7461	0	149	99.96%	302.0	301.3	0
-Sample_C	21099611	7943	0	200	99.96%	302.0	301.3	0
-Sample_D	16919528	6128	0	404	99.96%	302.0	301.3	0
-Sample_E	20662573	7766	0	372	99.96%	302.0	301.3	0
+Sample_A	999622	368	0	10	99.96%	302.0	301.3	0
+Sample_B	999600	396	0	4	99.96%	302.0	301.3	0
+Sample_C	999608	384	0	8	99.96%	302.0	301.3	0
+Sample_D	999634	339	0	27	99.96%	302.0	301.3	0
+Sample_E	999630	354	0	16	99.96%	302.0	301.3	0

@@ -1,0 +1,19 @@
+# bin	superkingdom;phylum;class;order;family;genus;species;	lineage	lineage scores	reason
+1	Bacteria;Proteobacteria;Alphaproteobacteria;Rhodospirillales;Acetobacteraceae;Acetobacter;	1;131567;2;1224;28211;204441;433;434	1.00;1.00;1.00;0.99;0.99;0.98;0.97;0.97	based on 351/366 ORFs
+10	Bacteria;Firmicutes;Clostridia;Clostridiales;Lachnospiraceae;	1;131567;2;1783272;1239;186801;186802;186803	1.00;1.00;1.00;0.98;0.97;0.89;0.89;0.77	based on 2097/2137 ORFs
+11	Bacteria;Proteobacteria;Alphaproteobacteria;Rhodospirillales;Acetobacteraceae;Acetobacter;	1;131567;2;1224;28211;204441;433;434	1.00;1.00;1.00;0.99;0.99;0.96;0.95;0.95	based on 654/676 ORFs
+12	Bacteria;Firmicutes;Clostridia;Clostridiales;Ruminococcaceae;	1;131567;2;1783272;1239;186801;186802;541000	1.00;0.99;0.98;0.97;0.96;0.96;0.96;0.93	based on 2122/2153 ORFs
+13	Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Rikenellaceae;Alistipes;	1;131567;2;1783270;68336;976;200643;171549;171550;239759	1.00;1.00;1.00;0.98;0.98;0.98;0.98;0.98;0.95;0.94	based on 1836/1859 ORFs
+14	Bacteria;Firmicutes;Clostridia;Clostridiales;Ruminococcaceae;NA;Ruminococcaceae bacterium;	1;131567;2;1783272;1239;186801;186802;541000;2305133;1898205	1.00;1.00;1.00;0.98;0.97;0.94;0.92;0.64;0.62;0.62	based on 1673/1713 ORFs
+15	Bacteria;Firmicutes;Clostridia;Clostridiales;Ruminococcaceae;	1;131567;2;1783272;1239;186801;186802;541000	1.00;1.00;1.00;0.96;0.96;0.96;0.96;0.95	based on 2532/2564 ORFs
+16	Bacteria;Firmicutes;Clostridia;Clostridiales;	1;131567;2;1783272;1239;186801;186802	1.00;1.00;1.00;0.98;0.98;0.95;0.94	based on 2150/2160 ORFs
+17	Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Bacteroidaceae;Bacteroides;	1;131567;2;1783270;68336;976;200643;171549;815;816	1.00;1.00;1.00;0.92;0.92;0.92;0.92;0.92;0.86;0.86	based on 5525/5554 ORFs
+18	Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;	1;131567;2;1783270;68336;976;200643;171549	1.00;0.99;0.99;0.69;0.69;0.69;0.67;0.67	based on 3158/3177 ORFs
+2	Bacteria;Firmicutes;Clostridia;Clostridiales;	1;131567;2;1783272;1239;186801;186802	1.00;1.00;1.00;0.99;0.99;0.95;0.95	based on 2928/2992 ORFs
+3	Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;	1;131567;2;1783270;68336;976;200643;171549	1.00;1.00;1.00;0.79;0.79;0.79;0.79;0.79	based on 3841/3861 ORFs
+4	Bacteria;Firmicutes;Clostridia;Clostridiales;	1;131567;2;1783272;1239;186801;186802	1.00;0.99;0.99;0.95;0.86;0.63;0.63	based on 259/266 ORFs
+5	Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Bacteroidaceae;Bacteroides;	1;131567;2;1783270;68336;976;200643;171549;815;816	1.00;0.99;0.99;0.73;0.73;0.73;0.73;0.73;0.67;0.67	based on 1491/1506 ORFs
+6	Bacteria;Firmicutes;Clostridia;Clostridiales;Clostridiaceae;Hungatella;	1;131567;2;1783272;1239;186801;186802;31979;1649459	1.00;1.00;1.00;0.98;0.98;0.97;0.97;0.91;0.59	based on 5439/5514 ORFs
+7	Bacteria;Firmicutes;	1;131567;2;1783272;1239	1.00;0.99;0.99;0.96;0.95	based on 1474/1502 ORFs
+8	Bacteria;Firmicutes;Clostridia;Clostridiales;	1;131567;2;1783272;1239;186801;186802	1.00;1.00;1.00;0.97;0.97;0.34;0.34	based on 547/561 ORFs
+9	Bacteria;Firmicutes;Clostridia;Clostridiales;	1;131567;2;1783272;1239;186801;186802	1.00;1.00;1.00;0.95;0.92;0.86;0.86	based on 3399/3459 ORFs

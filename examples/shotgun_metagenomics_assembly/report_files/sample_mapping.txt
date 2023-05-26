@@ -1,0 +1,6 @@
+Sample	OriginalID
+Sample_A	Sample_A
+Sample_B	Sample_B
+Sample_C	Sample_C
+Sample_D	Sample_D
+Sample_E	Sample_E
