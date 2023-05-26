@@ -1,6 +1,0 @@
-Count	892
-TotalLength	355265
-Longest	917
-N50	381
-N75	339
-N90	313
