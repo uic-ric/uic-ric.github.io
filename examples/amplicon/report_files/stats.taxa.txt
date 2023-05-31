@@ -1,9 +1,8 @@
 Taxon	Counts	Percent
-Bacteria;Firmicutes	456450	61.58%
-Bacteria;Bacteroidetes	264187	35.64%
-Bacteria;Proteobacteria	7119	< 1%
-Bacteria;Tenericutes	6648	< 1%
-Bacteria;Deferribacteres	3415	< 1%
-Bacteria;Actinobacteria	2842	< 1%
-Bacteria;Cyanobacteria	623	< 1%
+Bacteria;Firmicutes	549249	55.23%
+Bacteria;Bacteroidota	435706	43.81%
+Bacteria;Deferribacterota	8689	< 1%
+Bacteria;Proteobacteria	407	< 1%
+Bacteria;Actinobacteriota	392	< 1%
+Bacteria;Other	2	< 1%
 Unassigned	0	0%

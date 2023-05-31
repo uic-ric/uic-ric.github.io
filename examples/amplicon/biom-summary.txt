@@ -1,25 +1,35 @@
-Num samples: 10
-Num observations: 777
-Total count: 741284
-Table density (fraction of non-zero values): 0.412
+Num samples: 20
+Num observations: 475
+Total count: 994445
+Table density (fraction of non-zero values): 0.360
 
 Counts/sample summary:
- Min: 49479.0
- Max: 114318.0
- Median: 69126.500
- Mean: 74128.400
- Std. dev.: 18794.547
+ Min: 31.000
+ Max: 79610.000
+ Median: 50428.000
+ Mean: 49722.250
+ Std. dev.: 15262.450
  Sample Metadata Categories: None provided
  Observation Metadata Categories: taxonomy
 
 Counts/sample detail:
-Sample009: 49479.0
-Sample010: 58517.0
-Sample005: 61965.0
-Sample006: 63800.0
-Sample002: 67786.0
-Sample001: 70467.0
-Sample008: 70789.0
-Sample004: 84947.0
-Sample003: 99216.0
-Sample007: 114318.0
+Sample21_M25_Fec2: 31.000
+Sample22_M26_Fec1: 32343.000
+Sample26_M33_Fec2: 39237.000
+Sample23_M29_Fec3: 39305.000
+Sample20_M24_Fec3: 45393.000
+Sample27_M34_Fec3: 45856.000
+Sample15_M16_Fec2: 46029.000
+Sample29_M36_Fec3: 48789.000
+Sample19_M23_Fec2: 49364.000
+Sample16_M18_Fec3: 49988.000
+Sample28_M35_Fec3: 50868.000
+Sample18_M20_Fec3: 53641.000
+Sample14_M15_Fec1: 55243.000
+Sample11_M12_Fec3: 55259.000
+Sample13_M14_Fec3: 55619.000
+Sample12_M13_Fec1: 59838.000
+Sample24_M30_Fec3: 60474.000
+Sample25_M32_Fec2: 62840.000
+Sample10_M10_Fec2: 64718.000
+Sample17_M19_Fec2: 79610.000
