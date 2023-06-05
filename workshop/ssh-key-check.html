@@ -14,20 +14,45 @@
 		// Get the SSH key
 		var ssh_key = input_obj.val();
 
-		// Clean up and new line characters
-		var ssh_key_clean = ssh_key.replace(/(\r\n|\n|\r)/gm, "");
+		// Check if in PEM format
+		if ( ssh_key.match('\s*---- BEGIN SSH2 PUBLIC KEY ----') ) {
+			var lines = ssh_key.replace('\s+$', '').split('\n');
+			var key_data = "";
+			var comment = ""
+			for ( var i=1; i < ( lines.length - 1 ); i++ ) { 
+				var comment_match = lines[i].match('Comment: "?(.+)"?"');
+				if ( comment_match ) { 
+					comment = comment_match[1];
+				} else if ( lines[i].match('\s*---- END SSH2 PUBLIC KEY ----') ) {
+					break	
+				} else {
+					key_data += lines[i];
+				}
+			}
+			try { 
+				var ssh = SSH.parseKeyType(SSH.parseElements({ 'type': undefined, 
+										'bytes': Enc.base64ToBuf(key_data), 
+										'comment': comment }));
+				ssh.type = Enc.bufToBin(ssh.elements[0]);
+				input_obj.val(ssh.type + " " + key_data + " " + comment);
+			} catch (err) { 
+			}
+		} else {
+			// Clean up and new line characters
+			var ssh_key_clean = ssh_key.replace(/(\r\n|\n|\r)/gm, "");
 		
-		if ( ssh_key_clean != ssh_key) {
-			input_obj.val(ssh_key_clean);
+			if ( ssh_key_clean != ssh_key) {
+				input_obj.val(ssh_key_clean);
+			}
+			ssh_key = ssh_key_clean;
+			var ssh = undefined;
+			try { 
+		    		ssh = SSH.parseKeyType(SSH.parseElements(SSH.parseBlock(ssh_key)));
+			} catch (err) { 
+			
+			}
 		}
 
-		ssh_key = ssh_key_clean;
-		var ssh = undefined;
-		try { 
-		    ssh = SSH.parseKeyType(SSH.parseElements(SSH.parseBlock(ssh_key)));
-		} catch (err) { 
-			
-		}
 
 		if ( ssh == undefined ) { 
     		    $('#ssh_fingerprint').html('<strong>ERROR!</strong> Input SSH public key is not formatted properly.');
