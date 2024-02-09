@@ -1,0 +1,5 @@
+Sample	OriginalID
+RNA_mouse_polyA_folB.1	RNA_mouse_polyA_folB.1
+RNA_mouse_polyA_folB.2	RNA_mouse_polyA_folB.2
+RNA_mouse_polyA_pre-proB.1	RNA_mouse_polyA_pre-proB.1
+RNA_mouse_polyA_pre-proB.2	RNA_mouse_polyA_pre-proB.2

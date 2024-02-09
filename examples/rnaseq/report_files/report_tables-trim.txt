@@ -1,0 +1,5 @@
+Sample	Raw reads	Reads passed trimming	Reads dropped	Percent passing
+RNA_mouse_polyA_folB.1	27890026	22182967	5707059	79.54 %
+RNA_mouse_polyA_folB.2	28589327	22844856	5744471	79.91 %
+RNA_mouse_polyA_pre-proB.1	28408668	23268450	5140218	81.91 %
+RNA_mouse_polyA_pre-proB.2	27189999	22352203	4837796	82.21 %

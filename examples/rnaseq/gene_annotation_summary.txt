@@ -1,0 +1,5 @@
+Status	Assigned	Unassigned_Unmapped	Unassigned_Read_Type	Unassigned_Singleton	Unassigned_MappingQuality	Unassigned_Chimera	Unassigned_FragmentLength	Unassigned_Duplicate	Unassigned_MultiMapping	Unassigned_Secondary	Unassigned_NonSplit	Unassigned_NoFeatures	Unassigned_Overlapping_Length	Unassigned_Ambiguity
+RNA_mouse_polyA_folB.1	14635393	0	0	0	0	0	0	0	10228652	0	0	3747931	0	157395
+RNA_mouse_polyA_folB.2	14711502	0	0	0	0	0	0	0	10084610	0	0	4352410	0	150550
+RNA_mouse_polyA_pre-proB.1	15540809	0	0	0	0	0	0	0	10655117	0	0	3706145	0	155124
+RNA_mouse_polyA_pre-proB.2	15083443	0	0	0	0	0	0	0	10126663	0	0	3451892	0	153044

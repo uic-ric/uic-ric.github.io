@@ -1,25 +1,28 @@
 <!DOCTYPE html><html>
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link href="report_files/reportstyle.css" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.16/datatables.min.css"><script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.2.1.min.js"></script><script type="text/javascript" charset="utf8" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.16/datatables.min.js"></script><style>
-				body {
-      position: relative; 
-  }
-                   #sidebar {
-						width: 230px;
-    					position: fixed;
-    					top: 0;
-    					left: 0;
-   						height: 100vh;
-    					z-index: 999;
-    					background: #eee;
-    					color: #fff;
-    					transition: all 0.3s;						
-					}
-					.wrapper { display: flex; width: 100%; align-items: stretch; }
+body {
+     position: relative; 
+}
+
+#sidebar {
+   width: 230px;
+   position: fixed;
+   top: 0;
+   left: 0;
+   height: 100vh;
+   z-index: 999;
+   background: #eee;
+   color: #fff;
+   transition: all 0.3s;						
+}
+
+.wrapper { display: flex; width: 100%; align-items: stretch; }
+
 #sidebar .sidebar-header {
     padding: 20px;
     background:  #44639b;
@@ -61,7 +64,33 @@
 	margin-left: 230px;
 } .citations { background-color: #eee; border-top: 1px solid black; padding-left: 10px; padding-right:10px; }
                     .date { margin-bottom: 10px; }
-                </style></head>
+
+div.header {display:block;width:100%; text-align:left; 
+	border-bottom:1px solid #44639b;
+	margin:0;padding:10px 20px; padding-left: 50px}
+
+/* div { padding-left: 20px; } */
+
+div.toc { display:block; border-top: 1px solid #44639b; border-bottom: 1px solid #44639b; background-color: #eee; }
+
+div.citations { display:block; border-top: 1px solid #44639b; background-color: #eee; padding-bottom: 20px; }
+
+/* h1.header { width: 100%; background-color: #1f4c74; margin: 0px; padding: 10px 30px; color: #fff; } */
+
+img.logo { height: 75px; } 
+h1 img { height: 75px; } 
+
+table th td {
+	border-width: 0.3em 0 9px;
+	width: 100%;
+}
+
+li > div.analysis { font-size: 14pt; font-weight: bold; border-bottom: 1px solid #44639b; display: block; width: 70%; list-style: none; }
+
+dd.database, dd.method { margin-left: 5px; }
+
+dl.params { margin-left: 5px; }
+    </style></head>
    <body data-spy="scroll" data-target=".navbar" data-offset="50">
       <nav id="sidebar" class="navbar navbar-inverse navbar-fixed-top">
          <div class="sidebar-header">
@@ -72,10 +101,11 @@
                <li role="presentation" class="analysis active"><a href="#main_page" aria-controls="#main_page" style="color:black;">
                      <h4><b>Overview</b></h4></a></li>
                <li role="presentation" class="analysis"><a href="#analysis_1" aria-controls="#analysis_1" style="color:black;">1. Quality control of raw fastq data</a></li>
-               <li role="presentation" class="analysis"><a href="#analysis_2" aria-controls="#analysis_2" style="color:black;">2. Reference genome alignment</a></li>
-               <li role="presentation" class="analysis"><a href="#analysis_3" aria-controls="#analysis_3" style="color:black;">3. Checking reads against a filter database</a></li>
-               <li role="presentation" class="analysis"><a href="#analysis_4" aria-controls="#analysis_4" style="color:black;">4. Quantification of genomic features</a></li>
-               <li role="presentation" class="analysis"><a href="#analysis_5" aria-controls="#analysis_5" style="color:black;">5. Gene isoform quantification</a></li>
+               <li role="presentation" class="analysis"><a href="#analysis_2" aria-controls="#analysis_2" style="color:black;">2. Sequence trimming</a></li>
+               <li role="presentation" class="analysis"><a href="#analysis_3" aria-controls="#analysis_3" style="color:black;">3. Reference genome alignment</a></li>
+               <li role="presentation" class="analysis"><a href="#analysis_4" aria-controls="#analysis_4" style="color:black;">4. Checking reads against a filter database</a></li>
+               <li role="presentation" class="analysis"><a href="#analysis_5" aria-controls="#analysis_5" style="color:black;">5. Quantification of genomic features</a></li>
+               <li role="presentation" class="analysis"><a href="#analysis_6" aria-controls="#analysis_6" style="color:black;">6. Gene isoform quantification</a></li>
                <li role="presentation" class="analysis"><a href="#citations" style="color:black;"><i>Citations</i></a></li>
             </ul>
          </div>
@@ -84,11 +114,40 @@
          <div id="header">
             <header>
                <div class="row header" id="top">
-                  <div class="col-sm-3" style="vertical-align:middle; padding-top:20px; margin-left:10px"><img src="report_files/rrc-logo.png" class="img-responsive"></div>
+                  <div class="col-sm-3" style="vertical-align:middle; padding-top:20px; margin-left:10px">
+                     <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 705.45 218.29">
+                        <g>
+                           <path d="M330.05,127.39h-5.08l-4.93-9.71c-.37-.74-.75-1.36-1.14-1.85-.39-.49-.8-.88-1.25-1.16-.45-.29-.93-.49-1.46-.62s-1.12-.19-1.78-.19h-2.12v13.52h-4.5v-30.37h8.84c1.92,0,3.57,.19,4.95,.58s2.51,.93,3.4,1.63c.88,.7,1.53,1.54,1.94,2.52,.41,.98,.62,2.07,.62,3.26,0,.95-.15,1.84-.46,2.68-.3,.84-.75,1.61-1.35,2.3-.6,.69-1.34,1.29-2.22,1.79-.88,.5-1.9,.88-3.04,1.13,.93,.29,1.71,.81,2.36,1.54,.65,.74,1.31,1.72,1.98,2.94l5.23,9.99Zm-7.2-22.03c0-1.63-.55-2.84-1.65-3.65-1.1-.81-2.66-1.21-4.66-1.21h-4.24v10.04h3.64c1.06,0,2.02-.11,2.87-.34s1.57-.56,2.17-1c.6-.44,1.06-.98,1.39-1.63,.33-.64,.49-1.38,.49-2.22Z" style="fill:#045381;"></path>
+                           <path d="M358.5,127.39h-5.08l-4.93-9.71c-.37-.74-.75-1.36-1.14-1.85-.39-.49-.8-.88-1.25-1.16-.45-.29-.93-.49-1.46-.62s-1.12-.19-1.78-.19h-2.12v13.52h-4.5v-30.37h8.84c1.92,0,3.57,.19,4.95,.58s2.51,.93,3.4,1.63c.88,.7,1.53,1.54,1.94,2.52,.41,.98,.62,2.07,.62,3.26,0,.95-.15,1.84-.46,2.68-.3,.84-.75,1.61-1.35,2.3-.6,.69-1.34,1.29-2.22,1.79-.88,.5-1.9,.88-3.04,1.13,.93,.29,1.71,.81,2.36,1.54,.65,.74,1.31,1.72,1.98,2.94l5.23,9.99Zm-7.2-22.03c0-1.63-.55-2.84-1.65-3.65-1.1-.81-2.66-1.21-4.66-1.21h-4.24v10.04h3.64c1.06,0,2.02-.11,2.87-.34s1.57-.56,2.17-1c.6-.44,1.06-.98,1.39-1.63,.33-.64,.49-1.38,.49-2.22Z" style="fill:#045381;"></path>
+                           <path d="M385.52,126.25c-2.64,1.01-5.41,1.51-8.31,1.51-4.67,0-8.25-1.28-10.75-3.85-2.5-2.56-3.75-6.36-3.75-11.38,0-2.43,.34-4.63,1.04-6.6s1.68-3.64,2.96-5.01c1.28-1.37,2.83-2.43,4.65-3.17,1.82-.74,3.86-1.12,6.11-1.12,1.53,0,2.96,.12,4.27,.36s2.58,.61,3.79,1.1v4.07c-1.2-.6-2.43-1.07-3.71-1.38-1.28-.32-2.68-.48-4.19-.48s-2.95,.27-4.21,.8-2.32,1.31-3.2,2.32-1.55,2.25-2.02,3.72c-.47,1.46-.71,3.13-.71,5.01,0,3.94,.87,6.9,2.6,8.9,1.73,2,4.28,3,7.63,3,1.42,0,2.77-.15,4.07-.45,1.3-.3,2.54-.72,3.74-1.27v3.9Z" style="fill:#045381;"></path>
+                        </g>
+                        <g>
+                           <path d="M346.16,55.76c26.37,0,48.7,17.21,56.44,40.99h39.23c-8.58-45.03-48.14-79.07-95.67-79.07s-87.08,34.04-95.66,79.07h39.23c7.73-23.78,30.06-40.99,56.42-40.99Z" style="fill:#045381;"></path>
+                           <path d="M346.16,174.43c-26.36,0-48.69-17.2-56.42-40.99h-39.23c8.58,45.03,48.13,79.07,95.66,79.07s87.09-34.04,95.67-79.07h-39.23c-7.74,23.79-30.07,40.99-56.44,40.99Z" style="fill:#045381;"></path>
+                           <path d="M250.48,133.44h.03s-.02-.09-.03-.13v.13Z" style="fill:#045381;"></path>
+                           <path d="M441.86,96.74h-.03s.02,.09,.03,.13v-.13Z" style="fill:#045381;"></path>
+                           <path d="M250.48,96.74v.13s.02-.09,.03-.13h-.03Z" style="fill:#045381;"></path>
+                           <path d="M441.86,133.31s-.02,.08-.03,.13h.03v-.13Z" style="fill:#045381;"></path>
+                        </g>
+                        <line x1="221.52" x2="221.52" y2="218.29" style="fill:none; stroke:#045381; stroke-miterlimit:10; stroke-width:7px;"></line>
+                        <g>
+                           <path d="M593.46,164.31c-.12-.07-1.86-1.08-2.9-1.75h102.49l1.76-3.47h-110.09c-4.54-2.33-8.74-5.38-12.45-9.09-9.4-9.39-14.57-21.89-14.57-35.17s5.17-25.78,14.57-35.18c9.39-9.4,21.89-14.57,35.18-14.57s25.78,5.17,35.17,14.57c.67,.67,1.27,1.39,1.89,2.08,.25,.02,.48,.1,.66,.28l44.78-20.44c-17.43-26.75-47.6-44.43-81.91-44.43-53.95,0-97.69,43.73-97.69,97.69s43.74,97.68,97.69,97.68c35.89,0,67.26-19.36,84.24-48.2h-98.83Z" style="fill:#045381;"></path>
+                           <path d="M627.37,114.71c0,10.94-8.86,19.8-19.8,19.8s-19.8-8.86-19.8-19.8,8.87-19.8,19.8-19.8,19.8,8.87,19.8,19.8Z" style="fill:#00749c;"></path>
+                           <path d="M696.6,106.18h-51.1c-4.89,0-8.85,4.99-8.85,11.14s3.96,11.14,8.85,11.14h51.1c4.89,0,8.85-4.98,8.85-11.14s-3.96-11.14-8.85-11.14Z" style="fill:#00749c;"></path>
+                        </g>
+                        <line x1="478.2" x2="478.2" y2="218.29" style="fill:none; stroke:#045381; stroke-miterlimit:10; stroke-width:7px;"></line>
+                        <path d="M196.77,113.74c0,54.34-44.05,98.39-98.38,98.39S0,168.07,0,113.74,44.05,15.35,98.39,15.35s98.38,44.05,98.38,98.39Z" style="fill:#045381;"></path>
+                        <g>
+                           <path d="M59.35,80.12h18.69v40.12c0,3.98-.56,7.74-1.67,11.27-1.12,3.53-2.87,6.63-5.25,9.27-2.38,2.65-4.89,4.51-7.51,5.58-3.64,1.5-8.01,2.25-13.11,2.25-2.95,0-6.17-.23-9.66-.69-3.49-.46-6.4-1.37-8.75-2.73-2.34-1.36-4.49-3.3-6.43-5.81-1.94-2.51-3.27-5.1-3.99-7.76-1.16-4.28-1.74-8.08-1.74-11.38v-40.12h18.69v41.08c0,3.67,.92,6.54,2.75,8.61,1.83,2.07,4.38,3.1,7.63,3.1s5.75-1.02,7.59-3.05c1.83-2.03,2.75-4.92,2.75-8.65v-41.08Z" style="fill:#fff;"></path>
+                           <path d="M91.19,80.12h18.78v67.34h-18.78V80.12Z" style="fill:#fff;"></path>
+                           <path d="M163.77,119.9l16.42,5.51c-1.1,5.12-2.84,9.39-5.21,12.82s-5.31,6.02-8.83,7.76c-3.51,1.75-7.99,2.62-13.42,2.62-6.59,0-11.97-1.06-16.15-3.19-4.18-2.13-7.78-5.87-10.81-11.22-3.03-5.36-4.55-12.21-4.55-20.57,0-11.14,2.67-19.7,8-25.68,5.33-5.98,12.88-8.97,22.64-8.97,7.64,0,13.64,1.71,18.01,5.14,4.37,3.43,7.62,8.7,9.74,15.8l-16.54,4.09c-.58-2.05-1.19-3.55-1.82-4.5-1.05-1.59-2.33-2.82-3.85-3.67-1.52-.86-3.21-1.29-5.09-1.29-4.25,0-7.5,1.9-9.76,5.69-1.71,2.81-2.56,7.23-2.56,13.26,0,7.46,1.02,12.58,3.06,15.35,2.04,2.77,4.91,4.15,8.6,4.15s6.29-1.12,8.13-3.35c1.83-2.24,3.16-5.48,3.99-9.74Z" style="fill:#fff;"></path>
+                        </g>
+                     </svg>
+                  </div>
                   <div class="col-sm-8">
                      <h2 class="title">RNA-seq processing</h2>
-                     <h4>Generated by: RIC Analysis</h4>
-                     <h4 class="date">Report date: March 27, 2020</h4>
+                     <h4>Generated by: George Edward Chlipala</h4>
+                     <h4 class="date">Report date: February 1, 2024</h4>
                   </div>
                </div>
             </header>
@@ -103,7 +162,7 @@
                            efforts. Please cite our facility as follows (for example):
                         </p>
                         <blockquote>
-                           <p>Basic processing of the raw data were performed by the University of Illinois at Chicago Core for Research Informatics (UICCRI).</p>
+                           <p>Basic processing of the raw data were performed by the University of Illinois at Chicago Research Informatics Core (UICRIC).</p>
                         </blockquote>
                         <p>We adhere to a <a href="https://abrf.org/authorship-guidelines" target="_blank">general policy for acknowledgements and authorship as 
                               established by the Association for Biomolecular Resource Facilities (ABRF) <span class="glyphicon glyphicon-new-window"></span></a>, 
@@ -119,6 +178,99 @@
                      </div>
                   </div>
                </div>
+               <h3>Output Files</h3>
+               <table class="table file-table">
+                  <thead>
+                     <tr>
+                        <th>File</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td><a href="genes.txt">genes.txt</a></td>
+                        <td>Raw counts per gene</td>
+                        <td>result</td>
+                     </tr>
+                     <tr>
+                        <td><a href="exons.zip">exons.zip</a></td>
+                        <td>Raw counts per exon</td>
+                        <td>result</td>
+                     </tr>
+                     <tr>
+                        <td><a href="exons_annotation.zip">exons_annotation.zip</a></td>
+                        <td>Exon-to-gene annotation</td>
+                        <td>result</td>
+                     </tr>
+                     <tr>
+                        <td><a href="junctions.zip">junctions.zip</a></td>
+                        <td>Raw counts per splice junction</td>
+                        <td>result</td>
+                     </tr>
+                     <tr>
+                        <td><a href="junctions_annotation.zip">junctions_annotation.zip</a></td>
+                        <td>Junctions-to-gene annotation</td>
+                        <td>result</td>
+                     </tr>
+                     <tr>
+                        <td><a href="isoforms.zip">isoforms.zip</a></td>
+                        <td>Raw counts per isoform</td>
+                        <td>result</td>
+                     </tr>
+                     <tr>
+                        <td><a href="isoforms_annotation.zip">isoforms_annotation.zip</a></td>
+                        <td>Isoform-to-gene annotation</td>
+                        <td>result</td>
+                     </tr>
+                     <tr>
+                        <td><a href="gene_annotation_summary.txt">gene_annotation_summary.txt</a></td>
+                        <td>Summary of read annotations</td>
+                        <td>result</td>
+                     </tr>
+                     <tr>
+                        <td><a href="genes_norm.txt">genes_norm.txt</a></td>
+                        <td>Normalized gene expression levels (CPM units)</td>
+                        <td>result</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <div class="panel panel-default">
+                  <div class="panel-heading" role="tab">
+                     <h3 class="panel-title"><a role="button" data-toggle="collapse" href="#sample_list"><strong>Sample listing</strong></a><a role="button" href="report_files/sample_mapping.txt" class="hidden-print btn btn-sm btn-default" style="margin-left:10px"><span class="glyphicon glyphicon-download-alt"></span> Download sample list</a></h3>
+                  </div>
+                  <div class="panel-collapse in collapse" id="sample_list" role="tabpanel">
+                     <div class="panel-body">
+                        <table class="table data-table">
+                           <thead>
+                              <tr>
+                                 <th>Sample</th>
+                                 <th>OriginalID</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td>RNA_mouse_polyA_folB.1</td>
+                                 <td>RNA_mouse_polyA_folB.1</td>
+                              </tr>
+                              <tr>
+                                 <td>RNA_mouse_polyA_folB.2</td>
+                                 <td>RNA_mouse_polyA_folB.2</td>
+                              </tr>
+                              <tr>
+                                 <td>RNA_mouse_polyA_pre-proB.1</td>
+                                 <td>RNA_mouse_polyA_pre-proB.1</td>
+                              </tr>
+                              <tr>
+                                 <td>RNA_mouse_polyA_pre-proB.2</td>
+                                 <td>RNA_mouse_polyA_pre-proB.2</td>
+                              </tr>
+                           </tbody>
+                           <tfoot></tfoot>
+                        </table>
+                     </div>
+                  </div>
+               </div>
             </div>
             <div style="padding:10px" id="analysis_1">
                <div class="page-header analysis-header">
@@ -129,7 +281,7 @@
                      <li role="presentation"><a href="#folder-1">Additional files</a></li>
                   </ul>
                </div>
-               <div id="details-$" class="panel panel-default" style="width:80%">
+               <div id="details-1" class="panel panel-default" style="width:80%; word-wrap:break-word;">
                   <div class="panel-heading">
                      <h4 class="panel-title">Details</h4>
                   </div>
@@ -139,7 +291,9 @@
                            Method:  
                            FastQC<span class="citation hidden"><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">https://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></span></dt>
                         <dd class="method">
-                           <p>General quality-control metrics for next-generation sequencing data were obtained using FastQC.</p>
+                           <p>
+                              <description>General quality-control metrics for next-generation sequencing data were obtained using FastQC.</description>
+                           </p>
                         </dd>
                      </dl>
                   </div>
@@ -150,22 +304,10 @@
                </div>
                <div id="folder-list-1" class="collapse in" style="padding-left:10px; padding-right:10px">
                   <dl>
-                     <div class="folder"><a href="report_files/SAMPLE_001_R1_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_001_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_001_R2_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_001_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_002_R1_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_002_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_002_R2_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_002_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_003_R1_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_003_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_003_R2_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_003_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_004_R1_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_004_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_004_R2_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_004_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_006_R1_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_006_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_006_R2_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_006_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_005_R1_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_005_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_005_R2_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_005_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_007_R1_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_007_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_007_R2_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_007_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_008_R1_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_008_QC</a></div>
-                     <div class="folder"><a href="report_files/SAMPLE_008_R2_fastqc/fastqc_report.html"><span class="glyphicon glyphicon-file"></span> FastQC report for SAMPLE_008_QC</a></div>
+                     <div class="folder"><a href="report_files/RNA_mouse_polyA_folB.1_QC/RNA_mouse_polyA_folB.1_QC_R1_subset_fastqc.html"><span class="glyphicon glyphicon-file"></span> FastQC report for RNA_mouse_polyA_folB.1_QC</a></div>
+                     <div class="folder"><a href="report_files/RNA_mouse_polyA_folB.2_QC/RNA_mouse_polyA_folB.2_QC_R1_subset_fastqc.html"><span class="glyphicon glyphicon-file"></span> FastQC report for RNA_mouse_polyA_folB.2_QC</a></div>
+                     <div class="folder"><a href="report_files/RNA_mouse_polyA_pre-proB.1_QC/RNA_mouse_polyA_pre-proB.1_QC_R1_subset_fastqc.html"><span class="glyphicon glyphicon-file"></span> FastQC report for RNA_mouse_polyA_pre-proB.1_QC</a></div>
+                     <div class="folder"><a href="report_files/RNA_mouse_polyA_pre-proB.2_QC/RNA_mouse_polyA_pre-proB.2_QC_R1_subset_fastqc.html"><span class="glyphicon glyphicon-file"></span> FastQC report for RNA_mouse_polyA_pre-proB.2_QC</a></div>
                   </dl>
                </div>
             </div>
@@ -173,11 +315,137 @@
                <div class="page-header analysis-header">
                   <ul class="nav nav-pills">
                      <li>
-                        <h2 style="margin-top:5px; margin-bottom:0px">Reference genome alignment</h2>
+                        <h2 style="margin-top:5px; margin-bottom:0px">Sequence trimming</h2>
                      </li>
+                     <li role="presentation"><a href="#figures-2">Figures</a></li>
+                     <li role="presentation"><a href="#tables-2">Tables</a></li>
                   </ul>
                </div>
-               <div id="details-$" class="panel panel-default" style="width:80%">
+               <div id="details-2" class="panel panel-default" style="width:80%; word-wrap:break-word;">
+                  <div class="panel-heading">
+                     <h4 class="panel-title">Details</h4>
+                  </div>
+                  <div class="panel-body">
+                     <dl>
+                        <dt class="method">
+                           Method:  
+                           cutadapt<span class="citation hidden"><a href="Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet.journal, 17(1):10-12. doi:https://doi.org/10.14806/ej.17.1.200">Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet.journal, 17(1):10-12.
+                                 doi:https://doi.org/10.14806/ej.17.1.200</a></span></dt>
+                        <dd class="method">
+                           <p>
+                              <description>Sequencing trimming using cutadapt</description>
+                           </p><i>Custom Parameters</i><ul class="params">
+                              <li>-a = file:/mnt/store3/clustcrilab/reference/adapters/TruSeq_R1.fa</li>
+                              <li>-q = 20,20</li>
+                              <li>-m = 40</li>
+                              <li>--nextseq-trim = 20</li>
+                              <li>--report = minimal</li>
+                           </ul>
+                        </dd>
+                        <dt class="method">
+                           Method:  
+                           Quality trimming
+                        </dt>
+                        <dd class="method">
+                           <p>
+                              <description>Quality trimming based on quality threshold and length parameters.</description>
+                           </p><i>Custom Parameters</i><ul class="params">
+                              <li>min length = 40</li>
+                              <li>p = 20,20</li>
+                           </ul>
+                        </dd>
+                        <dt class="method">
+                           Method:  
+                           Adapter trimming
+                        </dt>
+                        <dd class="method">
+                           <p>
+                              <description>Adapter/primer sequences were trimmed from the reads.</description>
+                           </p><i>Custom Parameters</i><ul class="params">
+                              <li>5' adapter = AGATCGGAAGAGCACACGTCTGAACTCCAGTCA</li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </div>
+               </div>
+               <div id="figures-2" class="page-header">
+                  <h3><a href="#figure-list-2" data-toggle="collapse" class="section-toggle hidden-print" style="color:black;" onclick="toggleSection(this);"><span class="glyphicon glyphicon-menu-down"></span> 
+                        Figures</a><a href="#top" class="btn btn-link">Return to top</a></h3>
+               </div>
+               <div id="figure-list-2" class="collapse in" style="padding-left:10px; padding-right:10px">
+                  <dl>
+                     <h4 class="figure">
+                        
+                        Figure 1.
+                        Trimming results
+                     </h4>
+                     <dd><img class="img-responsive" src="report_files/report_plots-trim.png"></dd>
+                  </dl>
+               </div>
+               <div id="tables-2" class="page-header">
+                  <h3><a href="#table-list-2" data-toggle="collapse" class="section-toggle hidden-print" style="color:black;" onclick="toggleSection(this);"><span class="glyphicon glyphicon-menu-down"></span> 
+                        Tables</a><a href="#top" class="btn btn-link">Return to top</a></h3>
+               </div>
+               <div id="table-list-2" class="collapse in" style="padding-left:10px; padding-right:10px">
+                  <dl>
+                     <h4>Table 1.
+                        Trimming statistics <a href="report_files/report_tables-trim.txt" class="hidden-print btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span> Download table data</a></h4>
+                     <table class="table data-table">
+                        <thead>
+                           <tr>
+                              <th>Sample</th>
+                              <th>Raw reads</th>
+                              <th>Reads passed trimming</th>
+                              <th>Reads dropped</th>
+                              <th>Percent passing</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>RNA_mouse_polyA_folB.1</td>
+                              <td>27890026</td>
+                              <td>22182967</td>
+                              <td>5707059</td>
+                              <td>79.54 %</td>
+                           </tr>
+                           <tr>
+                              <td>RNA_mouse_polyA_folB.2</td>
+                              <td>28589327</td>
+                              <td>22844856</td>
+                              <td>5744471</td>
+                              <td>79.91 %</td>
+                           </tr>
+                           <tr>
+                              <td>RNA_mouse_polyA_pre-proB.1</td>
+                              <td>28408668</td>
+                              <td>23268450</td>
+                              <td>5140218</td>
+                              <td>81.91 %</td>
+                           </tr>
+                           <tr>
+                              <td>RNA_mouse_polyA_pre-proB.2</td>
+                              <td>27189999</td>
+                              <td>22352203</td>
+                              <td>4837796</td>
+                              <td>82.21 %</td>
+                           </tr>
+                        </tbody>
+                        <tfoot></tfoot>
+                     </table>
+                  </dl>
+               </div>
+            </div>
+            <div style="padding:10px" id="analysis_3">
+               <div class="page-header analysis-header">
+                  <ul class="nav nav-pills">
+                     <li>
+                        <h2 style="margin-top:5px; margin-bottom:0px">Reference genome alignment</h2>
+                     </li>
+                     <li role="presentation"><a href="#figures-3">Figures</a></li>
+                     <li role="presentation"><a href="#tables-3">Tables</a></li>
+                  </ul>
+               </div>
+               <div id="details-3" class="panel panel-default" style="width:80%; word-wrap:break-word;">
                   <div class="panel-heading">
                      <h4 class="panel-title">Details</h4>
                   </div>
@@ -187,36 +455,112 @@
                            Method:  
                            STAR<span class="citation hidden">Dobin, A., et al. "STAR: ultrafast universal RNA-seq aligner." Bioinformatics (Oxford, England) 2013;29(1):15-21.</span></dt>
                         <dd class="method">
-                           <p>Reads were aligned to the reference genome in a splice-aware manner using STAR.</p>
+                           <p>
+                              <description>Reads were aligned to the reference genome in a splice-aware manner using STAR.</description>
+                           </p>
                         </dd>
                         <dt class="method">
                            Method:  
                            PCR Duplicate Removal with Picard<span class="citation hidden"><a href="Wysoker, A., Tibbetts, K. and Fennell, T. Picard tools version 1.107. https://github.com/broadinstitute/picard/releases/tag/2.11.0 2013.">Wysoker, A., Tibbetts, K. and Fennell, T. Picard tools version 1.107. https://github.com/broadinstitute/picard/releases/tag/2.11.0
                                  2013.</a></span></dt>
                         <dd class="method">
-                           <p>Apparent PCR duplicates were checked or removed with Picard (note: for RNA-seq samples, the full set of alignments are used
-                              for gene expression quantification).
+                           <p>
+                              <description>Apparent PCR duplicates were checked or removed with Picard (note: for RNA-seq samples, the full set of alignments are used
+                                 for gene expression quantification).
+                              </description>
                            </p>
-                        </dd>
-                        <dt class="database"><span class="ref">Reference sequence database 
-                              : </span>hg38
-                        </dt>
-                        <dd class="database">
-                           <p>Ref human genome v.hg38</p>
                         </dd>
                      </dl>
                   </div>
                </div>
+               <div id="figures-3" class="page-header">
+                  <h3><a href="#figure-list-3" data-toggle="collapse" class="section-toggle hidden-print" style="color:black;" onclick="toggleSection(this);"><span class="glyphicon glyphicon-menu-down"></span> 
+                        Figures</a><a href="#top" class="btn btn-link">Return to top</a></h3>
+               </div>
+               <div id="figure-list-3" class="collapse in" style="padding-left:10px; padding-right:10px">
+                  <dl>
+                     <h4 class="figure">
+                        
+                        Figure 1.
+                        Alignment results
+                     </h4>
+                     <dd><img class="img-responsive" src="report_files/report_plots-align.png"></dd>
+                  </dl>
+               </div>
+               <div id="tables-3" class="page-header">
+                  <h3><a href="#table-list-3" data-toggle="collapse" class="section-toggle hidden-print" style="color:black;" onclick="toggleSection(this);"><span class="glyphicon glyphicon-menu-down"></span> 
+                        Tables</a><a href="#top" class="btn btn-link">Return to top</a></h3>
+               </div>
+               <div id="table-list-3" class="collapse in" style="padding-left:10px; padding-right:10px">
+                  <dl>
+                     <h4>Table 1.
+                        Alignment statistics <a href="report_files/report_tables-align.txt" class="hidden-print btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span> Download table data</a></h4>
+                     <table class="table data-table">
+                        <thead>
+                           <tr>
+                              <th>Sample</th>
+                              <th>Alignments, duplicates removed</th>
+                              <th>Alignments</th>
+                              <th>PCR duplicates</th>
+                              <th>Unaligned reads</th>
+                              <th>Percent aligned</th>
+                              <th>Percent non-duplicates</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>RNA_mouse_polyA_folB.1</td>
+                              <td>9251608</td>
+                              <td>21588988</td>
+                              <td>12337380</td>
+                              <td>593979</td>
+                              <td>97.3 %</td>
+                              <td>41.7 %</td>
+                           </tr>
+                           <tr>
+                              <td>RNA_mouse_polyA_folB.2</td>
+                              <td>9663713</td>
+                              <td>22224300</td>
+                              <td>12560587</td>
+                              <td>620556</td>
+                              <td>97.3 %</td>
+                              <td>42.3 %</td>
+                           </tr>
+                           <tr>
+                              <td>RNA_mouse_polyA_pre-proB.1</td>
+                              <td>9709200</td>
+                              <td>22608292</td>
+                              <td>12899092</td>
+                              <td>660158</td>
+                              <td>97.2 %</td>
+                              <td>41.7 %</td>
+                           </tr>
+                           <tr>
+                              <td>RNA_mouse_polyA_pre-proB.2</td>
+                              <td>9442179</td>
+                              <td>21741704</td>
+                              <td>12299525</td>
+                              <td>610499</td>
+                              <td>97.3 %</td>
+                              <td>42.2 %</td>
+                           </tr>
+                        </tbody>
+                        <tfoot></tfoot>
+                     </table>
+                  </dl>
+               </div>
             </div>
-            <div style="padding:10px" id="analysis_3">
+            <div style="padding:10px" id="analysis_4">
                <div class="page-header analysis-header">
                   <ul class="nav nav-pills">
                      <li>
                         <h2 style="margin-top:5px; margin-bottom:0px">Checking reads against a filter database</h2>
                      </li>
+                     <li role="presentation"><a href="#figures-4">Figures</a></li>
+                     <li role="presentation"><a href="#tables-4">Tables</a></li>
                   </ul>
                </div>
-               <div id="details-$" class="panel panel-default" style="width:80%">
+               <div id="details-4" class="panel panel-default" style="width:80%; word-wrap:break-word;">
                   <div class="panel-heading">
                      <h4 class="panel-title">Details</h4>
                   </div>
@@ -226,61 +570,17 @@
                            Method:  
                            BWA MEM<span class="citation hidden">Li, H. (2013). "Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM." arXiv 1303.3997v1 [q-bio.GN].</span></dt>
                         <dd class="method">
-                           <p>Reads were aligned to the reference genome using BWA MEM.</p>
+                           <p>
+                              <description>Reads were aligned to the reference genome using BWA MEM.</description>
+                           </p>
                         </dd>
                         <dt class="database"><span class="ref">Reference sequence database 
-                              : </span>Human rRNA
+                              : </span>Mouse rRNA
                         </dt>
                         <dd class="database">
-                           <p>Human ribosomal RNA sequences from NCBI and Ensembl</p>
-                        </dd>
-                     </dl>
-                  </div>
-               </div>
-            </div>
-            <div style="padding:10px" id="analysis_4">
-               <div class="page-header analysis-header">
-                  <ul class="nav nav-pills">
-                     <li>
-                        <h2 style="margin-top:5px; margin-bottom:0px">Quantification of genomic features</h2>
-                     </li>
-                     <li role="presentation"><a href="#figures-4">Figures</a></li>
-                     <li role="presentation"><a href="#tables-4">Tables</a></li>
-                  </ul>
-               </div>
-               <div id="details-$" class="panel panel-default" style="width:80%">
-                  <div class="panel-heading">
-                     <h4 class="panel-title">Details</h4>
-                  </div>
-                  <div class="panel-body">
-                     <dl>
-                        <dt class="method">
-                           Method:  
-                           FeatureCounts<span class="citation hidden">Liao, Y., et al. (2014). "featureCounts: an efficient general purpose program for assigning sequence reads to genomic features."
-                              Bioinformatics 30(7): 923-930.</span></dt>
-                        <dd class="method">
-                           <p>Abundance of genomic features (e.g., genes) were quantified as raw counts based on read alignments using featureCounts.</p>
-                        </dd>
-                        <dt class="method">
-                           Method:  
-                           EdgeR<span class="citation hidden">Robinson, M. D., et al. (2010). "edgeR: a Bioconductor package for differential expression analysis of digital gene expression
-                              data." Bioinformatics 26(1): 139-140.</span><span class="citation hidden">McCarthy, D. J., et al. (2012). "Differential expression analysis of multifactor RNA-Seq experiments with respect to biological
-                              variation." Nucleic Acids Res 40(10): 4288-4297.</span></dt>
-                        <dd class="method">
-                           <p>Genomic features were normalized to CPM (counts per million reads) using edgeR.</p>
-                        </dd>
-                        <dt class="method">
-                           Method:  
-                           EdgeR<span class="citation hidden">Robinson, M. D., et al. (2010). "edgeR: a Bioconductor package for differential expression analysis of digital gene expression
-                              data." Bioinformatics 26(1): 139-140.</span><span class="citation hidden">McCarthy, D. J., et al. (2012). "Differential expression analysis of multifactor RNA-Seq experiments with respect to biological
-                              variation." Nucleic Acids Res 40(10): 4288-4297.</span></dt>
-                        <dd class="method">
-                           <p>Genomic features were normalized to CPM (counts per million reads) using edgeR.</p>
-                        </dd>
-                        <dt class="database"><span class="ref">Gene annotation database 
-                              : </span>hg38 Ensembl<span class="citation hidden">Gencode human release 26 (ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_26/gencode.v26.annotation.gtf.gz)</span></dt>
-                        <dd class="database">
-                           <p>Ensembl annotations for human genome v.hg38</p>
+                           <p>
+                              <description>Mouse ribosomal RNA sequences from NCBI and Ensembl</description>
+                           </p>
                         </dd>
                      </dl>
                   </div>
@@ -294,9 +594,9 @@
                      <h4 class="figure">
                         
                         Figure 1.
-                        PCA plot
+                        Filtering results
                      </h4>
-                     <dd><img class="img-responsive" src="report_files/quant_pca-1.png"></dd>
+                     <dd><img class="img-responsive" src="report_files/report_plots-filter.png"></dd>
                   </dl>
                </div>
                <div id="tables-4" class="page-header">
@@ -306,174 +606,48 @@
                <div id="table-list-4" class="collapse in" style="padding-left:10px; padding-right:10px">
                   <dl>
                      <h4>Table 1.
-                        Data processing summary statistics <a href="report_files/stats.txt" class="hidden-print btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span> Download table data</a></h4>
+                        Filtering statistics <a href="report_files/report_tables-filter.txt" class="hidden-print btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span> Download table data</a></h4>
                      <table class="table data-table">
                         <thead>
                            <tr>
-                              <th>Stats</th>
-                              <th>Raw reads</th>
+                              <th>Sample</th>
                               <th>Alignments</th>
-                              <th>Percent</th>
-                              <th>Alignments, duplicates removed</th>
-                              <th>Percent</th>
                               <th>rRNA sequence counts</th>
-                              <th>Percent</th>
-                              <th>Gene sum</th>
-                              <th>Percent</th>
-                              <th>Genes expressed (out of 43836)</th>
-                              <th>Entropy (base 2)</th>
-                              <th>Isoform sum</th>
-                              <th>Percent</th>
-                              <th>Isoforms expressed (out of 179034)</th>
-                              <th>Entropy (base 2)</th>
+                              <th>Unfiltered alignments</th>
+                              <th>Percent passing</th>
                            </tr>
                         </thead>
                         <tbody>
                            <tr>
-                              <td>SAMPLE_001</td>
-                              <td>32819701</td>
-                              <td>31715169</td>
-                              <td>0.966345</td>
-                              <td>21696191</td>
-                              <td>0.661072</td>
-                              <td>1509354</td>
-                              <td>0.0459893</td>
-                              <td>23340879</td>
-                              <td>0.711185</td>
-                              <td>22987</td>
-                              <td>11.669</td>
-                              <td>26320787</td>
-                              <td>0.801981</td>
-                              <td>104310</td>
-                              <td>12.785</td>
+                              <td>RNA_mouse_polyA_folB.1</td>
+                              <td>21588988</td>
+                              <td>47404</td>
+                              <td>21541584</td>
+                              <td>99.8 %</td>
                            </tr>
                            <tr>
-                              <td>SAMPLE_002</td>
-                              <td>36145270</td>
-                              <td>35023482</td>
-                              <td>0.968964</td>
-                              <td>23271904</td>
-                              <td>0.643844</td>
-                              <td>2312253</td>
-                              <td>0.0639711</td>
-                              <td>25366678</td>
-                              <td>0.701798</td>
-                              <td>23134</td>
-                              <td>11.640</td>
-                              <td>28781237</td>
-                              <td>0.796266</td>
-                              <td>105124</td>
-                              <td>12.721</td>
+                              <td>RNA_mouse_polyA_folB.2</td>
+                              <td>22224300</td>
+                              <td>37122</td>
+                              <td>22187178</td>
+                              <td>99.8 %</td>
                            </tr>
                            <tr>
-                              <td>SAMPLE_003</td>
-                              <td>36405308</td>
-                              <td>35113329</td>
-                              <td>0.964511</td>
-                              <td>24785999</td>
-                              <td>0.680835</td>
-                              <td>313247</td>
-                              <td>0.00860443</td>
-                              <td>28269845</td>
-                              <td>0.776531</td>
-                              <td>24998</td>
-                              <td>12.263</td>
-                              <td>31299546</td>
-                              <td>0.859752</td>
-                              <td>109761</td>
-                              <td>13.451</td>
+                              <td>RNA_mouse_polyA_pre-proB.1</td>
+                              <td>22608292</td>
+                              <td>109373</td>
+                              <td>22498919</td>
+                              <td>99.5 %</td>
                            </tr>
                            <tr>
-                              <td>SAMPLE_004</td>
-                              <td>38786673</td>
-                              <td>37330463</td>
-                              <td>0.962456</td>
-                              <td>26996319</td>
-                              <td>0.69602</td>
-                              <td>546084</td>
-                              <td>0.0140792</td>
-                              <td>29437422</td>
-                              <td>0.758957</td>
-                              <td>25380</td>
-                              <td>12.335</td>
-                              <td>32687855</td>
-                              <td>0.84276</td>
-                              <td>112959</td>
-                              <td>13.556</td>
-                           </tr>
-                           <tr>
-                              <td>SAMPLE_005</td>
-                              <td>37195226</td>
-                              <td>35883902</td>
-                              <td>0.964745</td>
-                              <td>25833651</td>
-                              <td>0.694542</td>
-                              <td>308503</td>
-                              <td>0.00829416</td>
-                              <td>28657295</td>
-                              <td>0.770456</td>
-                              <td>25096</td>
-                              <td>12.287</td>
-                              <td>31729687</td>
-                              <td>0.853058</td>
-                              <td>111106</td>
-                              <td>13.519</td>
-                           </tr>
-                           <tr>
-                              <td>SAMPLE_006</td>
-                              <td>33687382</td>
-                              <td>32450733</td>
-                              <td>0.96329</td>
-                              <td>24837828</td>
-                              <td>0.737304</td>
-                              <td>291189</td>
-                              <td>0.00864386</td>
-                              <td>25210508</td>
-                              <td>0.748366</td>
-                              <td>25195</td>
-                              <td>12.551</td>
-                              <td>28139213</td>
-                              <td>0.835304</td>
-                              <td>112672</td>
-                              <td>13.855</td>
-                           </tr>
-                           <tr>
-                              <td>SAMPLE_007</td>
-                              <td>38527287</td>
-                              <td>37196437</td>
-                              <td>0.965457</td>
-                              <td>26567494</td>
-                              <td>0.689576</td>
-                              <td>1053711</td>
-                              <td>0.0273497</td>
-                              <td>28499069</td>
-                              <td>0.739711</td>
-                              <td>25070</td>
-                              <td>12.482</td>
-                              <td>31869464</td>
-                              <td>0.827192</td>
-                              <td>113592</td>
-                              <td>13.720</td>
-                           </tr>
-                           <tr>
-                              <td>SAMPLE_008</td>
-                              <td>36057676</td>
-                              <td>34785365</td>
-                              <td>0.964715</td>
-                              <td>26261660</td>
-                              <td>0.728324</td>
-                              <td>676564</td>
-                              <td>0.0187634</td>
-                              <td>26819594</td>
-                              <td>0.743797</td>
-                              <td>25271</td>
-                              <td>12.543</td>
-                              <td>29914309</td>
-                              <td>0.829624</td>
-                              <td>113654</td>
-                              <td>13.825</td>
+                              <td>RNA_mouse_polyA_pre-proB.2</td>
+                              <td>21741704</td>
+                              <td>72023</td>
+                              <td>21669681</td>
+                              <td>99.7 %</td>
                            </tr>
                         </tbody>
+                        <tfoot></tfoot>
                      </table>
                   </dl>
                </div>
@@ -482,11 +656,245 @@
                <div class="page-header analysis-header">
                   <ul class="nav nav-pills">
                      <li>
+                        <h2 style="margin-top:5px; margin-bottom:0px">Quantification of genomic features</h2>
+                     </li>
+                     <li role="presentation"><a href="#figures-5">Figures</a></li>
+                     <li role="presentation"><a href="#tables-5">Tables</a></li>
+                  </ul>
+               </div>
+               <div id="details-5" class="panel panel-default" style="width:80%; word-wrap:break-word;">
+                  <div class="panel-heading">
+                     <h4 class="panel-title">Details</h4>
+                  </div>
+                  <div class="panel-body">
+                     <dl>
+                        <dt class="method">
+                           Method:  
+                           FeatureCounts<span class="citation hidden">Liao, Y., et al. (2014). "featureCounts: an efficient general purpose program for assigning sequence reads to genomic features."
+                              Bioinformatics 30(7): 923-930.</span></dt>
+                        <dd class="method">
+                           <p>
+                              <description>Abundance of genomic features (e.g., genes) were quantified as raw counts based on read alignments using featureCounts.</description>
+                           </p><i>Custom Parameters</i><ul class="params">
+                              <li>reference = mm10_mRNA.gtf</li>
+                              <li>parameters = -t exon -g gene_id --countReadPairs -s 2</li>
+                           </ul>
+                        </dd>
+                        <dt class="method">
+                           Method:  
+                           FeatureCounts<span class="citation hidden">Liao, Y., et al. (2014). "featureCounts: an efficient general purpose program for assigning sequence reads to genomic features."
+                              Bioinformatics 30(7): 923-930.</span></dt>
+                        <dd class="method">
+                           <p>
+                              <description>Abundance of genomic features (e.g., genes) were quantified as raw counts based on read alignments using featureCounts.</description>
+                           </p><i>Custom Parameters</i><ul class="params">
+                              <li>reference = reference_flattened.saf</li>
+                              <li>parameters = --countReadPairs -F SAF -O --fraction -f -s 2</li>
+                           </ul>
+                        </dd>
+                        <dt class="database"><span class="ref">Gene annotation database 
+                              : </span>mm10 Ensembl<span class="citation hidden">Gencode mouse release M13 (ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_mouse/release_M13/gencode.vM13.annotation.gtf.gz)</span></dt>
+                        <dd class="database">
+                           <p>
+                              <description>Ensembl annotations for mouse genome v.mm10</description>
+                           </p>
+                        </dd>
+                     </dl>
+                  </div>
+               </div>
+               <div id="figures-5" class="page-header">
+                  <h3><a href="#figure-list-5" data-toggle="collapse" class="section-toggle hidden-print" style="color:black;" onclick="toggleSection(this);"><span class="glyphicon glyphicon-menu-down"></span> 
+                        Figures</a><a href="#top" class="btn btn-link">Return to top</a></h3>
+               </div>
+               <div id="figure-list-5" class="collapse in" style="padding-left:10px; padding-right:10px">
+                  <dl>
+                     <h4 class="figure">
+                        
+                        Figure 1.
+                        Quantification results
+                     </h4>
+                     <dd><img class="img-responsive" src="report_files/report_plots-gene_sum.png"></dd>
+                     <hr>
+                     <h4 class="figure">
+                        
+                        Figure 2.
+                        PCA plot
+                     </h4>
+                     <dd><img class="img-responsive" src="report_files/genes_pca.png"></dd>
+                  </dl>
+               </div>
+               <div id="tables-5" class="page-header">
+                  <h3><a href="#table-list-5" data-toggle="collapse" class="section-toggle hidden-print" style="color:black;" onclick="toggleSection(this);"><span class="glyphicon glyphicon-menu-down"></span> 
+                        Tables</a><a href="#top" class="btn btn-link">Return to top</a></h3>
+               </div>
+               <div id="table-list-5" class="collapse in" style="padding-left:10px; padding-right:10px">
+                  <dl>
+                     <h4>Table 1.
+                        Data processing summary statistics <a href="report_files/stats.txt" class="hidden-print btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span> Download table data</a></h4>
+                     <table class="table data-table">
+                        <thead>
+                           <tr>
+                              <th>Stats</th>
+                              <th>Raw reads</th>
+                              <th>Trimmed reads</th>
+                              <th>Percent</th>
+                              <th>Alignments</th>
+                              <th>Percent</th>
+                              <th>Alignments, duplicates removed</th>
+                              <th>Percent</th>
+                              <th>rRNA sequence counts</th>
+                              <th>Percent</th>
+                              <th>Unassigned_MultiMapping</th>
+                              <th>Percent</th>
+                              <th>Unassigned_NoFeatures</th>
+                              <th>Percent</th>
+                              <th>Unassigned_Ambiguity</th>
+                              <th>Percent</th>
+                              <th>Gene sum</th>
+                              <th>Percent</th>
+                              <th>Genes expressed (out of 39056)</th>
+                              <th>Entropy (base 2)</th>
+                              <th>Isoform sum</th>
+                              <th>Percent</th>
+                              <th>Isoforms expressed (out of 112588)</th>
+                              <th>Entropy (base 2)</th>
+                              <th>Read length</th>
+                              <th>Directions</th>
+                              <th>Orientation</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>RNA_mouse_polyA_folB.1</td>
+                              <td>27890026</td>
+                              <td>22182967</td>
+                              <td>0.795373</td>
+                              <td>21588988</td>
+                              <td>0.774076</td>
+                              <td>9251608</td>
+                              <td>0.331717</td>
+                              <td>47404</td>
+                              <td>0.00169968</td>
+                              <td>10228652</td>
+                              <td>0.366749</td>
+                              <td>3747931</td>
+                              <td>0.134382</td>
+                              <td>157395</td>
+                              <td>0.00564342</td>
+                              <td>14635393</td>
+                              <td>0.524754</td>
+                              <td>17703</td>
+                              <td>11.972</td>
+                              <td>16625215</td>
+                              <td>0.596099</td>
+                              <td>54956</td>
+                              <td>12.844</td>
+                              <td>49</td>
+                              <td>SE</td>
+                              <td>Reverse stranded</td>
+                           </tr>
+                           <tr>
+                              <td>RNA_mouse_polyA_folB.2</td>
+                              <td>28589327</td>
+                              <td>22844856</td>
+                              <td>0.799069</td>
+                              <td>22224300</td>
+                              <td>0.777364</td>
+                              <td>9663713</td>
+                              <td>0.338018</td>
+                              <td>37122</td>
+                              <td>0.00129846</td>
+                              <td>10084610</td>
+                              <td>0.35274</td>
+                              <td>4352410</td>
+                              <td>0.152239</td>
+                              <td>150550</td>
+                              <td>0.00526595</td>
+                              <td>14711502</td>
+                              <td>0.51458</td>
+                              <td>17760</td>
+                              <td>11.967</td>
+                              <td>16646967</td>
+                              <td>0.582279</td>
+                              <td>54583</td>
+                              <td>12.846</td>
+                              <td>49</td>
+                              <td>SE</td>
+                              <td>Reverse stranded</td>
+                           </tr>
+                           <tr>
+                              <td>RNA_mouse_polyA_pre-proB.1</td>
+                              <td>28408668</td>
+                              <td>23268450</td>
+                              <td>0.819062</td>
+                              <td>22608292</td>
+                              <td>0.795824</td>
+                              <td>9709200</td>
+                              <td>0.341769</td>
+                              <td>109373</td>
+                              <td>0.00384999</td>
+                              <td>10655117</td>
+                              <td>0.375066</td>
+                              <td>3706145</td>
+                              <td>0.130458</td>
+                              <td>155124</td>
+                              <td>0.00546045</td>
+                              <td>15540809</td>
+                              <td>0.547045</td>
+                              <td>19120</td>
+                              <td>12.213</td>
+                              <td>17785508</td>
+                              <td>0.626059</td>
+                              <td>57891</td>
+                              <td>13.010</td>
+                              <td>49</td>
+                              <td>SE</td>
+                              <td>Reverse stranded</td>
+                           </tr>
+                           <tr>
+                              <td>RNA_mouse_polyA_pre-proB.2</td>
+                              <td>27189999</td>
+                              <td>22352203</td>
+                              <td>0.822074</td>
+                              <td>21741704</td>
+                              <td>0.799621</td>
+                              <td>9442179</td>
+                              <td>0.347267</td>
+                              <td>72023</td>
+                              <td>0.00264888</td>
+                              <td>10126663</td>
+                              <td>0.372441</td>
+                              <td>3451892</td>
+                              <td>0.126954</td>
+                              <td>153044</td>
+                              <td>0.00562869</td>
+                              <td>15083443</td>
+                              <td>0.554742</td>
+                              <td>19060</td>
+                              <td>12.219</td>
+                              <td>17189354</td>
+                              <td>0.632194</td>
+                              <td>57939</td>
+                              <td>13.022</td>
+                              <td>49</td>
+                              <td>SE</td>
+                              <td>Reverse stranded</td>
+                           </tr>
+                        </tbody>
+                        <tfoot></tfoot>
+                     </table>
+                  </dl>
+               </div>
+            </div>
+            <div style="padding:10px" id="analysis_6">
+               <div class="page-header analysis-header">
+                  <ul class="nav nav-pills">
+                     <li>
                         <h2 style="margin-top:5px; margin-bottom:0px">Gene isoform quantification</h2>
                      </li>
                   </ul>
                </div>
-               <div id="details-$" class="panel panel-default" style="width:80%">
+               <div id="details-6" class="panel panel-default" style="width:80%; word-wrap:break-word;">
                   <div class="panel-heading">
                      <h4 class="panel-title">Details</h4>
                   </div>
@@ -496,15 +904,19 @@
                            Method:  
                            Kallisto<span class="citation hidden">Bray, N.L., et al. "Near-optimal probabilistic RNA-seq quantification." Nature biotechnology 2016;34(5):525-527.</span></dt>
                         <dd class="method">
-                           <p>Gene isoforms were quantified with Kallisto, using k-mer-based pseudo-alignment and expectation maximization to probabilistically
-                              assign reads to isoforms.
+                           <p>
+                              <description>Gene isoforms were quantified with Kallisto, using k-mer-based pseudo-alignment and expectation maximization to probabilistically
+                                 assign reads to isoforms.
+                              </description>
                            </p>
                         </dd>
                         <dt class="database"><span class="ref">Reference sequence database 
-                              : </span>hg38 transcriptome
+                              : </span>mm10 transcriptome
                         </dt>
                         <dd class="database">
-                           <p>Human mRNA and long-non-coding transcriptome from Ensembl, genome hg38.</p>
+                           <p>
+                              <description>Mouse mRNA and long-non-coding transcriptome from Ensembl, genome mm10.</description>
+                           </p>
                         </dd>
                      </dl>
                   </div>

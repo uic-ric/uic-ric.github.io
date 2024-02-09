@@ -1,0 +1,5 @@
+Sample	Alignments, duplicates removed	Alignments	PCR duplicates	Unaligned reads	Percent aligned	Percent non-duplicates
+RNA_mouse_polyA_folB.1	9251608	21588988	12337380	593979	97.3 %	41.7 %
+RNA_mouse_polyA_folB.2	9663713	22224300	12560587	620556	97.3 %	42.3 %
+RNA_mouse_polyA_pre-proB.1	9709200	22608292	12899092	660158	97.2 %	41.7 %
+RNA_mouse_polyA_pre-proB.2	9442179	21741704	12299525	610499	97.3 %	42.2 %

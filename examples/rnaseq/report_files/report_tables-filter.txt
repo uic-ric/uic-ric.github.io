@@ -1,0 +1,5 @@
+Sample	Alignments	rRNA sequence counts	Unfiltered alignments	Percent passing
+RNA_mouse_polyA_folB.1	21588988	47404	21541584	99.8 %
+RNA_mouse_polyA_folB.2	22224300	37122	22187178	99.8 %
+RNA_mouse_polyA_pre-proB.1	22608292	109373	22498919	99.5 %
+RNA_mouse_polyA_pre-proB.2	21741704	72023	21669681	99.7 %
