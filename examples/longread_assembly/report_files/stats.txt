@@ -1,2 +1,2 @@
 Sample	Target genome size	Target coverage	Count	TotalLength	Longest	N50	N75	L50	L75
-sample_A	5m	100	2	2779046	2751938	2751938	27108	1	2
+sample_A	5m	100	2	2779040	2751939	2751939	27101	1	2

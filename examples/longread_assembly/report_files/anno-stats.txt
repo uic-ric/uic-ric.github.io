@@ -1,2 +1,2 @@
-Sample
-sample_A
+Sample	tRNAs	tmRNAs	rRNAs	ncRNAs	ncRNA regions	CRISPR arrays	CDSs	pseudogenes	hypotheticals	signal peptides	sORFs	gaps	oriCs	oriVs	oriTs	
+sample_A	61	1	19	87	25	0	2537	11	51	0	16	0	5	0	1	
