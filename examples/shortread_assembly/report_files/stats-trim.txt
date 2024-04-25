@@ -1,0 +1,2 @@
+Sample	Trim passed	Ambig dropped	Trim filter dropped	Trim length dropped	Percent passed	Mean Length	Mean Trimmed Length	Quality trimmed bp
+example	9504850	708	0	138755	98.55%	292.6	NA	258766
