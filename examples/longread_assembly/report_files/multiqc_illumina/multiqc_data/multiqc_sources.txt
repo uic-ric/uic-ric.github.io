@@ -1,0 +1,3 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	sample_A_R1	/mnt/store3/clustcrilab/practice_data_sets/flye_assembly/gchlip2_work/initial_fastqc_illumina/sample_A/sample_A_R1_fastqc.zip
+FastQC	all_sections	sample_A_R2	/mnt/store3/clustcrilab/practice_data_sets/flye_assembly/gchlip2_work/initial_fastqc_illumina/sample_A/sample_A_R2_fastqc.zip

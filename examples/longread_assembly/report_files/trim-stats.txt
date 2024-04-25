@@ -1,2 +1,2 @@
-Sample	Raw reads (reads)	Raw reads (bp)	Passed trimming (reads)	Passed trimming (bp)	Passed length filter (reads)	Passed length filter (bp)	Post subsampling (reads)	Post subsampling (bp)
-sample1	332722	815437449	331178	776217125	234322	713797864	134831	500002317
+Sample	Raw reads (reads)	Raw reads (bp)	Passed trimming (reads)	Passed trimming (bp)	Passed length filter (reads)	Passed length filter (bp)
+sample_A	332722	815437449	331741	776727919	234373	713978446

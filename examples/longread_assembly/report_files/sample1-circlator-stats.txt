@@ -1,3 +1,0 @@
-Contig	Circularized	Method
-tig1	True	nucmer
-tig56	False	

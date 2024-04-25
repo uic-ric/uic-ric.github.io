@@ -1,0 +1,2 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	sample_A_nanopore	/mnt/store3/clustcrilab/practice_data_sets/flye_assembly/gchlip2_work/initial_fastqc_long/sample_A/sample_A_nanopore_fastqc.zip
