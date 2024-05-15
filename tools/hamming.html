@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Hamming Distance</title>
+<meta charset="UTF-8">
+<meta name="description" content="Hamming distance calculator">
+<meta name="author" content="Jason M. Wood">
+<meta name="version" content="1.4">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.0.6/b-3.0.2/b-html5-3.0.2/b-print-3.0.2/r-3.0.2/datatables.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.0.6/b-3.0.2/b-html5-3.0.2/b-print-3.0.2/r-3.0.2/datatables.min.js"></script>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+<h1>Hamming Distance</h1>
+<div class="row">
+<div class="col">
+<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#usage">
+Display Help/Usage
+</button>
+</div>
+</div>
+<div class="modal fade" tabindex="-1" id="usage">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Usage</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+</button>
+</div>
+<div class="modal-body">
+<p style="text-align:justify">
+This tool computes the Hamming distance (edit distance) between all pairs of
+sequences in the input. Only sequence pairs closer than or equal to the 'Minimum
+distance' are reported.
+</p>
+<p style="text-align:justify">
+The input format should be a list of sequences and their names as two columns in
+an Excel (.xlsx) document:
+</p>
+<pre class="bg-light border border-dark rounded ps-3 py-2"><code>
+ACGTACTCCGT	S1
+CTCGACTAGCT	S2
+GGGCGCGGGGT	S3
+GGGCTCGGTGT	S4
+</code></pre>
+<p style="text-align:justify">
+If you have multiple barcodes, add these as an extra pair of columns, for
+example:
+</p>
+<pre class="bg-light border border-dark rounded ps-3 py-2"><code>
+AGGCTGAA	FWD1	TTCGATAC	REV1
+TGGCTGAA	FWD2	TTCGATAC	REV2
+AGCGTGAA	FWD3	ACTGATAC	REV3
+TGCGTGAA	FWD4	TTCGAATG	REV4
+</code></pre>
+<p style="text-align:justify">
+Here, the FWD1 through FWD4 sequences would be analyzed as part of barcode set
+1, and the REV1 through REV4 sequences would analyzed as part of barcode set 2.
+</p>
+<p style="text-align:justify">
+NOTE: sequences of different lengths are allowed, but no alignment is done prior
+to the comparison. The comparison would start with the first letter of each over
+the smallest of the two strings, and the difference in lengths would be added to
+the total distance.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="card my-3">
+<div class="card-body">
+<div class="row">
+<div class="col">
+<h5><label for="input" class="form-label">Input</label></h5>
+<input type="file" id="input" class="form-control" accept=".xlsx">
+<br><br>
+</div>
+</div>
+<div class="row">
+<div class="col">
+<h5><label for="mindist">Minimum distance:</label></h5>
+<input id="mindist" class="form-control" type="number" min="1" max="20" value="1">
+</div>
+</div>
+<div class="row my-2">
+<div class="col">
+<input type="button" class="btn btn-primary" value="Submit" onclick="submitForm()">
+<input type="button" class="btn btn-secondary" value="Clear" onclick="clearForm()">
+</div>
+</div>
+</div>
+</div>
+<div class="card my-3">
+<div class="card-body">
+<h5 class="card-title">Output</h5>
+<table id="output" class="table table-striped" style="width:100%">
+<thead><tr><td>Sequence 1</td><td>Sequence 2</td><td>Distance</td></tr></thead>
+</table>
+</div>
+</div>
+<div class="card my-3">
+<div class="card-body">
+<h5 class="card-title">Plot</h5>
+<canvas id="dist_plot"></canvas>
+</div>
+</div>
+</div>
+<script>
+
+let input = [];
+
+const inputFile = document.getElementById("input");
+const mindist = document.getElementById("mindist");
+
+// Create the output table.
+let output_table = new DataTable(
+  '#output', {
+    data: [],
+    columns: [
+      { data: 'seq_1' },
+      { data: 'seq_2' },
+      { data: 'distance', className: 'dt-left' }
+    ],
+    paging: false,
+    buttons: [ 'copy', 'excel', 'print'],
+    dom: 'Bfrtip'
+  }
+);
+
+// Create a plot.
+const chart = new Chart(
+  document.getElementById('dist_plot'),
+  {
+    type: 'bar', 
+    options: {
+      responsive: true, 
+      plugins: {
+        title: {
+          display: true,
+          text: "Hamming distance"
+        }
+      },
+      scales: { 
+        x: { display: true, text: 'Hamming distance'},
+//        y: { display: true, text: 'Number of pairs'}
+      }
+    }
+  }
+);
+
+// Load the XLSX file once selected.
+inputFile.addEventListener('change',loadXLSX);
+
+// Clear the input file on page reload.
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+  inputFile.value = "";
+}
+
+function loadXLSX(event) {
+  // Load the user selected XLSX file.
+  const file = event.target.files[0];
+  if (! file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const workbook = XLSX.read(e.target.result, { type: 'binary' });
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    input = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+  };
+  reader.readAsBinaryString(file);
+}
+
+function submitForm() {
+  // Validate input.
+  if (input.length == 0) {
+    alert("Input not defined!");
+    return;
+  }
+  if (input.length < 2) {
+    alert("Input only has a single line!");
+    return;
+  }
+  if (input[0].length % 2 != 0) {
+    alert("Input must have an even number of columns!");
+  }
+  if (mindist.value.length == 0) {
+    alert("Minimum distance not defined!");
+    return;
+  }
+  if (mindist.value < 1) {
+    alert("The minimum distance must be greater than 0!");
+    return;
+  }
+  output_table.data().clear();
+
+  // Clear the chart data.
+  chart.data.datasets.splice(0, chart.data.datasets.length);
+  chart.data.labels = [];
+
+  let dist_labels = [];
+  let barcodes = 1;
+
+  // Calculate the hamming distance between all pairs and add results to output.
+  for (let col = 0; col < input[0].length; col += 2) {
+    // Create object to hold counts for graph.
+    let counts = [];
+    for (let i = 0; i < input.length; i++) {
+      let seqI = input[i][col];
+      let idI = input[i][col+1];
+      if (! validateDNA(seqI)) {
+        alert(`Invalid DNA sequence (${seqI})!`);
+        return;
+      }
+      for (let j = i + 1; j < input.length; j++) {
+        let seqJ = input[j][col];
+        let idJ = input[j][col+1];
+        if (!validateDNA(seqJ)) {
+          alert(`Invalid DNA sequence (${seqJ})!`);
+          return;
+        }
+        let dist = hammingDistance(seqI, seqJ);
+        // add to the counts
+        counts[dist] = counts[dist] ? counts[dist] + 1 : 1;
+        // Check if the distance is less than or equal to threshold and add to
+        // table, if so.
+        if (dist <= mindist.value) {
+          output_table.row.add({'seq_1':idI, 'seq_2':idJ, 'distance':dist });
+        }
+      }
+    }
+    // Add data to plot
+    chart.data.datasets.push({ label: 'Barcodes ' + barcodes, data: counts });
+    if ( dist_labels.length < counts.length ) {
+      dist_labels = Array.from(counts.keys());
+    }
+    // Increment the barcode number
+    barcodes++;
+  }
+  // Update the output table.
+  output_table.column(2).title("Distance (&le;" + mindist.value + ")");
+  output_table.draw();
+  // Update the chart
+  chart.data.labels = dist_labels;
+  chart.update();
+}
+
+function clearForm() {
+  // Clear the input, minimum distance, and output fields.
+  input = [];
+  inputFile.value = "";
+  mindist.value = "1";
+  output_table.data().clear();
+  output_table.draw();
+}
+
+function hammingDistance(seq1,seq2) {
+  // Calculate the hamming distance between two sequences.
+  const s1 = seq1.split("");
+  const s2 = seq2.split("");
+  let dist = 0;
+  for (let i = 0; i < Math.max(s1.length, s2.length); i++) {
+    if (s1[i] == "undefined" || s2[i] == "undefined" || s1[i] != s2[i]) {
+      dist++;
+    }
+  }
+  return dist;
+}
+
+function validateDNA(seq) {
+  // Make sure the DNA sequence contains only the letters A, C, G, or T.
+  if (seq.length == 0) {
+    return false;
+  }
+  return seq.match(/^[ACGT]+$/gi);
+}
+
+</script>
+</body>
+</html>
