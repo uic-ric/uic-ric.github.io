@@ -1,0 +1,92 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+      <script charset="utf8" src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+      <script charset="utf8" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+      <title>Countdown to Extreme End of Life</title>
+      <style>
+	.progress-right { float: right; }
+      </style>
+      <script type="text/javascript">
+	// Update the following to the start time of the maintenance window
+	var start = new Date("15 Sept 2024 23:59:59 CDT");
+
+	// Function to update the countdown every second.
+	function updateTime() { 
+		var now = new Date();
+		var diff = start.getTime() - now.getTime();
+
+		// Check if the date has past
+		if ( diff < 0 ) { 
+			$('#countdown_progress').removeClass('progress-bar-warning');
+			$('#countdown_progress').addClass('progress-bar-danger');
+			$('#countdown_progress').css('width', "100%");
+			$('#maint_time').html("00:00:00");
+			updateTimer.clearInterval();
+			return;
+		}
+
+		// Calculate the difference for the progress bar	
+		var progress_diff = diff / (1000 * 3600);
+		if ( progress_diff <= 24 ) { 
+		// If less than 24 hours (1 day) set to error (red)
+			$('#countdown_progress').removeClass('progress-bar-warning');
+			$('#countdown_progress').addClass('progress-bar-danger');
+		} else if ( progress_diff <= ( 7 * 24 ) ) { 
+		// else if less than 1 week set to warning (orange)
+			$('#countdown_progress').removeClass('progress-bar-danger');
+			$('#countdown_progress').addClass('progress-bar-warning');
+		}
+		// Set the width of the progress bar (percent of 720 hours remaining)
+		$('#countdown_progress').css('width', ( progress_diff / 7.2 ) + "%");
+
+		// Calculate the integer hours, minutes and seconds for the countdown.
+		var days = Math.floor(diff / (1000 * 3600 * 24));
+		$('#days_remain').html(days);
+
+		var hours = Math.floor(diff / (1000 * 3600));
+		diff = diff - ( hours * 1000 * 3600);
+	
+		var minutes = Math.floor(diff / (1000 * 60));
+		diff = diff - ( minutes * 1000 * 60);
+
+		var seconds = Math.floor(diff / 1000);
+		$('#maint_time').html(hours + ":" + ( minutes < 10 ?  "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
+	}
+
+	// Have the web browser update the countdown and progress bar every second
+	var updateTimer = window.setInterval(updateTime, 1000);
+      </script>
+   </head>
+   <body>
+	<div id="content">
+		<div class="row">
+			<div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+        			<h1>Countdown to Extreme End of Life</h1>
+			</div>
+			<div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-2">
+				<h3>Login access will terminate on</h3>
+			</div>
+			<div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-6">
+				<h2><span id="maint_date"></span></h2>
+			</div>
+			<div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+				<div class="progress">
+					<div id="countdown_progress" role="progressbar" class="progress-bar progress-right progress-bar-striped active" aria-valuemin="0" aria-valuemax="720" style="width: 100%"></div>
+				</div>
+				<div class="text-center"><h1><small>Walltime remaining:</small> <span id="maint_time"></span> <small>(hh:mm:ss)</small></h1></div>
+				<div class="text-center"><h1><small>Days remaining:</small> <span id="days_remain"></span></h1></div>
+			</div>
+		</div>
+	</div>
+	<script>
+		// Add the maintenance start date to the web page
+		$('#maint_date').html(start.toDateString() + " at " + start.toTimeString());
+
+		// First run the updateTime function 
+		updateTime();
+	</script>
+
+</body>
+</html>
