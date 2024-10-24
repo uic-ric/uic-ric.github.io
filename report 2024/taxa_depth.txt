@@ -1,0 +1,8 @@
+Level 2 taxon	Level 2 raw counts	Level 3 raw counts	Level 4 raw counts	Level 5 raw counts	Level 6 raw counts	Level 7 raw counts	Level 2 relative counts	Level 3 relative counts	Level 4 relative counts	Level 5 relative counts	Level 6 relative counts	Level 7 relative counts
+Firmicutes	3	46	14390	73985	287585	102993	< 1%	< 1%	1.89%	9.72%	37.77%	13.53%
+Bacteroidota	0	0	3	187459	67385	13496	-	-	< 1%	24.62%	8.85%	1.77%
+Desulfobacterota	0	0	0	45	4895	0	-	-	-	< 1%	< 1%	-
+Deferribacterota	0	0	0	0	6	3436	-	-	-	-	< 1%	< 1%
+Actinobacteriota	0	0	0	70	2801	0	-	-	-	< 1%	< 1%	-
+Proteobacteria	0	0	0	0	2247	11	-	-	-	-	< 1%	< 1%
+Cyanobacteria	0	0	624	0	0	0	-	-	< 1%	-	-	-

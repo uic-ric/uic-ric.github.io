@@ -1,0 +1,1532 @@
+<!DOCTYPE html><html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Amplicon sequencing processing</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.2.1.min.js"></script><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script><link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/datatables.min.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script><script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/datatables.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><style>
+
+.analysis-header { margin-top:20px; margin-bottom:10px; }
+
+#content {
+  transition: all 0.3s;
+  overflow-y: scroll;
+}
+
+#content .accordion-header {
+	--bs-accordion-active-color: var(--bs-secondary-text-emphasis);
+	--bs-accordion-active-bg: var(--bs-secondary-bg-subtle);
+}
+.date { margin-bottom: 10px; }
+
+div.citations { display:block; border-top: 1px solid #44639b; background-color: #eee; padding-bottom: 20px; }
+
+li > div.analysis { font-size: 14pt; font-weight: bold; border-bottom: 1px solid #44639b; display: block; width: 70%; list-style: none; }
+
+		dd.database, dd.method { margin-left: 5px; }
+
+		dl.params { margin-left: 5px; }
+
+		@media screen {
+		.fullscreen {
+		height: 100vh;
+		}
+		}
+
+		#sidebar_items > li.nav-item > a.active {
+		border: var(--bs-border-width) solid var(--bs-primary-border-subtle);
+		border-radius: var(--bs-border-radius);
+		background-color: var(--bs-primary-bg-subtle);
+		}
+
+		#sidebar_items > li.nav-item > a {
+		display:block;
+		color: black;
+		}
+
+		table.data-table > caption {
+		display:none;
+		}
+	</style></head>
+   <body>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+         <div class="container-fluid"><a href="#" class="h3 navbar-brand">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 68.6566" style="height:50px">
+                  <title>University of Illinois Chicago</title>
+                  <g id="full-rgb">
+                     <g id="logoMark">
+                        <rect id="logoMark_PathItem_" data-name="logoMark <PathItem&gt;" x="31.7455" y="24.1714" width="6.7174" height="22.3922" style="fill: #fff"></rect>
+                        <path id="logoMark_PathItem_2" data-name="logoMark <PathItem&gt;" d="M20.9464,37.54a4.7676,4.7676,0,0,1-.757,3.1632,3.24,3.24,0,0,1-2.6327.9214,3.24,3.24,0,0,1-2.6357-.9214,4.7673,4.7673,0,0,1-.7576-3.1632V24.1714H7.4444V37.41c0,3.1288.3308,4.6412,1.2211,6.1589,1.4817,2.4694,5.4315,3.423,8.8912,3.423,3.4544,0,7.4074-.9536,8.8882-3.423.89-1.5177,1.2211-3.03,1.2211-6.1589V24.1714h-6.72Z" style="fill: #fff"></path>
+                        <path id="logoMark_PathItem_3" data-name="logoMark <PathItem&gt;" d="M52.884,41.5255c-2.8642,0-4.3148-2.3059-4.3148-6.16,0-3.8819,1.4506-6.2527,4.3148-6.2527,2.1075,0,3.3256,1.2831,3.8875,3.4554l5.8254-2.7981c-1.1194-2.9308-4.2782-5.9919-9.6123-5.9919-6.9811,0-11.2619,4.709-11.2619,11.5873,0,6.85,4.05,11.5925,11.1294,11.5925,5.103,0,8.2988-2.4688,9.8783-6.06L56.638,38.7266A3.7235,3.7235,0,0,1,52.884,41.5255Z" style="fill: #fff"></path>
+                        <path id="logoMark_CompoundPathItem_" data-name="logoMark <CompoundPathItem&gt;" d="M34.3313,0a34.3283,34.3283,0,1,0,34.33,34.3282A34.3291,34.3291,0,0,0,34.3313,0ZM14.921,40.7031a3.24,3.24,0,0,0,2.6357.9214,3.24,3.24,0,0,0,2.6327-.9214,4.7676,4.7676,0,0,0,.757-3.1632V24.1714h6.72V37.41c0,3.1288-.3315,4.6412-1.2211,6.1589-1.4808,2.4694-5.4338,3.423-8.8882,3.423-3.46,0-7.4095-.9536-8.8912-3.423-.89-1.5177-1.2211-3.03-1.2211-6.1589V24.1714h6.719V37.54A4.7673,4.7673,0,0,0,14.921,40.7031Zm16.8245,5.8605V24.1714h6.7174V46.5636Zm21.1066.3949c-7.08,0-11.1294-4.7424-11.1294-11.5925,0-6.8783,4.2808-11.5873,11.2619-11.5873,5.3341,0,8.4929,3.0611,9.6123,5.9919l-5.8254,2.7981c-.5619-2.1723-1.78-3.4554-3.8875-3.4554-2.8642,0-4.3148,2.3708-4.3148,6.2527,0,3.8536,1.4506,6.16,4.3148,6.16a3.7235,3.7235,0,0,0,3.754-2.7989L62.73,40.8984C61.1509,44.49,57.9551,46.9585,52.8521,46.9585Z" style="fill: #d50032"></path>
+                     </g>
+                  </g>
+               </svg><strong class="d-none d-lg-inline">Research Informatics Core</strong><span class="ms-3">Analysis Report<span class="d-none d-md-inline">: <em>Amplicon sequencing processing</em></span></span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar_list" aria-controls="sidebar_list" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button></div>
+      </nav>
+      <div class="container-fluid">
+         <div class="row flex-nowrap fullscreen">
+            <div class="col-auto d-print-none bg-secondary-subtle">
+               <nav class="nav navbar-expand-lg">
+                  <div class="d-flex flex-column flex-shrink-0 p-3">
+                     <div id="sidebar_list" class="collapse navbar-collapse collapse-horizontal">
+                        <ul class="nav flex-column mb-auto" id="sidebar_items">
+                           <li role="presentation" class="nav-item analysis"><a class="nav-link active" href="#overview" aria-controls="overview">
+                                 <h4>Overview</h4></a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_1" class="nav-link" aria-controls="#analysis_1">1. Read merging</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_2" class="nav-link" aria-controls="#analysis_2">2. Sequence trimming</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_3" class="nav-link" aria-controls="#analysis_3">3. Chimera checking</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_4" class="nav-link" aria-controls="#analysis_4">4. Read count simplification</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_5" class="nav-link" aria-controls="#analysis_5">5. Taxonomic annotation</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_6" class="nav-link" aria-controls="#analysis_6">6. Data normalization</a></li>
+                           <hr>
+                           <li class="nav-item"><a href="#citations" class="nav-link" aria-controls="citations"><i>Citations</i></a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </nav>
+            </div>
+            <div id="content" class="col ms-3" data-bs-spy="scroll" data-bs-target="#sidebar_items" data-bs-smooth-scroll="true" tabindex="0">
+               <div id="overview">
+                  <div id="header">
+                     <header>
+                        <div class="row header pt-3" id="top">
+                           <div class="col">
+                              <h2 class="title"><strong>Amplicon sequencing processing</strong></h2>
+                              <h4><small class="text-body-secondary">Generated by: </small>George Edward Chlipala
+                              </h4>
+                              <h4 class="date"><small class="text-body-secondary">Report date: </small>October 21, 2024
+                              </h4>
+                           </div>
+                        </div>
+                     </header>
+                     <hr>
+                  </div>
+                  <div style="padding:10px">
+                     <div class="row">
+                        <div class="col">
+                           <h3 id="main_page">Overview</h3>
+                           <div class="alert alert-info alert-dismissible fade show" style="border-bottom:1px solid #44639b"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><p>
+                                 									When you publish manuscripts based on data generated at our facility, we would greatly appreciate an acknowledgement
+                                 of our
+                                 									efforts. Please cite our facility as follows (for example):
+                                 								
+                              </p>
+                              <blockquote class="blockquote ms-3">
+                                 <p>Basic processing of the raw data were performed by the University of Illinois at Chicago Research Informatics Core (UICRIC).</p>
+                              </blockquote>
+                              <p>
+                                 									We adhere to a <a href="https://abrf.org/authorship-guidelines" target="_blank">
+                                    										general policy for acknowledgements and authorship as
+                                    										established by the Association for Biomolecular Resource Facilities (ABRF) <span class="bi bi-box-arrow-up-right"></span></a>,
+                                 									and we support the following statement from the ABRF.
+                                 									
+                                 <blockquote class="blockquote ms-3"><em>
+                                       											The existence of core facilities depends in part on proper acknowledgment in publications. This is an important
+                                       metric of
+                                       											the value of most core facilities. Proper acknowledgment of core facilities enables them to obtain financial and
+                                       other support
+                                       											so that they may continue to provide their essential services in the best ways possible. It also helps core personnel
+                                       to advance
+                                       											in their careers, adding to the overall health of the core facility.
+                                       										</em></blockquote>
+                              </p>
+                              <p>
+                                 									Please <a href="mailto:cribioinfo@uic.edu?subject=Manuscript%20support">
+                                    										contact us <span class="bi bi-envelope"></span></a> for assistance in drafting manuscripts.
+                                 								
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion mt-3" id="main_items">
+                        <div class="accordion-item">
+                           <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#notes_panel" aria-expanded="true" aria-controls="notes_panel"><strong>Notes</strong></button></h3>
+                           <div id="notes_panel" class="accordion-collapse show collapse">
+                              <div class="accordion-body">
+                                 <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                       This report provides a high-level summary of the basic bioinformatic analysis included with the amplicon sequencing services
+                                       provided by the UIC Research Resources Center (RRC).
+                                       The end result of these bioinformatics services is to provide investigators basic information concerning the abundance of
+                                       taxa present in the samples.
+                                       The basic bioinformatic analysis includes basic processing of raw sequence data including read merging, adapter &amp; quality
+                                       trimming, chimeric checking and processing using DADA2
+                                       to generate a table of abundance data and associated taxonomic annotations.
+                                       
+                                    </li>
+                                    <li class="list-group-item">
+                                       There were 10 samples in this project.
+                                       
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion-item">
+                           <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#files_panel" aria-expanded="true" aria-controls="files_panel"><strong>Output Files</strong></button></h3>
+                           <div id="files_panel" class="accordion-collapse show collapse">
+                              <div class="accordion-body">
+                                 <table class="table file-table">
+                                    <thead>
+                                       <tr>
+                                          <th data-priority="1">File</th>
+                                          <th data-priority="2">Description</th>
+                                          <th data-priority="3">Type</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td><a href="rep_set_tax_assignments.txt">rep_set_tax_assignments.txt</a></td>
+                                          <td>Taxonomic assignment of master sequences</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_raw_counts.zip">taxa_raw_counts.zip</a></td>
+                                          <td>ZIP archive of taxonomic summaries from phylum to species level result - raw sequence counts</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_raw_counts.xlsx">taxa_raw_counts.xlsx</a></td>
+                                          <td>Excel spreadsheet of taxonomic summaries from phylum to species level result - raw sequence counts</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_relative.zip">taxa_relative.zip</a></td>
+                                          <td>ZIP archive of taxonomic summaries from phylum to species level result - relative sequence abundance</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_relative.xlsx">taxa_relative.xlsx</a></td>
+                                          <td>Excel spreadsheet of taxonomic summaries from phylum to species level result - raw sequence counts</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="biom-summary.txt">biom-summary.txt</a></td>
+                                          <td>Summary statistics of ASV table</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_table.biom">taxa_table.biom</a></td>
+                                          <td>Amplicon Sequence Variant (ASV) table, in BIOM format</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="sequences.zip">sequences.zip</a></td>
+                                          <td>ZIP archive of sequences for each sample, after merging, trimming and chimera checking</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="rep_set_sequences.zip">rep_set_sequences.zip</a></td>
+                                          <td>Compressed FASTA file of representative sequences for ASVs</td>
+                                          <td>result</td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion-item">
+                           <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#samples_panel" aria-expanded="true" aria-controls="samples_panel"><strong>Sample Listing</strong></button></h3>
+                           <div id="samples_panel" class="accordion-collapse show collapse">
+                              <div class="accordion-body">
+                                 <table class="table data-table caption-top">
+                                    <caption>Sample list</caption>
+                                    <thead>
+                                       <tr>
+                                          <th>SampleID</th>
+                                          <th>Original ID</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>1</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>2</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>3</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>4</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>5</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>6</td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>7</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>8</td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>9</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>10</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_1">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Read merging</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_1_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_1_head">Tables</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_1" aria-expanded="true" aria-controls="details_1"><b>Details</b></button></h4>
+                        <div id="details_1" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    Pear<span class="citation hidden">Jiajie Zhang, Kassian Kobert, Tom Flouri, and Alexandros Stamatakis. (2014) Pear: a fast and accurate illumina paired-end
+                                       read merger. Bioinformatics, 30(5):614-620</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Forward and reverse reads were merged using PEAR.</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_1_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_1" aria-expanded="true" aria-controls="figures_1"><b>Figures</b></button></h3>
+                        <div id="figures_1" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_1" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Merging results
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plots-merge.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_1_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_1" aria-expanded="true" aria-controls="tables_1"><b>Tables</b></button></h3>
+                        <div id="tables_1" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_1" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Sequence merging statistics
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Sequence merging statistics
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Assembled reads</th>
+                                          <th>Discarded reads</th>
+                                          <th>Not assembled reads</th>
+                                          <th>Percent passed</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>79076</td>
+                                          <td>0</td>
+                                          <td>639</td>
+                                          <td>99.20%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>75442</td>
+                                          <td>8</td>
+                                          <td>454</td>
+                                          <td>99.39%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>110474</td>
+                                          <td>0</td>
+                                          <td>841</td>
+                                          <td>99.24%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>93706</td>
+                                          <td>4</td>
+                                          <td>665</td>
+                                          <td>99.29%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>68268</td>
+                                          <td>2</td>
+                                          <td>555</td>
+                                          <td>99.19%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>74593</td>
+                                          <td>2</td>
+                                          <td>528</td>
+                                          <td>99.29%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>133187</td>
+                                          <td>2</td>
+                                          <td>881</td>
+                                          <td>99.34%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>85918</td>
+                                          <td>2</td>
+                                          <td>635</td>
+                                          <td>99.26%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>54762</td>
+                                          <td>0</td>
+                                          <td>319</td>
+                                          <td>99.42%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>66041</td>
+                                          <td>4</td>
+                                          <td>444</td>
+                                          <td>99.33%</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_2">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Sequence trimming</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_2_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_2_head">Tables</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#folder_2_head">Additional files</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_2" aria-expanded="true" aria-controls="details_2"><b>Details</b></button></h4>
+                        <div id="details_2" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    cutadapt<span class="citation hidden">Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet.journal, 17(1):10-12.
+                                       doi:<a href="https://doi.org/10.14806/ej.17.1.200">https://doi.org/10.14806/ej.17.1.200</a></span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Sequencing trimming using cutadapt</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>-a = ^GTGCCAGCMGCCGCGGTAA...ATTAGAWACCCBDGTAGTCC$</li>
+                                       <li>--trim-n</li>
+                                       <li>--max-n = 0</li>
+                                       <li>-q = 20</li>
+                                       <li>-m = 225</li>
+                                       <li>--trimmed-only</li>
+                                       <li>-e = 0.10</li>
+                                       <li>--report = minimal</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Quality trimming
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Quality trimming based on quality threshold and length parameters.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>min length = 225</li>
+                                       <li>p = 20</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Adapter trimming
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Adapter/primer sequences were trimmed from the reads.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>5' adapter = GTGCCAGCMGCCGCGGTAA</li>
+                                       <li>3' adapter = ATTAGAWACCCBDGTAGTCC</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Adapter filter
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Reads that lack the adpater/primer sequences were discarded.</description>
+                                    </p>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Abiguous nucleotide trimming
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Ambiguous nucleotides (N) were trimmed from the ends and reads with internal ambiguous nucleotides were discarded.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>max-n = 0</li>
+                                    </ul>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_2_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_2" aria-expanded="true" aria-controls="figures_2"><b>Figures</b></button></h3>
+                        <div id="figures_2" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_2" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Trimming results
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plots-trim.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_2_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_2" aria-expanded="true" aria-controls="tables_2"><b>Tables</b></button></h3>
+                        <div id="tables_2" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_2" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Trimming statistics
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Trimming statistics
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Trim passed</th>
+                                          <th>Ambig dropped</th>
+                                          <th>Trim filter dropped</th>
+                                          <th>Trim length dropped</th>
+                                          <th>Percent passed</th>
+                                          <th>Mean Length</th>
+                                          <th>Mean Trimmed Length</th>
+                                          <th>Quality trimmed bp</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>71895</td>
+                                          <td>0</td>
+                                          <td>6956</td>
+                                          <td>225</td>
+                                          <td>90.92%</td>
+                                          <td>296.8</td>
+                                          <td>252.6</td>
+                                          <td>2198</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>69994</td>
+                                          <td>0</td>
+                                          <td>5296</td>
+                                          <td>152</td>
+                                          <td>92.78%</td>
+                                          <td>295.6</td>
+                                          <td>252.7</td>
+                                          <td>1554</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>102626</td>
+                                          <td>0</td>
+                                          <td>7637</td>
+                                          <td>211</td>
+                                          <td>92.90%</td>
+                                          <td>295.5</td>
+                                          <td>252.6</td>
+                                          <td>2744</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>86532</td>
+                                          <td>0</td>
+                                          <td>6975</td>
+                                          <td>199</td>
+                                          <td>92.34%</td>
+                                          <td>295.8</td>
+                                          <td>252.7</td>
+                                          <td>2555</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>63044</td>
+                                          <td>0</td>
+                                          <td>5082</td>
+                                          <td>142</td>
+                                          <td>92.35%</td>
+                                          <td>295.7</td>
+                                          <td>252.6</td>
+                                          <td>1892</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>68177</td>
+                                          <td>0</td>
+                                          <td>6215</td>
+                                          <td>201</td>
+                                          <td>91.40%</td>
+                                          <td>296.9</td>
+                                          <td>252.9</td>
+                                          <td>2272</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>123053</td>
+                                          <td>0</td>
+                                          <td>9843</td>
+                                          <td>291</td>
+                                          <td>92.39%</td>
+                                          <td>296.1</td>
+                                          <td>252.8</td>
+                                          <td>3104</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>78998</td>
+                                          <td>0</td>
+                                          <td>6713</td>
+                                          <td>207</td>
+                                          <td>91.95%</td>
+                                          <td>296.5</td>
+                                          <td>252.9</td>
+                                          <td>1906</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>50962</td>
+                                          <td>0</td>
+                                          <td>3688</td>
+                                          <td>112</td>
+                                          <td>93.06%</td>
+                                          <td>295.5</td>
+                                          <td>252.7</td>
+                                          <td>1305</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>61168</td>
+                                          <td>0</td>
+                                          <td>4722</td>
+                                          <td>151</td>
+                                          <td>92.62%</td>
+                                          <td>295.9</td>
+                                          <td>252.8</td>
+                                          <td>1727</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="folders_2_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#folders_2" aria-expanded="true" aria-controls="tables_2"><b>Additional files</b></button></h3>
+                        <div id="folders_2" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_2" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <div class="folder"><a href="trimmed_multiqc/multiqc_report.html"><span class="glyphicon glyphicon-file"></span> MultiQC report</a></div>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_3">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Chimera checking</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_3_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_3_head">Tables</a></li>
+                        </ul>
+                     </div>
+                     <p>
+                        <description>Chimeric sequences are artifacts of the PCR process and occur when portions of two separate amplicons fuse during the amplification
+                           process. The RRC analysis pipeline uses a standard chimera checking program to identify chimeric sequences and the remove
+                           from the dataset
+                        </description>
+                     </p>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_3" aria-expanded="true" aria-controls="details_3"><b>Details</b></button></h4>
+                        <div id="details_3" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    USEARCH reference based<span class="citation hidden">Robert C. Edgar. (2010) Search and clustering orders of magnitude faster than blast. Bioinformatics, 26(19):2460-2461</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Chimeric sequences were identified using the USEARCH algorithm as compared with a reference database.</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_3_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_3" aria-expanded="true" aria-controls="figures_3"><b>Figures</b></button></h3>
+                        <div id="figures_3" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_3" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Chimera checking results
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plots-chimera.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_3_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_3" aria-expanded="true" aria-controls="tables_3"><b>Tables</b></button></h3>
+                        <div id="tables_3" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_3" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Chimera checking statistics
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Chimera checking statistics
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Non-chimeras</th>
+                                          <th>Chimeras</th>
+                                          <th>Percent passed</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>71637</td>
+                                          <td>258</td>
+                                          <td>90.59%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>69302</td>
+                                          <td>692</td>
+                                          <td>91.86%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>101773</td>
+                                          <td>853</td>
+                                          <td>92.12%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>86259</td>
+                                          <td>273</td>
+                                          <td>92.05%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>62794</td>
+                                          <td>250</td>
+                                          <td>91.98%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>67000</td>
+                                          <td>1177</td>
+                                          <td>89.82%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>120491</td>
+                                          <td>2562</td>
+                                          <td>90.47%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>76467</td>
+                                          <td>2531</td>
+                                          <td>89.00%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>50624</td>
+                                          <td>338</td>
+                                          <td>92.44%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>60374</td>
+                                          <td>794</td>
+                                          <td>91.42%</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_4">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Read count simplification</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_4_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_4_head">Tables</a></li>
+                        </ul>
+                     </div>
+                     <p>
+                        <description>Reduce read count complexity by a number of techniques, e.g. dereplication or sequences clustering.</description>
+                     </p>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_4" aria-expanded="true" aria-controls="details_4"><b>Details</b></button></h4>
+                        <div id="details_4" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    DADA2 amplicon denoising<span class="citation hidden">Callahan BJ, McMurdie PJ, Rosen MJ, Han AW, Johnson AJA and Holmes SP (2016). DADA2: High-resolution sample inference from
+                                       Illumina amplicon data. Nature Methods, 13:581-583. doi: 10.1038/nmeth.3869</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Amplicon Sequence Variants (ASVs) were infered using DADA2.</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_4_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_4" aria-expanded="true" aria-controls="figures_4"><b>Figures</b></button></h3>
+                        <div id="figures_4" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_4" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Comparison of observation and sequence counts in each sample
+                                 </h4>
+                                 <dd><img class="img-fluid" src="dada2_table_plots-samples.png"></dd>
+                                 <hr>
+                                 <h4 class="figure">
+                                    
+                                    Figure 2.
+                                    Comparison of samples and sequence counts for ASVs/OTUs
+                                 </h4>
+                                 <dd><img class="img-fluid" src="dada2_table_plots-observations.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_4_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_4" aria-expanded="true" aria-controls="tables_4"><b>Tables</b></button></h3>
+                        <div id="tables_4" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_4" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Observation (ASV/OTU) and total sequence counts per sample
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Observation (ASV/OTU) and total sequence counts per sample
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Observations</th>
+                                          <th>Counts</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>272</td>
+                                          <td>50228</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>232</td>
+                                          <td>62495</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>302</td>
+                                          <td>60000</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>360</td>
+                                          <td>68927</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>262</td>
+                                          <td>71223</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>373</td>
+                                          <td>66460</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>474</td>
+                                          <td>75625</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>287</td>
+                                          <td>85826</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>357</td>
+                                          <td>101270</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>530</td>
+                                          <td>119426</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_5">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Taxonomic annotation</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_5_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_5_head">Tables</a></li>
+                        </ul>
+                     </div>
+                     <p>
+                        <description>Annotate sequences with taxonomic information</description>
+                     </p>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_5" aria-expanded="true" aria-controls="details_5"><b>Details</b></button></h4>
+                        <div id="details_5" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    Naive Bayseian classifier<span class="citation hidden">Callahan BJ, McMurdie PJ, Rosen MJ, Han AW, Johnson AJA and Holmes SP (2016). DADA2: High-resolution sample inference from
+                                       Illumina amplicon data. Nature Methods, 13:581-583. doi: 10.1038/nmeth.3869</span><span class="citation hidden">Wang Q, Garrity GM, Tiedje JM, and Cole JR. (2007). Naive Bayesian classifier for rapid assignment of rRNA sequences into
+                                       the new bacterial taxonomy. Applied and environmental microbiology, 73(16):5261-5267. doi:10.1128/AEM.00062-07</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Taxonomic annotations were deteremined using a Naive Bayesian approach include in the DADA2 package.</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_5_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_5" aria-expanded="true" aria-controls="figures_5"><b>Figures</b></button></h3>
+                        <div id="figures_5" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_5" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Summary of major level 2 taxa
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plots-qiime.png"></dd>
+                                 <hr>
+                                 <h4 class="figure">
+                                    
+                                    Figure 2.
+                                    Summary of taxonomic annotation depth
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plot-taxa-depth.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_5_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_5" aria-expanded="true" aria-controls="tables_5"><b>Tables</b></button></h3>
+                        <div id="tables_5" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_5" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Summary of major level 2 taxa
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Summary of major level 2 taxa
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Taxon</th>
+                                          <th>Counts</th>
+                                          <th>Percent</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Bacteria;Firmicutes</td>
+                                          <td>479002</td>
+                                          <td>62.90%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Bacteroidota</td>
+                                          <td>268343</td>
+                                          <td>35.24%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Desulfobacterota</td>
+                                          <td>4940</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Deferribacterota</td>
+                                          <td>3442</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Actinobacteriota</td>
+                                          <td>2871</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Proteobacteria</td>
+                                          <td>2258</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Cyanobacteria</td>
+                                          <td>624</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Unassigned</td>
+                                          <td>0</td>
+                                          <td>0%</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                                 <hr>
+                                 <h4>
+                                    Table 2.
+                                    Summary of taxonomic annotation depth - Grouped by level 2 taxa
+                                 </h4>
+                                 <table id="data_table_2" class="table data-table caption-top">
+                                    <caption>
+                                       Table 2.
+                                       Summary of taxonomic annotation depth - Grouped by level 2 taxa
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Level 2 taxon</th>
+                                          <th>Level 2 raw counts</th>
+                                          <th>Level 3 raw counts</th>
+                                          <th>Level 4 raw counts</th>
+                                          <th>Level 5 raw counts</th>
+                                          <th>Level 6 raw counts</th>
+                                          <th>Level 7 raw counts</th>
+                                          <th>Level 2 relative counts</th>
+                                          <th>Level 3 relative counts</th>
+                                          <th>Level 4 relative counts</th>
+                                          <th>Level 5 relative counts</th>
+                                          <th>Level 6 relative counts</th>
+                                          <th>Level 7 relative counts</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Firmicutes</td>
+                                          <td>3</td>
+                                          <td>46</td>
+                                          <td>14390</td>
+                                          <td>73985</td>
+                                          <td>287585</td>
+                                          <td>102993</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                          <td>1.89%</td>
+                                          <td>9.72%</td>
+                                          <td>37.77%</td>
+                                          <td>13.53%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteroidota</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>3</td>
+                                          <td>187459</td>
+                                          <td>67385</td>
+                                          <td>13496</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>24.62%</td>
+                                          <td>8.85%</td>
+                                          <td>1.77%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Desulfobacterota</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>45</td>
+                                          <td>4895</td>
+                                          <td>0</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                          <td>-</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Deferribacterota</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>6</td>
+                                          <td>3436</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Actinobacteriota</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>70</td>
+                                          <td>2801</td>
+                                          <td>0</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                          <td>-</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Proteobacteria</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>2247</td>
+                                          <td>11</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Cyanobacteria</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>624</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_6">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Data normalization</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_6_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_6_head">Tables</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_6" aria-expanded="true" aria-controls="details_6"><b>Details</b></button></h4>
+                        <div id="details_6" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    Taxonomic filter
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Data are filtered to remove read counts associated with particular taxa</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>filter = c__Chloroplast,f__mitochondria,D_4__Mitochondria,D_3__Chloroplast,Chloroplast,Mitochondria,Synthetic_Rhodanobacter_Spike-In</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Relative sequence abundance
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Read counts were normalized as fraction of total sequence counts in each sample</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_6_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_6" aria-expanded="true" aria-controls="figures_6"><b>Figures</b></button></h3>
+                        <div id="figures_6" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_6" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Filtering stats
+                                 </h4>
+                                 <dd><img class="img-fluid" src="taxa_diff.png"></dd>
+                                 <hr>
+                                 <h4 class="figure">
+                                    
+                                    Figure 2.
+                                    PCA plots of normalized data (relative sequence abundance)
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plot-taxa-pca.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_6_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_6" aria-expanded="true" aria-controls="tables_6"><b>Tables</b></button></h3>
+                        <div id="tables_6" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_6" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Filtering stats
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Filtering stats
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Original</th>
+                                          <th>Filtered</th>
+                                          <th>Retained</th>
+                                          <th>Percent Retained</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>71223</td>
+                                          <td>0</td>
+                                          <td>71223</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>68927</td>
+                                          <td>0</td>
+                                          <td>68927</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>101270</td>
+                                          <td>0</td>
+                                          <td>101270</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>85826</td>
+                                          <td>0</td>
+                                          <td>85826</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>62495</td>
+                                          <td>0</td>
+                                          <td>62495</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>66460</td>
+                                          <td>0</td>
+                                          <td>66460</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>119426</td>
+                                          <td>0</td>
+                                          <td>119426</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>75625</td>
+                                          <td>0</td>
+                                          <td>75625</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>50228</td>
+                                          <td>0</td>
+                                          <td>50228</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>60000</td>
+                                          <td>0</td>
+                                          <td>60000</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <hr>
+               <div class="row">
+                  <div id="citations">
+                     <h2>Citations</h2>
+                     <ol id="citation_list" class="col my-3"></ol>
+                  </div>
+               </div>
+            </div><script type="text/javascript">
+            
+                var citations = [];
+                $(".citation").each(function() {
+                    if ( $(this).hasClass("hidden") ) {
+                        var i = citations.indexOf(this.innerHTML);
+                        if ( i == -1 ) {
+                            citations.push(this.innerHTML);
+                            n = citations.length;
+                        } else {
+                            n = i + 1;
+                        }
+                    var prev = $(this).prev();
+                    prefix = '';
+                    if ( prev != undefined && prev.hasClass('citation') ) {
+                        prefix=',';
+                    }
+                        this.innerHTML = '<sup>' + prefix + '<a href="#cite' + n + '">' + n + "</a></sup>";
+                        $(this).removeClass("hidden");
+                        $(this).show();
+                    }
+                });
+
+                for ( var i = 0; i < citations.length; i++ ) {
+                    var n = i + 1;
+                    $('#citation_list').append('<li id="cite' + n + '">' + citations[i] + "</li>");
+                }
+            
+            </script><script type="text/javascript">
+            
+                var curr_table;
+                $(".data-table").DataTable({ 
+                	pageLength: 25, 
+                	order:[], 
+					responsive: true,
+                	buttons: [ 
+						{
+							extend: 'copy',
+							title: null
+						}, 
+                		{
+                    		extend: 'csvHtml5',
+                    		text: 'TSV',
+                    		extension: '.txt',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		fieldBoundary: '',
+                    		fieldSeparator: '\t'
+                		}, 
+						{
+                    		extend: 'excel',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		messageTop: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                		},
+                		{
+                    		extend: 'pdf',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		messageTop: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                		}], 
+                	layout: { topStart: 'buttons' } 
+                });
+                $(".file-table").DataTable({ pageLength: 50, responsive: true, order:[ [0, 'asc'] ] });
+            
+            </script></div>
+      </div>
+   </body>
+</html>

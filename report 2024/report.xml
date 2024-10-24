@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="file:/crixml/schema/relaxng.rnc" type="application/relax-ng-compact-syntax"?>
+<?xml-model href="file:/crixml/schema/schematron.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<report>
+   <title><![CDATA[Amplicon sequencing processing]]></title>
+   <author><![CDATA[George Edward Chlipala]]></author>
+<notes><![CDATA[
+This report provides a high-level summary of the basic bioinformatic analysis included with the amplicon sequencing services provided by the UIC Research Resources Center (RRC).
+The end result of these bioinformatics services is to provide investigators basic information concerning the abundance of taxa present in the samples.
+The basic bioinformatic analysis includes basic processing of raw sequence data including read merging, adapter & quality trimming, chimeric checking and processing using DADA2
+to generate a table of abundance data and associated taxonomic annotations.
+]]></notes>
+<notes><![CDATA[
+There were 10 samples in this project.
+]]></notes>
+<file filename="rep_set_tax_assignments.txt" description="Taxonomic assignment of master sequences" type="result"/>
+<file filename="taxa_raw_counts.zip" description="ZIP archive of taxonomic summaries from phylum to species level result - raw sequence counts" type="result"/>
+<file filename="taxa_raw_counts.xlsx" description="Excel spreadsheet of taxonomic summaries from phylum to species level result - raw sequence counts" type="result"/>
+<file filename="taxa_relative.zip" description="ZIP archive of taxonomic summaries from phylum to species level result - relative sequence abundance" type="result"/>
+<file filename="taxa_relative.xlsx" description="Excel spreadsheet of taxonomic summaries from phylum to species level result - raw sequence counts" type="result"/>
+<file filename="biom-summary.txt" description="Summary statistics of ASV table" type="result"/>
+<file filename="taxa_table.biom" description="Amplicon Sequence Variant (ASV) table, in BIOM format" type="result"/>
+<file filename="sequences.zip" description="ZIP archive of sequences for each sample, after merging, trimming and chimera checking" type="result"/>
+<file filename="rep_set_sequences.zip" description="Compressed FASTA file of representative sequences for ASVs" type="result"/>
+<samples>mapping.txt</samples>
+    <analysis id="seq_merge">
+<method id="pear"/>
+        <table tsv='stats.merge.txt' description="Sequence merging statistics"/>
+        <figure file='plots-merge.png' title="Merging results"/>
+    </analysis>
+    <analysis id="trimming">
+<method id="cutadapt" parameter="-a=^GTGCCAGCMGCCGCGGTAA...ATTAGAWACCCBDGTAGTCC$;--trim-n;--max-n=0;-q=20;-m=225;--trimmed-only;-e=0.10;--report=minimal"/>
+<method id="quality_trim" parameter="min length=225;p=20;"/>
+<method id="adapter" parameter="5' adapter=GTGCCAGCMGCCGCGGTAA;3' adapter=ATTAGAWACCCBDGTAGTCC;"/>
+<method id="filter"/>
+<method id="ambig" parameter="max-n=0"/>
+        <table tsv='stats-trim.txt' description="Trimming statistics"/>
+        <figure file='plots-trim.png' title="Trimming results"/>
+	<folder index='trimmed_multiqc/multiqc_report.html' alt="MultiQC report"/>
+    </analysis>
+    <analysis id="chimera_check">
+<method id="usearch_ref"/>
+        <database id="silva_138.1_16S_spike"/>
+        <table tsv='stats.chimera.txt' description="Chimera checking statistics"/>
+        <figure file='plots-chimera.png' title="Chimera checking results"/>
+    </analysis>
+    <analysis id="read_simplify">
+<method id="dada2"/>
+        <table tsv='dada2_table_stats.txt' description="Observation (ASV/OTU) and total sequence counts per sample"/>
+        <figure file='dada2_table_plots-samples.png' title="Comparison of observation and sequence counts in each sample"/>
+        <figure file='dada2_table_plots-observations.png' title="Comparison of samples and sequence counts for ASVs/OTUs"/>
+    </analysis>
+    <analysis id="annotate_taxa">
+<method id="dada2"/>
+        <database id="silva_138.1_16S_spike"/>
+        <table tsv='stats.taxa.txt' description="Summary of major level 2 taxa"/>
+        <figure file='plots-qiime.png' title="Summary of major level 2 taxa"/>
+        <figure file='plot-taxa-depth.png' title="Summary of taxonomic annotation depth"/>
+        <table tsv='taxa_depth.txt' description="Summary of taxonomic annotation depth - Grouped by level 2 taxa"/>
+    </analysis>
+    <analysis id="normalize">
+<method id="filter_taxa" parameter="filter=c__Chloroplast,f__mitochondria,D_4__Mitochondria,D_3__Chloroplast,Chloroplast,Mitochondria,Synthetic_Rhodanobacter_Spike-In"/>
+        <figure file='taxa_diff.png' title="Filtering stats"/>
+        <table tsv='taxa_diff.txt' description="Filtering stats"/>
+<method id="relative"/>
+        <figure file='plot-taxa-pca.png' title="PCA plots of normalized data (relative sequence abundance)"/>
+    </analysis>
+</report>
