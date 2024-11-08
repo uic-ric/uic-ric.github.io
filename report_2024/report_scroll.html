@@ -1,0 +1,2704 @@
+<!DOCTYPE html><html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Amplicon sequencing processing</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.2.1.min.js"></script><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+      <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/fc-5.0.4/fh-4.0.1/r-3.0.3/sc-2.4.3/datatables.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/fc-5.0.4/fh-4.0.1/r-3.0.3/sc-2.4.3/datatables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><style>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><style>
+
+.analysis-header { margin-top:20px; margin-bottom:10px; }
+
+#content {
+  transition: all 0.3s;
+  overflow-y: scroll;
+}
+
+#content .accordion-header {
+	--bs-accordion-active-color: var(--bs-secondary-text-emphasis);
+	--bs-accordion-active-bg: var(--bs-secondary-bg-subtle);
+}
+.date { margin-bottom: 10px; }
+
+div.citations { display:block; border-top: 1px solid #44639b; background-color: #eee; padding-bottom: 20px; }
+
+li > div.analysis { font-size: 14pt; font-weight: bold; border-bottom: 1px solid #44639b; display: block; width: 70%; list-style: none; }
+
+		dd.database, dd.method { margin-left: 5px; }
+
+		dl.params { margin-left: 5px; }
+
+		@media screen {
+		.fullscreen {
+		height: 100vh;
+		}
+		}
+
+		#sidebar_items > li.nav-item > a.active {
+		border: var(--bs-border-width) solid var(--bs-primary-border-subtle);
+		border-radius: var(--bs-border-radius);
+		background-color: var(--bs-primary-bg-subtle);
+		}
+
+		#sidebar_items > li.nav-item > a {
+		display:block;
+		color: black;
+		}
+
+		table.data-table > caption {
+		display:none;
+		}
+	</style></head>
+   <body>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+         <div class="container-fluid"><a href="#" class="h3 navbar-brand">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 68.6566" style="height:50px">
+                  <title>University of Illinois Chicago</title>
+                  <g id="full-rgb">
+                     <g id="logoMark">
+                        <rect id="logoMark_PathItem_" data-name="logoMark <PathItem&gt;" x="31.7455" y="24.1714" width="6.7174" height="22.3922" style="fill: #fff"></rect>
+                        <path id="logoMark_PathItem_2" data-name="logoMark <PathItem&gt;" d="M20.9464,37.54a4.7676,4.7676,0,0,1-.757,3.1632,3.24,3.24,0,0,1-2.6327.9214,3.24,3.24,0,0,1-2.6357-.9214,4.7673,4.7673,0,0,1-.7576-3.1632V24.1714H7.4444V37.41c0,3.1288.3308,4.6412,1.2211,6.1589,1.4817,2.4694,5.4315,3.423,8.8912,3.423,3.4544,0,7.4074-.9536,8.8882-3.423.89-1.5177,1.2211-3.03,1.2211-6.1589V24.1714h-6.72Z" style="fill: #fff"></path>
+                        <path id="logoMark_PathItem_3" data-name="logoMark <PathItem&gt;" d="M52.884,41.5255c-2.8642,0-4.3148-2.3059-4.3148-6.16,0-3.8819,1.4506-6.2527,4.3148-6.2527,2.1075,0,3.3256,1.2831,3.8875,3.4554l5.8254-2.7981c-1.1194-2.9308-4.2782-5.9919-9.6123-5.9919-6.9811,0-11.2619,4.709-11.2619,11.5873,0,6.85,4.05,11.5925,11.1294,11.5925,5.103,0,8.2988-2.4688,9.8783-6.06L56.638,38.7266A3.7235,3.7235,0,0,1,52.884,41.5255Z" style="fill: #fff"></path>
+                        <path id="logoMark_CompoundPathItem_" data-name="logoMark <CompoundPathItem&gt;" d="M34.3313,0a34.3283,34.3283,0,1,0,34.33,34.3282A34.3291,34.3291,0,0,0,34.3313,0ZM14.921,40.7031a3.24,3.24,0,0,0,2.6357.9214,3.24,3.24,0,0,0,2.6327-.9214,4.7676,4.7676,0,0,0,.757-3.1632V24.1714h6.72V37.41c0,3.1288-.3315,4.6412-1.2211,6.1589-1.4808,2.4694-5.4338,3.423-8.8882,3.423-3.46,0-7.4095-.9536-8.8912-3.423-.89-1.5177-1.2211-3.03-1.2211-6.1589V24.1714h6.719V37.54A4.7673,4.7673,0,0,0,14.921,40.7031Zm16.8245,5.8605V24.1714h6.7174V46.5636Zm21.1066.3949c-7.08,0-11.1294-4.7424-11.1294-11.5925,0-6.8783,4.2808-11.5873,11.2619-11.5873,5.3341,0,8.4929,3.0611,9.6123,5.9919l-5.8254,2.7981c-.5619-2.1723-1.78-3.4554-3.8875-3.4554-2.8642,0-4.3148,2.3708-4.3148,6.2527,0,3.8536,1.4506,6.16,4.3148,6.16a3.7235,3.7235,0,0,0,3.754-2.7989L62.73,40.8984C61.1509,44.49,57.9551,46.9585,52.8521,46.9585Z" style="fill: #d50032"></path>
+                     </g>
+                  </g>
+               </svg><strong class="d-none d-lg-inline">Research Informatics Core</strong><span class="ms-3">Analysis Report<span class="d-none d-md-inline">: <em>Amplicon sequencing processing</em></span></span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar_list" aria-controls="sidebar_list" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button></div>
+      </nav>
+      <div class="container-fluid">
+         <div class="row flex-nowrap fullscreen">
+            <div class="col-auto d-print-none bg-secondary-subtle">
+               <nav class="nav navbar-expand-lg">
+                  <div class="d-flex flex-column flex-shrink-0 p-3">
+                     <div id="sidebar_list" class="collapse navbar-collapse collapse-horizontal">
+                        <ul class="nav flex-column mb-auto" id="sidebar_items">
+                           <li role="presentation" class="nav-item analysis"><a class="nav-link active" href="#overview" aria-controls="overview">
+                                 <h4>Overview</h4></a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_1" class="nav-link" aria-controls="#analysis_1">1. Read merging</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_2" class="nav-link" aria-controls="#analysis_2">2. Sequence trimming</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_3" class="nav-link" aria-controls="#analysis_3">3. Chimera checking</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_4" class="nav-link" aria-controls="#analysis_4">4. Read count simplification</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_5" class="nav-link" aria-controls="#analysis_5">5. Taxonomic annotation</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_6" class="nav-link" aria-controls="#analysis_6">6. Data normalization</a></li>
+                           <li role="presentation" class="nav-item analysis"><a href="#analysis_7" class="nav-link" aria-controls="#analysis_7">7. Big table example</a></li>
+                           <hr>
+                           <li class="nav-item"><a href="#citations" class="nav-link" aria-controls="citations"><i>Citations</i></a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </nav>
+            </div>
+            <div id="content" class="col ms-3" data-bs-spy="scroll" data-bs-target="#sidebar_items" data-bs-smooth-scroll="true" tabindex="0">
+               <div id="overview">
+                  <div id="header">
+                     <header>
+                        <div class="row header pt-3" id="top">
+                           <div class="col">
+                              <h2 class="title"><strong>Amplicon sequencing processing</strong></h2>
+                              <h4><small class="text-body-secondary">Generated by: </small>George Edward Chlipala
+                              </h4>
+                              <h4 class="date"><small class="text-body-secondary">Report date: </small>October 21, 2024
+                              </h4>
+                           </div>
+                        </div>
+                     </header>
+                     <hr>
+                  </div>
+                  <div style="padding:10px">
+                     <div class="row">
+                        <div class="col">
+                           <h3 id="main_page">Overview</h3>
+                           <div class="alert alert-info alert-dismissible fade show" style="border-bottom:1px solid #44639b"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><p>
+                                 									When you publish manuscripts based on data generated at our facility, we would greatly appreciate an acknowledgement
+                                 of our
+                                 									efforts. Please cite our facility as follows (for example):
+                                 								
+                              </p>
+                              <blockquote class="blockquote ms-3">
+                                 <p>Basic processing of the raw data were performed by the University of Illinois at Chicago Research Informatics Core (UICRIC).</p>
+                              </blockquote>
+                              <p>
+                                 									We adhere to a <a href="https://abrf.org/authorship-guidelines" target="_blank">
+                                    										general policy for acknowledgements and authorship as
+                                    										established by the Association for Biomolecular Resource Facilities (ABRF) <span class="bi bi-box-arrow-up-right"></span></a>,
+                                 									and we support the following statement from the ABRF.
+                                 									
+                                 <blockquote class="blockquote ms-3"><em>
+                                       											The existence of core facilities depends in part on proper acknowledgment in publications. This is an important
+                                       metric of
+                                       											the value of most core facilities. Proper acknowledgment of core facilities enables them to obtain financial and
+                                       other support
+                                       											so that they may continue to provide their essential services in the best ways possible. It also helps core personnel
+                                       to advance
+                                       											in their careers, adding to the overall health of the core facility.
+                                       										</em></blockquote>
+                              </p>
+                              <p>
+                                 									Please <a href="mailto:cribioinfo@uic.edu?subject=Manuscript%20support">
+                                    										contact us <span class="bi bi-envelope"></span></a> for assistance in drafting manuscripts.
+                                 								
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion mt-3" id="main_items">
+                        <div class="accordion-item">
+                           <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#notes_panel" aria-expanded="true" aria-controls="notes_panel"><strong>Notes</strong></button></h3>
+                           <div id="notes_panel" class="accordion-collapse show collapse">
+                              <div class="accordion-body">
+                                 <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                       This report provides a high-level summary of the basic bioinformatic analysis included with the amplicon sequencing services
+                                       provided by the UIC Research Resources Center (RRC).
+                                       The end result of these bioinformatics services is to provide investigators basic information concerning the abundance of
+                                       taxa present in the samples.
+                                       The basic bioinformatic analysis includes basic processing of raw sequence data including read merging, adapter &amp; quality
+                                       trimming, chimeric checking and processing using DADA2
+                                       to generate a table of abundance data and associated taxonomic annotations.
+                                       
+                                    </li>
+                                    <li class="list-group-item">
+                                       There were 10 samples in this project.
+                                       
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion-item">
+                           <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#files_panel" aria-expanded="true" aria-controls="files_panel"><strong>Output Files</strong></button></h3>
+                           <div id="files_panel" class="accordion-collapse show collapse">
+                              <div class="accordion-body">
+                                 <table class="table file-table">
+                                    <thead>
+                                       <tr>
+                                          <th data-priority="1">File</th>
+                                          <th data-priority="2">Description</th>
+                                          <th data-priority="3">Type</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td><a href="rep_set_tax_assignments.txt">rep_set_tax_assignments.txt</a></td>
+                                          <td>Taxonomic assignment of master sequences</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_raw_counts.zip">taxa_raw_counts.zip</a></td>
+                                          <td>ZIP archive of taxonomic summaries from phylum to species level result - raw sequence counts</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_raw_counts.xlsx">taxa_raw_counts.xlsx</a></td>
+                                          <td>Excel spreadsheet of taxonomic summaries from phylum to species level result - raw sequence counts</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_relative.zip">taxa_relative.zip</a></td>
+                                          <td>ZIP archive of taxonomic summaries from phylum to species level result - relative sequence abundance</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_relative.xlsx">taxa_relative.xlsx</a></td>
+                                          <td>Excel spreadsheet of taxonomic summaries from phylum to species level result - raw sequence counts</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="biom-summary.txt">biom-summary.txt</a></td>
+                                          <td>Summary statistics of ASV table</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="taxa_table.biom">taxa_table.biom</a></td>
+                                          <td>Amplicon Sequence Variant (ASV) table, in BIOM format</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="sequences.zip">sequences.zip</a></td>
+                                          <td>ZIP archive of sequences for each sample, after merging, trimming and chimera checking</td>
+                                          <td>result</td>
+                                       </tr>
+                                       <tr>
+                                          <td><a href="rep_set_sequences.zip">rep_set_sequences.zip</a></td>
+                                          <td>Compressed FASTA file of representative sequences for ASVs</td>
+                                          <td>result</td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion-item">
+                           <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#samples_panel" aria-expanded="true" aria-controls="samples_panel"><strong>Sample Listing</strong></button></h3>
+                           <div id="samples_panel" class="accordion-collapse show collapse">
+                              <div class="accordion-body">
+                                 <table class="table data-table caption-top">
+                                    <caption>Sample list</caption>
+                                    <thead>
+                                       <tr>
+                                          <th>SampleID</th>
+                                          <th>Original ID</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>1</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>2</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>3</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>4</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>5</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>6</td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>7</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>8</td>
+                                          <td></td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>9</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>10</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_1">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Read merging</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_1_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_1_head">Tables</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_1" aria-expanded="true" aria-controls="details_1"><b>Details</b></button></h4>
+                        <div id="details_1" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    Pear<span class="citation hidden">Jiajie Zhang, Kassian Kobert, Tom Flouri, and Alexandros Stamatakis. (2014) Pear: a fast and accurate illumina paired-end
+                                       read merger. Bioinformatics, 30(5):614-620</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Forward and reverse reads were merged using PEAR.</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_1_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_1" aria-expanded="true" aria-controls="figures_1"><b>Figures</b></button></h3>
+                        <div id="figures_1" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_1" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Merging results
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plots-merge.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_1_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_1" aria-expanded="true" aria-controls="tables_1"><b>Tables</b></button></h3>
+                        <div id="tables_1" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_1" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Sequence merging statistics
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Sequence merging statistics
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Assembled reads</th>
+                                          <th>Discarded reads</th>
+                                          <th>Not assembled reads</th>
+                                          <th>Percent passed</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>79076</td>
+                                          <td>0</td>
+                                          <td>639</td>
+                                          <td>99.20%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>75442</td>
+                                          <td>8</td>
+                                          <td>454</td>
+                                          <td>99.39%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>110474</td>
+                                          <td>0</td>
+                                          <td>841</td>
+                                          <td>99.24%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>93706</td>
+                                          <td>4</td>
+                                          <td>665</td>
+                                          <td>99.29%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>68268</td>
+                                          <td>2</td>
+                                          <td>555</td>
+                                          <td>99.19%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>74593</td>
+                                          <td>2</td>
+                                          <td>528</td>
+                                          <td>99.29%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>133187</td>
+                                          <td>2</td>
+                                          <td>881</td>
+                                          <td>99.34%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>85918</td>
+                                          <td>2</td>
+                                          <td>635</td>
+                                          <td>99.26%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>54762</td>
+                                          <td>0</td>
+                                          <td>319</td>
+                                          <td>99.42%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>66041</td>
+                                          <td>4</td>
+                                          <td>444</td>
+                                          <td>99.33%</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_2">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Sequence trimming</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_2_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_2_head">Tables</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#folder_2_head">Additional files</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_2" aria-expanded="true" aria-controls="details_2"><b>Details</b></button></h4>
+                        <div id="details_2" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    cutadapt<span class="citation hidden">Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet.journal, 17(1):10-12.
+                                       doi:<a href="https://doi.org/10.14806/ej.17.1.200">https://doi.org/10.14806/ej.17.1.200</a></span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Sequencing trimming using cutadapt</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>-a = ^GTGCCAGCMGCCGCGGTAA...ATTAGAWACCCBDGTAGTCC$</li>
+                                       <li>--trim-n</li>
+                                       <li>--max-n = 0</li>
+                                       <li>-q = 20</li>
+                                       <li>-m = 225</li>
+                                       <li>--trimmed-only</li>
+                                       <li>-e = 0.10</li>
+                                       <li>--report = minimal</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Quality trimming
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Quality trimming based on quality threshold and length parameters.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>min length = 225</li>
+                                       <li>p = 20</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Adapter trimming
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Adapter/primer sequences were trimmed from the reads.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>5' adapter = GTGCCAGCMGCCGCGGTAA</li>
+                                       <li>3' adapter = ATTAGAWACCCBDGTAGTCC</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Adapter filter
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Reads that lack the adpater/primer sequences were discarded.</description>
+                                    </p>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Abiguous nucleotide trimming
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Ambiguous nucleotides (N) were trimmed from the ends and reads with internal ambiguous nucleotides were discarded.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>max-n = 0</li>
+                                    </ul>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_2_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_2" aria-expanded="true" aria-controls="figures_2"><b>Figures</b></button></h3>
+                        <div id="figures_2" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_2" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Trimming results
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plots-trim.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_2_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_2" aria-expanded="true" aria-controls="tables_2"><b>Tables</b></button></h3>
+                        <div id="tables_2" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_2" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Trimming statistics
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Trimming statistics
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Trim passed</th>
+                                          <th>Ambig dropped</th>
+                                          <th>Trim filter dropped</th>
+                                          <th>Trim length dropped</th>
+                                          <th>Percent passed</th>
+                                          <th>Mean Length</th>
+                                          <th>Mean Trimmed Length</th>
+                                          <th>Quality trimmed bp</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>71895</td>
+                                          <td>0</td>
+                                          <td>6956</td>
+                                          <td>225</td>
+                                          <td>90.92%</td>
+                                          <td>296.8</td>
+                                          <td>252.6</td>
+                                          <td>2198</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>69994</td>
+                                          <td>0</td>
+                                          <td>5296</td>
+                                          <td>152</td>
+                                          <td>92.78%</td>
+                                          <td>295.6</td>
+                                          <td>252.7</td>
+                                          <td>1554</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>102626</td>
+                                          <td>0</td>
+                                          <td>7637</td>
+                                          <td>211</td>
+                                          <td>92.90%</td>
+                                          <td>295.5</td>
+                                          <td>252.6</td>
+                                          <td>2744</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>86532</td>
+                                          <td>0</td>
+                                          <td>6975</td>
+                                          <td>199</td>
+                                          <td>92.34%</td>
+                                          <td>295.8</td>
+                                          <td>252.7</td>
+                                          <td>2555</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>63044</td>
+                                          <td>0</td>
+                                          <td>5082</td>
+                                          <td>142</td>
+                                          <td>92.35%</td>
+                                          <td>295.7</td>
+                                          <td>252.6</td>
+                                          <td>1892</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>68177</td>
+                                          <td>0</td>
+                                          <td>6215</td>
+                                          <td>201</td>
+                                          <td>91.40%</td>
+                                          <td>296.9</td>
+                                          <td>252.9</td>
+                                          <td>2272</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>123053</td>
+                                          <td>0</td>
+                                          <td>9843</td>
+                                          <td>291</td>
+                                          <td>92.39%</td>
+                                          <td>296.1</td>
+                                          <td>252.8</td>
+                                          <td>3104</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>78998</td>
+                                          <td>0</td>
+                                          <td>6713</td>
+                                          <td>207</td>
+                                          <td>91.95%</td>
+                                          <td>296.5</td>
+                                          <td>252.9</td>
+                                          <td>1906</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>50962</td>
+                                          <td>0</td>
+                                          <td>3688</td>
+                                          <td>112</td>
+                                          <td>93.06%</td>
+                                          <td>295.5</td>
+                                          <td>252.7</td>
+                                          <td>1305</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>61168</td>
+                                          <td>0</td>
+                                          <td>4722</td>
+                                          <td>151</td>
+                                          <td>92.62%</td>
+                                          <td>295.9</td>
+                                          <td>252.8</td>
+                                          <td>1727</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="folders_2_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#folders_2" aria-expanded="true" aria-controls="tables_2"><b>Additional files</b></button></h3>
+                        <div id="folders_2" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_2" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <div class="folder"><a href="trimmed_multiqc/multiqc_report.html"><span class="glyphicon glyphicon-file"></span> MultiQC report</a></div>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_3">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Chimera checking</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_3_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_3_head">Tables</a></li>
+                        </ul>
+                     </div>
+                     <p>
+                        <description>Chimeric sequences are artifacts of the PCR process and occur when portions of two separate amplicons fuse during the amplification
+                           process. The RRC analysis pipeline uses a standard chimera checking program to identify chimeric sequences and the remove
+                           from the dataset
+                        </description>
+                     </p>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_3" aria-expanded="true" aria-controls="details_3"><b>Details</b></button></h4>
+                        <div id="details_3" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    USEARCH reference based<span class="citation hidden">Robert C. Edgar. (2010) Search and clustering orders of magnitude faster than blast. Bioinformatics, 26(19):2460-2461</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Chimeric sequences were identified using the USEARCH algorithm as compared with a reference database.</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_3_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_3" aria-expanded="true" aria-controls="figures_3"><b>Figures</b></button></h3>
+                        <div id="figures_3" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_3" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Chimera checking results
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plots-chimera.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_3_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_3" aria-expanded="true" aria-controls="tables_3"><b>Tables</b></button></h3>
+                        <div id="tables_3" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_3" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Chimera checking statistics
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Chimera checking statistics
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Non-chimeras</th>
+                                          <th>Chimeras</th>
+                                          <th>Percent passed</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>71637</td>
+                                          <td>258</td>
+                                          <td>90.59%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>69302</td>
+                                          <td>692</td>
+                                          <td>91.86%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>101773</td>
+                                          <td>853</td>
+                                          <td>92.12%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>86259</td>
+                                          <td>273</td>
+                                          <td>92.05%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>62794</td>
+                                          <td>250</td>
+                                          <td>91.98%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>67000</td>
+                                          <td>1177</td>
+                                          <td>89.82%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>120491</td>
+                                          <td>2562</td>
+                                          <td>90.47%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>76467</td>
+                                          <td>2531</td>
+                                          <td>89.00%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>50624</td>
+                                          <td>338</td>
+                                          <td>92.44%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>60374</td>
+                                          <td>794</td>
+                                          <td>91.42%</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_4">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Read count simplification</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_4_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_4_head">Tables</a></li>
+                        </ul>
+                     </div>
+                     <p>
+                        <description>Reduce read count complexity by a number of techniques, e.g. dereplication or sequences clustering.</description>
+                     </p>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_4" aria-expanded="true" aria-controls="details_4"><b>Details</b></button></h4>
+                        <div id="details_4" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    DADA2 amplicon denoising<span class="citation hidden">Callahan BJ, McMurdie PJ, Rosen MJ, Han AW, Johnson AJA and Holmes SP (2016). DADA2: High-resolution sample inference from
+                                       Illumina amplicon data. Nature Methods, 13:581-583. doi: 10.1038/nmeth.3869</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Amplicon Sequence Variants (ASVs) were infered using DADA2.</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_4_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_4" aria-expanded="true" aria-controls="figures_4"><b>Figures</b></button></h3>
+                        <div id="figures_4" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_4" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Comparison of observation and sequence counts in each sample
+                                 </h4>
+                                 <dd><img class="img-fluid" src="dada2_table_plots-samples.png"></dd>
+                                 <hr>
+                                 <h4 class="figure">
+                                    
+                                    Figure 2.
+                                    Comparison of samples and sequence counts for ASVs/OTUs
+                                 </h4>
+                                 <dd><img class="img-fluid" src="dada2_table_plots-observations.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_4_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_4" aria-expanded="true" aria-controls="tables_4"><b>Tables</b></button></h3>
+                        <div id="tables_4" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_4" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Observation (ASV/OTU) and total sequence counts per sample
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Observation (ASV/OTU) and total sequence counts per sample
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Observations</th>
+                                          <th>Counts</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>272</td>
+                                          <td>50228</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>232</td>
+                                          <td>62495</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>302</td>
+                                          <td>60000</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>360</td>
+                                          <td>68927</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>262</td>
+                                          <td>71223</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>373</td>
+                                          <td>66460</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>474</td>
+                                          <td>75625</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>287</td>
+                                          <td>85826</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>357</td>
+                                          <td>101270</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>530</td>
+                                          <td>119426</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_5">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Taxonomic annotation</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_5_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_5_head">Tables</a></li>
+                        </ul>
+                     </div>
+                     <p>
+                        <description>Annotate sequences with taxonomic information</description>
+                     </p>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_5" aria-expanded="true" aria-controls="details_5"><b>Details</b></button></h4>
+                        <div id="details_5" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    Naive Bayseian classifier<span class="citation hidden">Callahan BJ, McMurdie PJ, Rosen MJ, Han AW, Johnson AJA and Holmes SP (2016). DADA2: High-resolution sample inference from
+                                       Illumina amplicon data. Nature Methods, 13:581-583. doi: 10.1038/nmeth.3869</span><span class="citation hidden">Wang Q, Garrity GM, Tiedje JM, and Cole JR. (2007). Naive Bayesian classifier for rapid assignment of rRNA sequences into
+                                       the new bacterial taxonomy. Applied and environmental microbiology, 73(16):5261-5267. doi:10.1128/AEM.00062-07</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Taxonomic annotations were deteremined using a Naive Bayesian approach include in the DADA2 package.</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_5_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_5" aria-expanded="true" aria-controls="figures_5"><b>Figures</b></button></h3>
+                        <div id="figures_5" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_5" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Summary of major level 2 taxa
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plots-qiime.png"></dd>
+                                 <hr>
+                                 <h4 class="figure">
+                                    
+                                    Figure 2.
+                                    Summary of taxonomic annotation depth
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plot-taxa-depth.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_5_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_5" aria-expanded="true" aria-controls="tables_5"><b>Tables</b></button></h3>
+                        <div id="tables_5" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_5" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Summary of major level 2 taxa
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Summary of major level 2 taxa
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Taxon</th>
+                                          <th>Counts</th>
+                                          <th>Percent</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Bacteria;Firmicutes</td>
+                                          <td>479002</td>
+                                          <td>62.90%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Bacteroidota</td>
+                                          <td>268343</td>
+                                          <td>35.24%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Desulfobacterota</td>
+                                          <td>4940</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Deferribacterota</td>
+                                          <td>3442</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Actinobacteriota</td>
+                                          <td>2871</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Proteobacteria</td>
+                                          <td>2258</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteria;Cyanobacteria</td>
+                                          <td>624</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Unassigned</td>
+                                          <td>0</td>
+                                          <td>0%</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                                 <hr>
+                                 <h4>
+                                    Table 2.
+                                    Summary of taxonomic annotation depth - Grouped by level 2 taxa
+                                 </h4>
+                                 <table id="data_table_2" class="table data-table caption-top">
+                                    <caption>
+                                       Table 2.
+                                       Summary of taxonomic annotation depth - Grouped by level 2 taxa
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Level 2 taxon</th>
+                                          <th>Level 2 raw counts</th>
+                                          <th>Level 3 raw counts</th>
+                                          <th>Level 4 raw counts</th>
+                                          <th>Level 5 raw counts</th>
+                                          <th>Level 6 raw counts</th>
+                                          <th>Level 7 raw counts</th>
+                                          <th>Level 2 relative counts</th>
+                                          <th>Level 3 relative counts</th>
+                                          <th>Level 4 relative counts</th>
+                                          <th>Level 5 relative counts</th>
+                                          <th>Level 6 relative counts</th>
+                                          <th>Level 7 relative counts</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Firmicutes</td>
+                                          <td>3</td>
+                                          <td>46</td>
+                                          <td>14390</td>
+                                          <td>73985</td>
+                                          <td>287585</td>
+                                          <td>102993</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                          <td>1.89%</td>
+                                          <td>9.72%</td>
+                                          <td>37.77%</td>
+                                          <td>13.53%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Bacteroidota</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>3</td>
+                                          <td>187459</td>
+                                          <td>67385</td>
+                                          <td>13496</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>24.62%</td>
+                                          <td>8.85%</td>
+                                          <td>1.77%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Desulfobacterota</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>45</td>
+                                          <td>4895</td>
+                                          <td>0</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                          <td>-</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Deferribacterota</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>6</td>
+                                          <td>3436</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Actinobacteriota</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>70</td>
+                                          <td>2801</td>
+                                          <td>0</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                          <td>-</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Proteobacteria</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>2247</td>
+                                          <td>11</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>&lt; 1%</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Cyanobacteria</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>624</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>&lt; 1%</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                          <td>-</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_6">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Data normalization</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_6_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_6_head">Tables</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_6" aria-expanded="true" aria-controls="details_6"><b>Details</b></button></h4>
+                        <div id="details_6" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    Method: 
+                                    Taxonomic filter
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Data are filtered to remove read counts associated with particular taxa</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>filter = c__Chloroplast,f__mitochondria,D_4__Mitochondria,D_3__Chloroplast,Chloroplast,Mitochondria,Synthetic_Rhodanobacter_Spike-In</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="method">
+                                    Method: 
+                                    Relative sequence abundance
+                                 </dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Read counts were normalized as fraction of total sequence counts in each sample</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_6_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_6" aria-expanded="true" aria-controls="figures_6"><b>Figures</b></button></h3>
+                        <div id="figures_6" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_6" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    
+                                    Figure 1.
+                                    Filtering stats
+                                 </h4>
+                                 <dd><img class="img-fluid" src="taxa_diff.png"></dd>
+                                 <hr>
+                                 <h4 class="figure">
+                                    
+                                    Figure 2.
+                                    PCA plots of normalized data (relative sequence abundance)
+                                 </h4>
+                                 <dd><img class="img-fluid" src="plot-taxa-pca.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_6_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_6" aria-expanded="true" aria-controls="tables_6"><b>Tables</b></button></h3>
+                        <div id="tables_6" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_6" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    Table 1.
+                                    Filtering stats
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       Table 1.
+                                       Filtering stats
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Original</th>
+                                          <th>Filtered</th>
+                                          <th>Retained</th>
+                                          <th>Percent Retained</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Sample001</td>
+                                          <td>71223</td>
+                                          <td>0</td>
+                                          <td>71223</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample002</td>
+                                          <td>68927</td>
+                                          <td>0</td>
+                                          <td>68927</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample003</td>
+                                          <td>101270</td>
+                                          <td>0</td>
+                                          <td>101270</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample004</td>
+                                          <td>85826</td>
+                                          <td>0</td>
+                                          <td>85826</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample005</td>
+                                          <td>62495</td>
+                                          <td>0</td>
+                                          <td>62495</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample006</td>
+                                          <td>66460</td>
+                                          <td>0</td>
+                                          <td>66460</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample007</td>
+                                          <td>119426</td>
+                                          <td>0</td>
+                                          <td>119426</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample008</td>
+                                          <td>75625</td>
+                                          <td>0</td>
+                                          <td>75625</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample009</td>
+                                          <td>50228</td>
+                                          <td>0</td>
+                                          <td>50228</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                       <tr>
+                                          <td>Sample010</td>
+                                          <td>60000</td>
+                                          <td>0</td>
+                                          <td>60000</td>
+                                          <td>100.00 %</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_7">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Big table - Quantification of genomic features</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_7_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_7_head">Tables</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_5" aria-expanded="true" aria-controls="details_7"><b>Details</b></button></h4>
+                        <div id="details_7" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    			Method: 
+                                    			FeatureCounts<span class="citation hidden">Liao, Y., et al. (2014). "featureCounts: an efficient general purpose program for assigning sequence reads to genomic features."
+                                       Bioinformatics 30(7): 923-930.</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Abundance of genomic features (e.g., genes) were quantified as raw counts based on read alignments using featureCounts.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>reference = hg38_mRNA.gtf</li>
+                                       <li>parameters = -t exon -g gene_id --countReadPairs -s 2</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="method">
+                                    			Method: 
+                                    			FeatureCounts<span class="citation hidden">Liao, Y., et al. (2014). "featureCounts: an efficient general purpose program for assigning sequence reads to genomic features."
+                                       Bioinformatics 30(7): 923-930.</span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Abundance of genomic features (e.g., genes) were quantified as raw counts based on read alignments using featureCounts.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>reference = reference_flattened.saf</li>
+                                       <li>parameters = --countReadPairs -F SAF -O --fraction -f -s 2</li>
+                                    </ul>
+                                 </dd>
+                                 <dt class="database"><span class="ref">Gene annotation database
+                                       							:
+                                       						</span>hg38 Ensembl<span class="citation hidden">Gencode human release 26 (ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_26/gencode.v26.annotation.gtf.gz)</span></dt>
+                                 <dd class="database">
+                                    <p>
+                                       <description>Ensembl annotations for human genome v.hg38</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_7_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_7" aria-expanded="true" aria-controls="figures_7"><b>Figures</b></button></h3>
+                        <div id="figures_7" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_7" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    			
+                                    			Figure
+                                    			1
+                                    			.
+                                    			Quantification results
+                                 </h4>
+                                 <dd><img class="img-fluid" src="report_plots-gene_sum.png"></dd>
+                                 <hr>
+                                 <h4 class="figure">
+                                    			
+                                    			Figure
+                                    			2
+                                    			.
+                                    			PCA plot
+                                 </h4>
+                                 <dd><img class="img-fluid" src="genes_pca.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_7_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_7" aria-expanded="true" aria-controls="tables_7"><b>Tables</b></button></h3>
+                        <div id="tables_7" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_7" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    			Table
+                                    			1
+                                    			.
+                                    			Data processing summary statistics
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       			Table
+                                       			1
+                                       			.
+                                       			Data processing summary statistics
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Stats</th>
+                                          <th>Raw reads</th>
+                                          <th>Trimmed reads</th>
+                                          <th>Percent</th>
+                                          <th>Alignments</th>
+                                          <th>Percent</th>
+                                          <th>Alignments, duplicates removed</th>
+                                          <th>Percent</th>
+                                          <th>rRNA sequence counts</th>
+                                          <th>Percent</th>
+                                          <th>Unassigned_MultiMapping</th>
+                                          <th>Percent</th>
+                                          <th>Unassigned_NoFeatures</th>
+                                          <th>Percent</th>
+                                          <th>Unassigned_Ambiguity</th>
+                                          <th>Percent</th>
+                                          <th>Gene sum</th>
+                                          <th>Percent</th>
+                                          <th>Genes expressed (out of 57807)</th>
+                                          <th>Entropy (base 2)</th>
+                                          <th>Isoform sum</th>
+                                          <th>Percent</th>
+                                          <th>Isoforms expressed (out of 248795)</th>
+                                          <th>Entropy (base 2)</th>
+                                          <th>Read length</th>
+                                          <th>Directions</th>
+                                          <th>Orientation</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>SP09_11101_A2_BR24_129</td>
+                                          <td>80879816</td>
+                                          <td>80432892</td>
+                                          <td>0.994474</td>
+                                          <td>76499861</td>
+                                          <td>0.945846</td>
+                                          <td>3210401</td>
+                                          <td>0.0396935</td>
+                                          <td>4393066</td>
+                                          <td>0.054316</td>
+                                          <td>53765145</td>
+                                          <td>0.664754</td>
+                                          <td>7636493</td>
+                                          <td>0.0944178</td>
+                                          <td>2454677</td>
+                                          <td>0.0303497</td>
+                                          <td>56784490</td>
+                                          <td>0.702085</td>
+                                          <td>20369</td>
+                                          <td>12.211</td>
+                                          <td>68258581</td>
+                                          <td>0.843951</td>
+                                          <td>84031</td>
+                                          <td>13.600</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP09_13811_D13_BR24_131</td>
+                                          <td>82430097</td>
+                                          <td>81938881</td>
+                                          <td>0.994041</td>
+                                          <td>70157455</td>
+                                          <td>0.851115</td>
+                                          <td>21712397</td>
+                                          <td>0.263404</td>
+                                          <td>1528871</td>
+                                          <td>0.0185475</td>
+                                          <td>23487364</td>
+                                          <td>0.284937</td>
+                                          <td>11124586</td>
+                                          <td>0.134958</td>
+                                          <td>3782431</td>
+                                          <td>0.0458865</td>
+                                          <td>48281131</td>
+                                          <td>0.585722</td>
+                                          <td>43032</td>
+                                          <td>13.714</td>
+                                          <td>55757981</td>
+                                          <td>0.676427</td>
+                                          <td>149859</td>
+                                          <td>15.611</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Unstranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP09_14200_A17_BR24_132</td>
+                                          <td>74541848</td>
+                                          <td>74184271</td>
+                                          <td>0.995203</td>
+                                          <td>72568395</td>
+                                          <td>0.973526</td>
+                                          <td>8508980</td>
+                                          <td>0.11415</td>
+                                          <td>4365072</td>
+                                          <td>0.0585587</td>
+                                          <td>52269616</td>
+                                          <td>0.701212</td>
+                                          <td>3654337</td>
+                                          <td>0.049024</td>
+                                          <td>2442585</td>
+                                          <td>0.032768</td>
+                                          <td>57568869</td>
+                                          <td>0.772303</td>
+                                          <td>24114</td>
+                                          <td>12.147</td>
+                                          <td>67265733</td>
+                                          <td>0.902389</td>
+                                          <td>111030</td>
+                                          <td>13.653</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP09_2940_A24_BR24_123</td>
+                                          <td>89054793</td>
+                                          <td>88515374</td>
+                                          <td>0.993943</td>
+                                          <td>51118607</td>
+                                          <td>0.574013</td>
+                                          <td>3974379</td>
+                                          <td>0.0446285</td>
+                                          <td>4205422</td>
+                                          <td>0.0472229</td>
+                                          <td>38452349</td>
+                                          <td>0.431783</td>
+                                          <td>4301715</td>
+                                          <td>0.0483041</td>
+                                          <td>1670729</td>
+                                          <td>0.0187607</td>
+                                          <td>38778642</td>
+                                          <td>0.435447</td>
+                                          <td>21394</td>
+                                          <td>12.409</td>
+                                          <td>46790204</td>
+                                          <td>0.525409</td>
+                                          <td>93806</td>
+                                          <td>13.931</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP09_7799_D9_BR24_127</td>
+                                          <td>91105323</td>
+                                          <td>90518903</td>
+                                          <td>0.993563</td>
+                                          <td>85773982</td>
+                                          <td>0.941482</td>
+                                          <td>4509247</td>
+                                          <td>0.0494949</td>
+                                          <td>11442379</td>
+                                          <td>0.125595</td>
+                                          <td>114768065</td>
+                                          <td>1.25973</td>
+                                          <td>6143627</td>
+                                          <td>0.0674343</td>
+                                          <td>2568671</td>
+                                          <td>0.0281945</td>
+                                          <td>60648721</td>
+                                          <td>0.665699</td>
+                                          <td>23580</td>
+                                          <td>11.965</td>
+                                          <td>73619314</td>
+                                          <td>0.808068</td>
+                                          <td>94376</td>
+                                          <td>13.301</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP12_10044_A1_BR24_94</td>
+                                          <td>100633137</td>
+                                          <td>100188142</td>
+                                          <td>0.995578</td>
+                                          <td>93555423</td>
+                                          <td>0.929668</td>
+                                          <td>16944221</td>
+                                          <td>0.168376</td>
+                                          <td>2872827</td>
+                                          <td>0.0285475</td>
+                                          <td>38417491</td>
+                                          <td>0.381758</td>
+                                          <td>5309346</td>
+                                          <td>0.0527594</td>
+                                          <td>3325074</td>
+                                          <td>0.0330415</td>
+                                          <td>77458555</td>
+                                          <td>0.769712</td>
+                                          <td>25182</td>
+                                          <td>12.358</td>
+                                          <td>88297091</td>
+                                          <td>0.877416</td>
+                                          <td>129057</td>
+                                          <td>14.112</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP12_12425_A1_BR24_95</td>
+                                          <td>75579081</td>
+                                          <td>75257491</td>
+                                          <td>0.995745</td>
+                                          <td>73808896</td>
+                                          <td>0.976578</td>
+                                          <td>9885839</td>
+                                          <td>0.130801</td>
+                                          <td>3803107</td>
+                                          <td>0.0503196</td>
+                                          <td>49190106</td>
+                                          <td>0.650843</td>
+                                          <td>3655753</td>
+                                          <td>0.0483699</td>
+                                          <td>2610821</td>
+                                          <td>0.0345442</td>
+                                          <td>57886563</td>
+                                          <td>0.765907</td>
+                                          <td>24217</td>
+                                          <td>12.458</td>
+                                          <td>68675426</td>
+                                          <td>0.908657</td>
+                                          <td>117834</td>
+                                          <td>13.894</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP12_2526_A1_BR24_92</td>
+                                          <td>80549389</td>
+                                          <td>80120724</td>
+                                          <td>0.994678</td>
+                                          <td>59699532</td>
+                                          <td>0.741154</td>
+                                          <td>6416105</td>
+                                          <td>0.0796543</td>
+                                          <td>2677553</td>
+                                          <td>0.0332411</td>
+                                          <td>27880171</td>
+                                          <td>0.346125</td>
+                                          <td>3122953</td>
+                                          <td>0.0387707</td>
+                                          <td>2013059</td>
+                                          <td>0.0249916</td>
+                                          <td>49171910</td>
+                                          <td>0.610457</td>
+                                          <td>21797</td>
+                                          <td>12.224</td>
+                                          <td>56377933</td>
+                                          <td>0.699918</td>
+                                          <td>102627</td>
+                                          <td>13.861</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP12_3258_A1_BR24_93</td>
+                                          <td>96654480</td>
+                                          <td>96070924</td>
+                                          <td>0.993962</td>
+                                          <td>22138831</td>
+                                          <td>0.229051</td>
+                                          <td>3074554</td>
+                                          <td>0.0318097</td>
+                                          <td>5781033</td>
+                                          <td>0.0598113</td>
+                                          <td>24704698</td>
+                                          <td>0.255598</td>
+                                          <td>2694616</td>
+                                          <td>0.0278789</td>
+                                          <td>615097</td>
+                                          <td>0.00636387</td>
+                                          <td>15125017</td>
+                                          <td>0.156485</td>
+                                          <td>20705</td>
+                                          <td>12.351</td>
+                                          <td>18455217</td>
+                                          <td>0.19094</td>
+                                          <td>89197</td>
+                                          <td>13.685</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP13_7166_A1_BR24_96</td>
+                                          <td>80576316</td>
+                                          <td>80189944</td>
+                                          <td>0.995205</td>
+                                          <td>75139017</td>
+                                          <td>0.93252</td>
+                                          <td>7260423</td>
+                                          <td>0.0901062</td>
+                                          <td>3629856</td>
+                                          <td>0.0450487</td>
+                                          <td>37281801</td>
+                                          <td>0.462689</td>
+                                          <td>4546135</td>
+                                          <td>0.0564202</td>
+                                          <td>2578682</td>
+                                          <td>0.032003</td>
+                                          <td>61073222</td>
+                                          <td>0.757955</td>
+                                          <td>23434</td>
+                                          <td>12.343</td>
+                                          <td>70361781</td>
+                                          <td>0.873232</td>
+                                          <td>112489</td>
+                                          <td>13.981</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP14_12292_A1_BR24_99</td>
+                                          <td>76506774</td>
+                                          <td>76162742</td>
+                                          <td>0.995503</td>
+                                          <td>70301106</td>
+                                          <td>0.918887</td>
+                                          <td>18632871</td>
+                                          <td>0.243545</td>
+                                          <td>3860945</td>
+                                          <td>0.0504654</td>
+                                          <td>44492194</td>
+                                          <td>0.581546</td>
+                                          <td>4008733</td>
+                                          <td>0.0523971</td>
+                                          <td>2438149</td>
+                                          <td>0.0318684</td>
+                                          <td>56284381</td>
+                                          <td>0.735678</td>
+                                          <td>25281</td>
+                                          <td>12.350</td>
+                                          <td>65291863</td>
+                                          <td>0.853413</td>
+                                          <td>131588</td>
+                                          <td>14.077</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP14_1337_A1_BR24_97</td>
+                                          <td>82077494</td>
+                                          <td>81628380</td>
+                                          <td>0.994528</td>
+                                          <td>61808440</td>
+                                          <td>0.75305</td>
+                                          <td>7429448</td>
+                                          <td>0.0905175</td>
+                                          <td>2348464</td>
+                                          <td>0.0286128</td>
+                                          <td>23127766</td>
+                                          <td>0.28178</td>
+                                          <td>3914986</td>
+                                          <td>0.0476987</td>
+                                          <td>2127526</td>
+                                          <td>0.0259209</td>
+                                          <td>50914287</td>
+                                          <td>0.62032</td>
+                                          <td>22596</td>
+                                          <td>12.202</td>
+                                          <td>58467852</td>
+                                          <td>0.712349</td>
+                                          <td>107846</td>
+                                          <td>13.885</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP14_5155_A1_BR24_98</td>
+                                          <td>85688755</td>
+                                          <td>85204798</td>
+                                          <td>0.994352</td>
+                                          <td>56824841</td>
+                                          <td>0.663154</td>
+                                          <td>14105395</td>
+                                          <td>0.164612</td>
+                                          <td>5344843</td>
+                                          <td>0.0623751</td>
+                                          <td>45315224</td>
+                                          <td>0.528835</td>
+                                          <td>2902786</td>
+                                          <td>0.0338759</td>
+                                          <td>1766005</td>
+                                          <td>0.0206095</td>
+                                          <td>45354466</td>
+                                          <td>0.529293</td>
+                                          <td>23036</td>
+                                          <td>12.003</td>
+                                          <td>52125785</td>
+                                          <td>0.608315</td>
+                                          <td>119414</td>
+                                          <td>13.657</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP15_10814_A11_BR24_100</td>
+                                          <td>73782318</td>
+                                          <td>73442276</td>
+                                          <td>0.995391</td>
+                                          <td>71478434</td>
+                                          <td>0.968775</td>
+                                          <td>16966259</td>
+                                          <td>0.22995</td>
+                                          <td>1616877</td>
+                                          <td>0.0219142</td>
+                                          <td>24544958</td>
+                                          <td>0.332667</td>
+                                          <td>11476924</td>
+                                          <td>0.155551</td>
+                                          <td>3975273</td>
+                                          <td>0.0538784</td>
+                                          <td>49610824</td>
+                                          <td>0.672394</td>
+                                          <td>45172</td>
+                                          <td>13.395</td>
+                                          <td>57591767</td>
+                                          <td>0.780563</td>
+                                          <td>160660</td>
+                                          <td>15.340</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Unstranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP16_19305_A2_BR24_103</td>
+                                          <td>77214823</td>
+                                          <td>76885255</td>
+                                          <td>0.995732</td>
+                                          <td>75694428</td>
+                                          <td>0.98031</td>
+                                          <td>18705518</td>
+                                          <td>0.242253</td>
+                                          <td>3543540</td>
+                                          <td>0.045892</td>
+                                          <td>45047934</td>
+                                          <td>0.58341</td>
+                                          <td>3415793</td>
+                                          <td>0.0442375</td>
+                                          <td>2659411</td>
+                                          <td>0.0344417</td>
+                                          <td>61445939</td>
+                                          <td>0.795779</td>
+                                          <td>25111</td>
+                                          <td>12.305</td>
+                                          <td>70789786</td>
+                                          <td>0.91679</td>
+                                          <td>129411</td>
+                                          <td>13.976</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP16_2867_E1_BR24_101</td>
+                                          <td>96389036</td>
+                                          <td>95955235</td>
+                                          <td>0.995499</td>
+                                          <td>90162611</td>
+                                          <td>0.935403</td>
+                                          <td>19662009</td>
+                                          <td>0.203986</td>
+                                          <td>9299472</td>
+                                          <td>0.0964785</td>
+                                          <td>93320702</td>
+                                          <td>0.968167</td>
+                                          <td>4506258</td>
+                                          <td>0.0467507</td>
+                                          <td>2744723</td>
+                                          <td>0.0284755</td>
+                                          <td>69682191</td>
+                                          <td>0.722927</td>
+                                          <td>25179</td>
+                                          <td>12.288</td>
+                                          <td>80544544</td>
+                                          <td>0.835619</td>
+                                          <td>131669</td>
+                                          <td>13.928</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP17_11213_A1_BR24_106</td>
+                                          <td>79112932</td>
+                                          <td>78756501</td>
+                                          <td>0.995495</td>
+                                          <td>76651046</td>
+                                          <td>0.968881</td>
+                                          <td>27616833</td>
+                                          <td>0.349081</td>
+                                          <td>2744892</td>
+                                          <td>0.0346959</td>
+                                          <td>35729545</td>
+                                          <td>0.451627</td>
+                                          <td>4170254</td>
+                                          <td>0.0527127</td>
+                                          <td>2778948</td>
+                                          <td>0.0351263</td>
+                                          <td>62958293</td>
+                                          <td>0.795803</td>
+                                          <td>25971</td>
+                                          <td>12.345</td>
+                                          <td>72149430</td>
+                                          <td>0.91198</td>
+                                          <td>137125</td>
+                                          <td>14.137</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP17_9184_A2_BR24_104</td>
+                                          <td>94407731</td>
+                                          <td>93906734</td>
+                                          <td>0.994693</td>
+                                          <td>71408609</td>
+                                          <td>0.756385</td>
+                                          <td>20104533</td>
+                                          <td>0.212954</td>
+                                          <td>3405197</td>
+                                          <td>0.036069</td>
+                                          <td>36183010</td>
+                                          <td>0.383263</td>
+                                          <td>3290622</td>
+                                          <td>0.0348554</td>
+                                          <td>2475910</td>
+                                          <td>0.0262257</td>
+                                          <td>58971296</td>
+                                          <td>0.624645</td>
+                                          <td>23676</td>
+                                          <td>12.217</td>
+                                          <td>67650947</td>
+                                          <td>0.716583</td>
+                                          <td>124118</td>
+                                          <td>13.918</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP17_9276_A2_BR24_105</td>
+                                          <td>76532029</td>
+                                          <td>76182959</td>
+                                          <td>0.995439</td>
+                                          <td>74842963</td>
+                                          <td>0.97793</td>
+                                          <td>10006651</td>
+                                          <td>0.130751</td>
+                                          <td>6169746</td>
+                                          <td>0.0806165</td>
+                                          <td>64186707</td>
+                                          <td>0.838691</td>
+                                          <td>2366063</td>
+                                          <td>0.030916</td>
+                                          <td>2830986</td>
+                                          <td>0.0369909</td>
+                                          <td>60209561</td>
+                                          <td>0.786724</td>
+                                          <td>21890</td>
+                                          <td>12.155</td>
+                                          <td>68681826</td>
+                                          <td>0.897426</td>
+                                          <td>103971</td>
+                                          <td>13.688</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP18_1153_A1_BR24_107</td>
+                                          <td>80623269</td>
+                                          <td>80276925</td>
+                                          <td>0.995704</td>
+                                          <td>77613884</td>
+                                          <td>0.962673</td>
+                                          <td>22014498</td>
+                                          <td>0.273054</td>
+                                          <td>3162177</td>
+                                          <td>0.0392216</td>
+                                          <td>40411406</td>
+                                          <td>0.501238</td>
+                                          <td>3992944</td>
+                                          <td>0.049526</td>
+                                          <td>2673727</td>
+                                          <td>0.0331632</td>
+                                          <td>63326041</td>
+                                          <td>0.785456</td>
+                                          <td>25459</td>
+                                          <td>12.394</td>
+                                          <td>72999619</td>
+                                          <td>0.905441</td>
+                                          <td>134502</td>
+                                          <td>14.129</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP18_22515_A1_BR24_110</td>
+                                          <td>83059253</td>
+                                          <td>82635594</td>
+                                          <td>0.994899</td>
+                                          <td>81584895</td>
+                                          <td>0.982249</td>
+                                          <td>43111919</td>
+                                          <td>0.51905</td>
+                                          <td>5579451</td>
+                                          <td>0.0671743</td>
+                                          <td>60567722</td>
+                                          <td>0.729211</td>
+                                          <td>3371762</td>
+                                          <td>0.0405947</td>
+                                          <td>2986736</td>
+                                          <td>0.0359591</td>
+                                          <td>66220247</td>
+                                          <td>0.797265</td>
+                                          <td>25028</td>
+                                          <td>12.148</td>
+                                          <td>75807340</td>
+                                          <td>0.91269</td>
+                                          <td>138322</td>
+                                          <td>13.893</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP18_3064_B2_BR24_108</td>
+                                          <td>94872165</td>
+                                          <td>94417389</td>
+                                          <td>0.995206</td>
+                                          <td>86507897</td>
+                                          <td>0.911836</td>
+                                          <td>19262222</td>
+                                          <td>0.203033</td>
+                                          <td>4442103</td>
+                                          <td>0.046822</td>
+                                          <td>49631318</td>
+                                          <td>0.523139</td>
+                                          <td>3375599</td>
+                                          <td>0.0355805</td>
+                                          <td>2685638</td>
+                                          <td>0.028308</td>
+                                          <td>72335444</td>
+                                          <td>0.762452</td>
+                                          <td>23902</td>
+                                          <td>11.819</td>
+                                          <td>81437343</td>
+                                          <td>0.85839</td>
+                                          <td>124522</td>
+                                          <td>13.562</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP18_5330_B1_BR24_109</td>
+                                          <td>76033640</td>
+                                          <td>75695425</td>
+                                          <td>0.995552</td>
+                                          <td>74260033</td>
+                                          <td>0.976673</td>
+                                          <td>13049689</td>
+                                          <td>0.17163</td>
+                                          <td>1312670</td>
+                                          <td>0.0172643</td>
+                                          <td>24815552</td>
+                                          <td>0.326376</td>
+                                          <td>4362637</td>
+                                          <td>0.0573777</td>
+                                          <td>2568488</td>
+                                          <td>0.0337809</td>
+                                          <td>61465034</td>
+                                          <td>0.808393</td>
+                                          <td>23832</td>
+                                          <td>12.329</td>
+                                          <td>70706792</td>
+                                          <td>0.929941</td>
+                                          <td>122150</td>
+                                          <td>14.083</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP19_12322_A1_BR24_113</td>
+                                          <td>77055406</td>
+                                          <td>76701608</td>
+                                          <td>0.995409</td>
+                                          <td>74533615</td>
+                                          <td>0.967273</td>
+                                          <td>33592873</td>
+                                          <td>0.435957</td>
+                                          <td>2626103</td>
+                                          <td>0.0340807</td>
+                                          <td>34305486</td>
+                                          <td>0.445205</td>
+                                          <td>2790296</td>
+                                          <td>0.0362116</td>
+                                          <td>2934178</td>
+                                          <td>0.0380788</td>
+                                          <td>62364538</td>
+                                          <td>0.809347</td>
+                                          <td>24896</td>
+                                          <td>12.422</td>
+                                          <td>70991021</td>
+                                          <td>0.921298</td>
+                                          <td>135703</td>
+                                          <td>14.177</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP19_15654_A2_BR24_114</td>
+                                          <td>77316446</td>
+                                          <td>76989189</td>
+                                          <td>0.995767</td>
+                                          <td>75724399</td>
+                                          <td>0.979409</td>
+                                          <td>17057808</td>
+                                          <td>0.220623</td>
+                                          <td>2129076</td>
+                                          <td>0.0275372</td>
+                                          <td>32654101</td>
+                                          <td>0.422344</td>
+                                          <td>2975648</td>
+                                          <td>0.0384866</td>
+                                          <td>2621466</td>
+                                          <td>0.0339057</td>
+                                          <td>63050225</td>
+                                          <td>0.815483</td>
+                                          <td>24063</td>
+                                          <td>12.267</td>
+                                          <td>72552873</td>
+                                          <td>0.938389</td>
+                                          <td>123098</td>
+                                          <td>13.871</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP19_19313_A2_BR24_115</td>
+                                          <td>80830313</td>
+                                          <td>80478635</td>
+                                          <td>0.995649</td>
+                                          <td>76267026</td>
+                                          <td>0.943545</td>
+                                          <td>16312191</td>
+                                          <td>0.201808</td>
+                                          <td>2027662</td>
+                                          <td>0.0250854</td>
+                                          <td>27907786</td>
+                                          <td>0.345264</td>
+                                          <td>3401536</td>
+                                          <td>0.0420824</td>
+                                          <td>2895780</td>
+                                          <td>0.0358254</td>
+                                          <td>64328925</td>
+                                          <td>0.795851</td>
+                                          <td>24186</td>
+                                          <td>12.373</td>
+                                          <td>72902146</td>
+                                          <td>0.901916</td>
+                                          <td>124135</td>
+                                          <td>14.079</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP19_19618_A3_BR24_116</td>
+                                          <td>82614384</td>
+                                          <td>82248283</td>
+                                          <td>0.995569</td>
+                                          <td>81006434</td>
+                                          <td>0.980537</td>
+                                          <td>29201841</td>
+                                          <td>0.353472</td>
+                                          <td>4004646</td>
+                                          <td>0.048474</td>
+                                          <td>51462673</td>
+                                          <td>0.622926</td>
+                                          <td>3477252</td>
+                                          <td>0.0420902</td>
+                                          <td>3075091</td>
+                                          <td>0.0372222</td>
+                                          <td>65123066</td>
+                                          <td>0.788278</td>
+                                          <td>25662</td>
+                                          <td>12.476</td>
+                                          <td>76089695</td>
+                                          <td>0.921022</td>
+                                          <td>135998</td>
+                                          <td>14.153</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP19_20529_A1_BR24_117</td>
+                                          <td>89229786</td>
+                                          <td>88832010</td>
+                                          <td>0.995542</td>
+                                          <td>87350147</td>
+                                          <td>0.978935</td>
+                                          <td>37082936</td>
+                                          <td>0.415589</td>
+                                          <td>2404077</td>
+                                          <td>0.0269425</td>
+                                          <td>39455786</td>
+                                          <td>0.442182</td>
+                                          <td>4606725</td>
+                                          <td>0.0516277</td>
+                                          <td>3280603</td>
+                                          <td>0.0367658</td>
+                                          <td>70971999</td>
+                                          <td>0.795385</td>
+                                          <td>26541</td>
+                                          <td>12.439</td>
+                                          <td>82582042</td>
+                                          <td>0.925499</td>
+                                          <td>143731</td>
+                                          <td>14.161</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP19_21242_A2_BR24_118</td>
+                                          <td>80693053</td>
+                                          <td>80320573</td>
+                                          <td>0.995384</td>
+                                          <td>79183716</td>
+                                          <td>0.981295</td>
+                                          <td>35795045</td>
+                                          <td>0.443595</td>
+                                          <td>3794900</td>
+                                          <td>0.0470288</td>
+                                          <td>46360977</td>
+                                          <td>0.574535</td>
+                                          <td>2928772</td>
+                                          <td>0.0362952</td>
+                                          <td>2925257</td>
+                                          <td>0.0362517</td>
+                                          <td>65013292</td>
+                                          <td>0.805686</td>
+                                          <td>25528</td>
+                                          <td>12.274</td>
+                                          <td>74731848</td>
+                                          <td>0.926125</td>
+                                          <td>136613</td>
+                                          <td>13.887</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP19_532_A2_BR24_111</td>
+                                          <td>75874642</td>
+                                          <td>75545427</td>
+                                          <td>0.995661</td>
+                                          <td>74392408</td>
+                                          <td>0.980465</td>
+                                          <td>30015285</td>
+                                          <td>0.39559</td>
+                                          <td>4552775</td>
+                                          <td>0.0600039</td>
+                                          <td>53727090</td>
+                                          <td>0.708103</td>
+                                          <td>4260542</td>
+                                          <td>0.0561524</td>
+                                          <td>2655565</td>
+                                          <td>0.0349994</td>
+                                          <td>57918891</td>
+                                          <td>0.76335</td>
+                                          <td>25788</td>
+                                          <td>12.313</td>
+                                          <td>68101382</td>
+                                          <td>0.897551</td>
+                                          <td>139682</td>
+                                          <td>13.889</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP19_7119_A1_BR24_112</td>
+                                          <td>84877088</td>
+                                          <td>84521499</td>
+                                          <td>0.995811</td>
+                                          <td>80643893</td>
+                                          <td>0.950126</td>
+                                          <td>20261338</td>
+                                          <td>0.238714</td>
+                                          <td>1792496</td>
+                                          <td>0.0211187</td>
+                                          <td>28169519</td>
+                                          <td>0.331886</td>
+                                          <td>3582061</td>
+                                          <td>0.0422029</td>
+                                          <td>3107192</td>
+                                          <td>0.0366081</td>
+                                          <td>67634653</td>
+                                          <td>0.796854</td>
+                                          <td>24619</td>
+                                          <td>12.348</td>
+                                          <td>76960382</td>
+                                          <td>0.906727</td>
+                                          <td>129473</td>
+                                          <td>13.984</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP20_3498_A2_BR24_120</td>
+                                          <td>84298887</td>
+                                          <td>83936466</td>
+                                          <td>0.995701</td>
+                                          <td>82708536</td>
+                                          <td>0.981134</td>
+                                          <td>18981501</td>
+                                          <td>0.225169</td>
+                                          <td>3804382</td>
+                                          <td>0.0451297</td>
+                                          <td>44913873</td>
+                                          <td>0.532793</td>
+                                          <td>2967651</td>
+                                          <td>0.0352039</td>
+                                          <td>2771893</td>
+                                          <td>0.0328817</td>
+                                          <td>69068863</td>
+                                          <td>0.819333</td>
+                                          <td>24597</td>
+                                          <td>11.980</td>
+                                          <td>78177898</td>
+                                          <td>0.927389</td>
+                                          <td>127738</td>
+                                          <td>13.624</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP20_381_A1_BR24_119</td>
+                                          <td>103998061</td>
+                                          <td>103522200</td>
+                                          <td>0.995424</td>
+                                          <td>102187426</td>
+                                          <td>0.98259</td>
+                                          <td>35930192</td>
+                                          <td>0.345489</td>
+                                          <td>5995144</td>
+                                          <td>0.0576467</td>
+                                          <td>71753043</td>
+                                          <td>0.689946</td>
+                                          <td>4923313</td>
+                                          <td>0.0473404</td>
+                                          <td>3698181</td>
+                                          <td>0.0355601</td>
+                                          <td>81014859</td>
+                                          <td>0.779004</td>
+                                          <td>26663</td>
+                                          <td>12.333</td>
+                                          <td>94341325</td>
+                                          <td>0.907145</td>
+                                          <td>144176</td>
+                                          <td>13.826</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP20_5106_B1_BR24_121</td>
+                                          <td>75658341</td>
+                                          <td>75342176</td>
+                                          <td>0.995821</td>
+                                          <td>73650000</td>
+                                          <td>0.973455</td>
+                                          <td>23433406</td>
+                                          <td>0.309727</td>
+                                          <td>2100215</td>
+                                          <td>0.0277592</td>
+                                          <td>30994621</td>
+                                          <td>0.409666</td>
+                                          <td>3648198</td>
+                                          <td>0.0482194</td>
+                                          <td>2676338</td>
+                                          <td>0.035374</td>
+                                          <td>61098296</td>
+                                          <td>0.807555</td>
+                                          <td>25271</td>
+                                          <td>12.369</td>
+                                          <td>69884516</td>
+                                          <td>0.923686</td>
+                                          <td>135383</td>
+                                          <td>14.096</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                       <tr>
+                                          <td>SP20_5860_A1_BR24_122</td>
+                                          <td>90685858</td>
+                                          <td>90271563</td>
+                                          <td>0.995432</td>
+                                          <td>88643841</td>
+                                          <td>0.977483</td>
+                                          <td>46055957</td>
+                                          <td>0.507863</td>
+                                          <td>4821909</td>
+                                          <td>0.0531716</td>
+                                          <td>59266357</td>
+                                          <td>0.653535</td>
+                                          <td>4921875</td>
+                                          <td>0.0542739</td>
+                                          <td>3366529</td>
+                                          <td>0.037123</td>
+                                          <td>69384272</td>
+                                          <td>0.765106</td>
+                                          <td>27199</td>
+                                          <td>12.312</td>
+                                          <td>81291658</td>
+                                          <td>0.896409</td>
+                                          <td>150089</td>
+                                          <td>13.890</td>
+                                          <td>150</td>
+                                          <td>PE</td>
+                                          <td>Reverse stranded</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <hr>
+               <div class="row">
+                  <div id="citations">
+                     <h2>Citations</h2>
+                     <ol id="citation_list" class="col my-3"></ol>
+                  </div>
+               </div>
+            </div><script type="text/javascript">
+            
+                var citations = [];
+                $(".citation").each(function() {
+                    if ( $(this).hasClass("hidden") ) {
+                        var i = citations.indexOf(this.innerHTML);
+                        if ( i == -1 ) {
+                            citations.push(this.innerHTML);
+                            n = citations.length;
+                        } else {
+                            n = i + 1;
+                        }
+                    var prev = $(this).prev();
+                    prefix = '';
+                    if ( prev != undefined && prev.hasClass('citation') ) {
+                        prefix=',';
+                    }
+                        this.innerHTML = '<sup>' + prefix + '<a href="#cite' + n + '">' + n + "</a></sup>";
+                        $(this).removeClass("hidden");
+                        $(this).show();
+                    }
+                });
+
+                for ( var i = 0; i < citations.length; i++ ) {
+                    var n = i + 1;
+                    $('#citation_list').append('<li id="cite' + n + '">' + citations[i] + "</li>");
+                }
+            
+            </script><script type="text/javascript">
+            
+                var curr_table;
+                $(".data-table").DataTable({ 
+                	pageLength: 25, 
+                	order:[], 
+			scrollX: true,
+			fixedColumns: true,
+                	buttons: [ 
+				{
+					extend: 'copy',
+					title: null
+				}, 
+                		{
+                    		extend: 'csvHtml5',
+                    		text: 'TSV',
+                    		extension: '.txt',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		fieldBoundary: '',
+                    		fieldSeparator: '\t'
+                		}, 
+						{
+                    		extend: 'excel',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		messageTop: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                		},
+                		{
+                    		extend: 'pdf',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		messageTop: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                		}], 
+                	layout: { topStart: 'buttons' } 
+                });
+                $(".file-table").DataTable({ pageLength: 50, responsive: true, order:[ [0, 'asc'] ] });
+            
+            </script></div>
+      </div>
+   </body>
+</html>
