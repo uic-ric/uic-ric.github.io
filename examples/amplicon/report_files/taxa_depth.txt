@@ -1,7 +1,6 @@
-Level 2 taxon	Level 0 raw counts	Level 4 raw counts	Level 5 raw counts	Level 6 raw counts	Level 7 raw counts	Level 0 relative counts	Level 4 relative counts	Level 5 relative counts	Level 6 relative counts	Level 7 relative counts
-Firmicutes	0	66051	150860	310691	21647	-	6.64%	15.17%	31.24%	2.18%
-Bacteroidota	0	0	435613	93	0	-	-	43.80%	< 1%	-
-Deferribacterota	0	0	0	0	8689	-	-	-	-	< 1%
-Proteobacteria	0	0	2	405	0	-	-	< 1%	< 1%	-
-Actinobacteriota	0	0	0	392	0	-	-	-	< 1%	-
-Unassigned	2	0	0	0	0	< 1%	-	-	-	-
+Level 2 taxon	Level 5 raw counts	Level 6 raw counts	Level 7 raw counts	Level 5 relative counts	Level 6 relative counts	Level 7 relative counts
+Bacillota	17494	503151	14185	1.79%	51.51%	1.45%
+Bacteroidota	0	432499	0	-	44.28%	-
+Deferribacterota	0	0	8675	-	-	< 1%
+Pseudomonadota	0	407	0	-	< 1%	-
+Actinomycetota	0	390	0	-	< 1%	-
