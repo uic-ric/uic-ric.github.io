@@ -1,0 +1,658 @@
+<!DOCTYPE html><html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>LC-MS Untargeted Metabolomics Processing</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.2.1.min.js"></script><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script><link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/fc-5.0.4/fh-4.0.1/r-3.0.3/sc-2.4.3/datatables.min.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script><script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/fc-5.0.4/fh-4.0.1/r-3.0.3/sc-2.4.3/datatables.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><style>
+		
+		#content {
+			transition: all 0.3s;
+			overflow-y: scroll;
+		}
+
+		#content .accordion-header {
+		--bs-accordion-active-color: var(--bs-secondary-text-emphasis);
+		--bs-accordion-active-bg: var(--bs-secondary-bg-subtle);
+		}
+
+
+		@media screen {
+		  .fullscreen {
+		    height: calc(100vh - 90px) !important;
+		  }
+		}
+
+		#sidebar_items > li.nav-item > a.active {
+		border: var(--bs-border-width) solid var(--bs-primary-border-subtle);
+		border-radius: var(--bs-border-radius);
+		background-color: var(--bs-primary-bg-subtle);
+		}
+
+		#sidebar_items > li.nav-item > a {
+		display:block;
+		color: black;
+		}
+
+		table.data-table > caption {
+		display:none;
+		}
+		
+		</style><style>
+				
+				.analysis-header { margin-top:20px; margin-bottom:10px; }
+
+				.date { margin-bottom: 10px; }
+
+				div.citations { display:block; border-top: 1px solid #44639b; background-color:
+				#eee; padding-bottom: 20px; }
+
+				li &gt; div.analysis { font-size: 14pt; font-weight: bold;
+				border-bottom: 1px solid #44639b; display: block; width: 70%;
+				list-style: none; }
+
+				dd.database, dd.method { margin-left: 5px; }
+
+				dl.params { margin-left: 5px; }
+				
+				</style></head>
+   <body>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary" style="height:90px">
+         <div class="container-fluid"><a href="#" class="h3 navbar-brand">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 68.6566" style="height:50px">
+                  <title>University of Illinois Chicago</title>
+                  <g id="full-rgb">
+                     <g id="logoMark">
+                        <rect id="logoMark_PathItem_" data-name="logoMark <PathItem&gt;" x="31.7455" y="24.1714" width="6.7174" height="22.3922" style="fill: #fff"></rect>
+                        <path id="logoMark_PathItem_2" data-name="logoMark <PathItem&gt;" d="M20.9464,37.54a4.7676,4.7676,0,0,1-.757,3.1632,3.24,3.24,0,0,1-2.6327.9214,3.24,3.24,0,0,1-2.6357-.9214,4.7673,4.7673,0,0,1-.7576-3.1632V24.1714H7.4444V37.41c0,3.1288.3308,4.6412,1.2211,6.1589,1.4817,2.4694,5.4315,3.423,8.8912,3.423,3.4544,0,7.4074-.9536,8.8882-3.423.89-1.5177,1.2211-3.03,1.2211-6.1589V24.1714h-6.72Z" style="fill: #fff"></path>
+                        <path id="logoMark_PathItem_3" data-name="logoMark <PathItem&gt;" d="M52.884,41.5255c-2.8642,0-4.3148-2.3059-4.3148-6.16,0-3.8819,1.4506-6.2527,4.3148-6.2527,2.1075,0,3.3256,1.2831,3.8875,3.4554l5.8254-2.7981c-1.1194-2.9308-4.2782-5.9919-9.6123-5.9919-6.9811,0-11.2619,4.709-11.2619,11.5873,0,6.85,4.05,11.5925,11.1294,11.5925,5.103,0,8.2988-2.4688,9.8783-6.06L56.638,38.7266A3.7235,3.7235,0,0,1,52.884,41.5255Z" style="fill: #fff"></path>
+                        <path id="logoMark_CompoundPathItem_" data-name="logoMark <CompoundPathItem&gt;" d="M34.3313,0a34.3283,34.3283,0,1,0,34.33,34.3282A34.3291,34.3291,0,0,0,34.3313,0ZM14.921,40.7031a3.24,3.24,0,0,0,2.6357.9214,3.24,3.24,0,0,0,2.6327-.9214,4.7676,4.7676,0,0,0,.757-3.1632V24.1714h6.72V37.41c0,3.1288-.3315,4.6412-1.2211,6.1589-1.4808,2.4694-5.4338,3.423-8.8882,3.423-3.46,0-7.4095-.9536-8.8912-3.423-.89-1.5177-1.2211-3.03-1.2211-6.1589V24.1714h6.719V37.54A4.7673,4.7673,0,0,0,14.921,40.7031Zm16.8245,5.8605V24.1714h6.7174V46.5636Zm21.1066.3949c-7.08,0-11.1294-4.7424-11.1294-11.5925,0-6.8783,4.2808-11.5873,11.2619-11.5873,5.3341,0,8.4929,3.0611,9.6123,5.9919l-5.8254,2.7981c-.5619-2.1723-1.78-3.4554-3.8875-3.4554-2.8642,0-4.3148,2.3708-4.3148,6.2527,0,3.8536,1.4506,6.16,4.3148,6.16a3.7235,3.7235,0,0,0,3.754-2.7989L62.73,40.8984C61.1509,44.49,57.9551,46.9585,52.8521,46.9585Z" style="fill: #d50032"></path>
+                     </g>
+                  </g>
+               </svg><strong class="d-none d-lg-inline">Research Informatics Core</strong><span class="ms-3">Analysis Report<span class="d-none d-md-inline">: <em>LC-MS Untargeted Metabolomics Processing</em></span></span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar_list" aria-controls="sidebar_list" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button></div>
+      </nav>
+      <div class="container-fluid fullscreen">
+         <div class="row flex-nowrap" style="height:100%">
+            <div class="col-auto d-print-none bg-secondary-subtle">
+               <nav class="nav navbar-expand-lg">
+                  <div class="d-flex flex-column flex-shrink-0 p-3">
+                     <div id="sidebar_list" class="collapse navbar-collapse collapse-horizontal">
+                        <ul class="nav flex-column mb-auto" id="sidebar_items">
+                           <li role="presentation" class="nav-item analysis"><a class="nav-link active" href="#overview" aria-controls="overview">
+                                 <h4>Overview</h4></a></li>
+                           <li role="presentation" class="nav-item &#xA;&#x9;&#x9;&#x9;analysis&#xA;&#x9;&#x9;"><a href="#analysis_1" class="nav-link" aria-controls="#analysis_1">1
+                                 				.
+                                 				Filtering of LC-MS data</a></li>
+                           <li role="presentation" class="nav-item &#xA;&#x9;&#x9;&#x9;analysis&#xA;&#x9;&#x9;"><a href="#analysis_2" class="nav-link" aria-controls="#analysis_2">2
+                                 				.
+                                 				Detect LC-MS features</a></li>
+                           <li role="presentation" class="nav-item &#xA;&#x9;&#x9;&#x9;analysis&#xA;&#x9;&#x9;"><a href="#analysis_3" class="nav-link" aria-controls="#analysis_3">3
+                                 				.
+                                 				Align LC-MS features</a></li>
+                           <li role="presentation" class="nav-item &#xA;&#x9;&#x9;&#x9;analysis&#xA;&#x9;&#x9;"><a href="#analysis_4" class="nav-link" aria-controls="#analysis_4">4
+                                 				.
+                                 				Merging LC-MS features</a></li>
+                           <li role="presentation" class="nav-item &#xA;&#x9;&#x9;&#x9;analysis&#xA;&#x9;&#x9;"><a href="#analysis_5" class="nav-link" aria-controls="#analysis_5">5
+                                 				.
+                                 				Annotate detected features</a></li>
+                           <hr>
+                           <li class="nav-item"><a href="#citations" class="nav-link" aria-controls="citations"><i>Citations</i></a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </nav>
+            </div>
+            <div id="content" class="col ms-3" data-bs-spy="scroll" data-bs-target="#sidebar_items" data-bs-smooth-scroll="true" tabindex="0">
+               <div id="overview">
+                  <div id="header">
+                     <header>
+                        <div class="row header pt-3" id="top">
+                           <div class="col">
+                              <h2 class="title"><strong>LC-MS Untargeted Metabolomics Processing</strong></h2>
+                              <h4><small class="text-body-secondary">Generated by: </small>George Chlipala
+                              </h4>
+                              <h4 class="date"><small class="text-body-secondary">Report date: </small>December 18, 2024
+                              </h4>
+                           </div>
+                        </div>
+                     </header>
+                     <hr>
+                  </div>
+                  <div style="padding:10px">
+                     <div class="row">
+                        <div class="col">
+                           <h3 id="main_page">Overview</h3>
+                           <div class="alert alert-info alert-dismissible fade show" style="border-bottom:1px solid #44639b"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><p>
+                                 				When you publish manuscripts based on data generated at our
+                                 				facility, we would greatly appreciate an acknowledgement of
+                                 				our
+                                 				efforts. Please cite our facility as follows (for example):
+                                 			
+                              </p>
+                              <blockquote class="blockquote ms-3">
+                                 <p>Basic processing of the raw data were performed by the
+                                    					University of Illinois at Chicago Research Informatics
+                                    					Core (UICRIC).
+                                 </p>
+                              </blockquote>
+                              <p>
+                                 				We adhere to a
+                                 				<a href="https://abrf.org/authorship-guidelines" target="_blank">
+                                    					general policy for acknowledgements and authorship as
+                                    					established by the Association for Biomolecular Resource
+                                    					Facilities (ABRF)
+                                    					<span class="bi bi-box-arrow-up-right"></span></a>
+                                 				,
+                                 				and we support the following statement from the ABRF.
+                                 				
+                                 <blockquote class="blockquote ms-3"><em>
+                                       						The existence of core facilities depends in part on proper
+                                       						acknowledgment in publications. This is an important
+                                       						metric of
+                                       						the value of most core facilities. Proper acknowledgment of
+                                       						core facilities enables them to obtain financial and
+                                       						other support
+                                       						so that they may continue to provide their essential
+                                       						services in the best ways possible. It also helps core
+                                       						personnel to advance
+                                       						in their careers, adding to the overall health of the core
+                                       						facility.
+                                       					</em></blockquote>
+                              </p>
+                              <p>
+                                 				Please
+                                 				<a href="mailto:cribioinfo@uic.edu?subject=Manuscript%20support">
+                                    					contact us
+                                    					<span class="bi bi-envelope"></span></a>
+                                 				for assistance in drafting manuscripts.
+                                 			
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion mt-3" id="main_items">
+                        <div class="accordion-item">
+                           <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#samples_panel" aria-expanded="true" aria-controls="samples_panel"><strong>Sample Listing</strong></button></h3>
+                           <div id="samples_panel" class="accordion-collapse show collapse">
+                              <div class="accordion-body">
+                                 <table class="table data-table caption-top">
+                                    <caption>Sample list</caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>OriginalID</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>1_RP_001</td>
+                                          <td>1_RP_001</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_002</td>
+                                          <td>1_RP_002</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_003</td>
+                                          <td>1_RP_003</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_004</td>
+                                          <td>1_RP_004</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_011</td>
+                                          <td>1_RP_011</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_012</td>
+                                          <td>1_RP_012</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_013</td>
+                                          <td>1_RP_013</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_014</td>
+                                          <td>1_RP_014</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_1">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Filtering of LC-MS data</h2>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_1" aria-expanded="true" aria-controls="details_1"><b>Details</b></button></h4>
+                        <div id="details_1" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    			Method: 
+                                    			OpenMS FileFilter<span class="citation d-none">Rost, H.L., Sachsenberg, T., Aiche, S., Bielow, C., Weisser, H., Aicheler, F., Andreotti, S., Ehrlich, H.-C., Gutenbrunner,
+                                       P., Kenar, E., Liang, X., Nahnsen, S., Nilse, L., Pfeuffer, J., Rosenberger, G., Rurik, M., Schmitt, U., Veit, J., Walzer,
+                                       M., Wojnar, D., Wolski, W.E., Schilling, O., Choudhary, J.S., Malmstrom, L., Aebersold, R., Reinert, K., Kohlbacher, O. (2016)
+                                       OpenMS: A flexible open-source software platform for mass spectrometry data analysis. Nat. Methods 13. <a href="https://doi.org/10.1038/nmeth.3959">doi:10.1038/nmeth.3959</a></span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>LC-MS data were filtered to remove data outside specified retention time and/or m/z window.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>-rt = 46:1020</li>
+                                    </ul>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_2">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Detect LC-MS features</h2>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_2" aria-expanded="true" aria-controls="details_2"><b>Details</b></button></h4>
+                        <div id="details_2" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    			Method: 
+                                    			OpenMS FeatureFinderMetabo<span class="citation d-none">Rost, H.L., Sachsenberg, T., Aiche, S., Bielow, C., Weisser, H., Aicheler, F., Andreotti, S., Ehrlich, H.-C., Gutenbrunner,
+                                       P., Kenar, E., Liang, X., Nahnsen, S., Nilse, L., Pfeuffer, J., Rosenberger, G., Rurik, M., Schmitt, U., Veit, J., Walzer,
+                                       M., Wojnar, D., Wolski, W.E., Schilling, O., Choudhary, J.S., Malmstrom, L., Aebersold, R., Reinert, K., Kohlbacher, O. (2016)
+                                       OpenMS: A flexible open-source software platform for mass spectrometry data analysis. Nat. Methods 13. <a href="https://doi.org/10.1038/nmeth.3959">doi:10.1038/nmeth.3959</a></span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Metabolite features were detected using singleton mass traces.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>-ini = /mmfs1/projects/rrc_shared/common/references/openms-inifiles/uplc_qtof.ini</li>
+                                    </ul>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_3">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Align LC-MS features</h2>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_3" aria-expanded="true" aria-controls="details_3"><b>Details</b></button></h4>
+                        <div id="details_3" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    			Method: 
+                                    			OpenMS MapAligngerPoseClustering<span class="citation d-none">Rost, H.L., Sachsenberg, T., Aiche, S., Bielow, C., Weisser, H., Aicheler, F., Andreotti, S., Ehrlich, H.-C., Gutenbrunner,
+                                       P., Kenar, E., Liang, X., Nahnsen, S., Nilse, L., Pfeuffer, J., Rosenberger, G., Rurik, M., Schmitt, U., Veit, J., Walzer,
+                                       M., Wojnar, D., Wolski, W.E., Schilling, O., Choudhary, J.S., Malmstrom, L., Aebersold, R., Reinert, K., Kohlbacher, O. (2016)
+                                       OpenMS: A flexible open-source software platform for mass spectrometry data analysis. Nat. Methods 13. <a href="https://doi.org/10.1038/nmeth.3959">doi:10.1038/nmeth.3959</a></span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Features were aligned among the different samples using a POSE clustering approach.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>mz_diff = 20 ppm</li>
+                                       <li>rt_diff = 30</li>
+                                    </ul>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_4">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Merging LC-MS features</h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_4_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_4_head">Tables</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_4" aria-expanded="true" aria-controls="details_4"><b>Details</b></button></h4>
+                        <div id="details_4" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    			Method: 
+                                    			OpenMS FeatureLinkerUnlabeledQT<span class="citation d-none">Rost, H.L., Sachsenberg, T., Aiche, S., Bielow, C., Weisser, H., Aicheler, F., Andreotti, S., Ehrlich, H.-C., Gutenbrunner,
+                                       P., Kenar, E., Liang, X., Nahnsen, S., Nilse, L., Pfeuffer, J., Rosenberger, G., Rurik, M., Schmitt, U., Veit, J., Walzer,
+                                       M., Wojnar, D., Wolski, W.E., Schilling, O., Choudhary, J.S., Malmstrom, L., Aebersold, R., Reinert, K., Kohlbacher, O. (2016)
+                                       OpenMS: A flexible open-source software platform for mass spectrometry data analysis. Nat. Methods 13. <a href="https://doi.org/10.1038/nmeth.3959">doi:10.1038/nmeth.3959</a></span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Groups corresponding features from multiple, aligned samples using a QT clustering approach.</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>mz_diff = 20 ppm</li>
+                                       <li>rt_diff = 30</li>
+                                    </ul>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_4_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_4" aria-expanded="true" aria-controls="figures_4"><b>Figures</b></button></h3>
+                        <div id="figures_4" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_4" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    			
+                                    			Figure
+                                    			1
+                                    			.
+                                    			Feature counts per sample
+                                 </h4>
+                                 <dd><img class="img-fluid" src="report_files/per_sample.png"></dd>
+                                 <hr>
+                                 <h4 class="figure">
+                                    			
+                                    			Figure
+                                    			2
+                                    			.
+                                    			Density of features (number of samples and number of shared features)
+                                 </h4>
+                                 <dd><img class="img-fluid" src="report_files/feat_density.1.png"></dd>
+                                 <hr>
+                                 <h4 class="figure">
+                                    			
+                                    			Figure
+                                    			3
+                                    			.
+                                    			Cumulative count of features by number of samples
+                                 </h4>
+                                 <dd><img class="img-fluid" src="report_files/feat_density.2.png"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_4_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_4" aria-expanded="true" aria-controls="tables_4"><b>Tables</b></button></h3>
+                        <div id="tables_4" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_4" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    			Table
+                                    			1
+                                    			.
+                                    			Feature counts per sample
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       			Table
+                                       			1
+                                       			.
+                                       			Feature counts per sample
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Total features</th>
+                                          <th>Unique features</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>1_RP_001</td>
+                                          <td>6803</td>
+                                          <td>1698</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_002</td>
+                                          <td>5782</td>
+                                          <td>1256</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_003</td>
+                                          <td>4467</td>
+                                          <td>296</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_004</td>
+                                          <td>3969</td>
+                                          <td>243</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_011</td>
+                                          <td>4359</td>
+                                          <td>317</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_012</td>
+                                          <td>4321</td>
+                                          <td>308</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_013</td>
+                                          <td>4333</td>
+                                          <td>651</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1_RP_014</td>
+                                          <td>4342</td>
+                                          <td>379</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                                 <hr>
+                                 <h4>
+                                    			Table
+                                    			2
+                                    			.
+                                    			Density of features (number of samples and number of shared features)
+                                 </h4>
+                                 <table id="data_table_2" class="table data-table caption-top">
+                                    <caption>
+                                       			Table
+                                       			2
+                                       			.
+                                       			Density of features (number of samples and number of shared features)
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample count</th>
+                                          <th>Feature count</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>8</td>
+                                          <td>1652</td>
+                                       </tr>
+                                       <tr>
+                                          <td>7</td>
+                                          <td>582</td>
+                                       </tr>
+                                       <tr>
+                                          <td>6</td>
+                                          <td>590</td>
+                                       </tr>
+                                       <tr>
+                                          <td>5</td>
+                                          <td>625</td>
+                                       </tr>
+                                       <tr>
+                                          <td>4</td>
+                                          <td>788</td>
+                                       </tr>
+                                       <tr>
+                                          <td>3</td>
+                                          <td>979</td>
+                                       </tr>
+                                       <tr>
+                                          <td>2</td>
+                                          <td>1592</td>
+                                       </tr>
+                                       <tr>
+                                          <td>1</td>
+                                          <td>5148</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_5">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Annotate detected features</h2>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_5" aria-expanded="true" aria-controls="details_5"><b>Details</b></button></h4>
+                        <div id="details_5" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    			Method: 
+                                    			OpenMS AccurateMassSearch<span class="citation d-none">Rost, H.L., Sachsenberg, T., Aiche, S., Bielow, C., Weisser, H., Aicheler, F., Andreotti, S., Ehrlich, H.-C., Gutenbrunner,
+                                       P., Kenar, E., Liang, X., Nahnsen, S., Nilse, L., Pfeuffer, J., Rosenberger, G., Rurik, M., Schmitt, U., Veit, J., Walzer,
+                                       M., Wojnar, D., Wolski, W.E., Schilling, O., Choudhary, J.S., Malmstrom, L., Aebersold, R., Reinert, K., Kohlbacher, O. (2016)
+                                       OpenMS: A flexible open-source software platform for mass spectrometry data analysis. Nat. Methods 13. <a href="https://doi.org/10.1038/nmeth.3959">doi:10.1038/nmeth.3959</a></span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Features were annotated using searches for exact mass matches from a spectrum against a database</description>
+                                    </p><i>Custom Parameters</i><ul class="params">
+                                       <li>-algorithm:mass_error_value = 5</li>
+                                       <li>-algorithm:mass_error_unit = ppm</li>
+                                       <li>-algorithm:keep_unidentified_masses = true</li>
+                                       <li>-algorithm:isotopic_similarity = true</li>
+                                       <li>-algorithm:ionization_mode = positive</li>
+                                       <li>adducts = </li>
+                                    </ul>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <hr>
+               <div class="row">
+                  <div id="citations">
+                     <h2>Citations</h2>
+                     <ol id="citation_list" class="col my-3"></ol>
+                  </div>
+               </div>
+            </div><script type="text/javascript">
+            
+                var citations = [];
+                $(".citation").each(function() {
+                    if ( $(this).hasClass("d-none") ) {
+                        var i = citations.indexOf(this.innerHTML);
+                        if ( i == -1 ) {
+                            citations.push(this.innerHTML);
+                            n = citations.length;
+                        } else {
+                            n = i + 1;
+                        }
+                    var prev = $(this).prev();
+                    prefix = '';
+                    if ( prev != undefined && prev.hasClass('citation') ) {
+                        prefix=',';
+                    }
+                        this.innerHTML = '<sup>' + prefix + '<a href="#cite' + n + '">' + n + "</a></sup>";
+                        $(this).removeClass("d-none");
+                        $(this).show();
+                    }
+                });
+
+                for ( var i = 0; i < citations.length; i++ ) {
+                    var n = i + 1;
+                    $('#citation_list').append('<li id="cite' + n + '">' + citations[i] + "</li>");
+                }
+
+                var curr_table;
+                $(".data-table").DataTable({
+                	paging: false,
+                	order:[], 
+					scrollX: true,
+					scrollCollapse: true,
+					scrollY: '50vh',
+					fixedColumns: true,
+                	buttons: [ 
+						{
+							extend: 'copy',
+							title: null
+						}, 
+                		{
+                    		extend: 'csvHtml5',
+                    		text: 'TSV',
+                    		extension: '.txt',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		fieldBoundary: '',
+                    		fieldSeparator: '\t'
+                		}, 
+						{
+                    		extend: 'excel',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		messageTop: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                		},
+                		{
+                    		extend: 'pdf',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		messageTop: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                		}], 
+                	layout: { topStart: 'buttons' } 
+                });
+                $(".file-table").DataTable({ paging: false, scrollX: true,
+					scrollCollapse: true,
+					scrollY: '50vh', order:[ [0, 'asc'] ] });
+            
+							</script></div>
+      </div>
+   </body>
+</html>

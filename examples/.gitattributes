@@ -1,2 +1,4 @@
-*.zip filter=lfs diff=lfs merge=lfs -text
-*.gz filter=lfs diff=lfs merge=lfs -text
+**/*.zip filter=lfs diff=lfs merge=lfs -text
+**/*.gz filter=lfs diff=lfs merge=lfs -text
+**/*.consensusXML filter=lfs diff=lfs merge=lfs -text
+**/*.MzTab filter=lfs diff=lfs merge=lfs -text
