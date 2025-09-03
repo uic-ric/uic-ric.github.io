@@ -1,6 +1,6 @@
 Feature	Counts
-CDS	93520
-rRNA	115
+CDS	93522
+rRNA	108
 tmRNA	17
 tmRNA*	4
-tRNA	1181
+tRNA	1185
