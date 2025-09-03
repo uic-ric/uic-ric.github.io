@@ -1,29 +1,28 @@
 # bin	superkingdom;phylum;class;order;family;genus;species;	lineage	lineage scores	reason
-1	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.88;0.88;0.88;0.88;0.88;0.52;0.40;0.40	based on 1827/1877 ORFs
-10	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Tannerellaceae;Parabacteroides;	1;131567;2;1783270;68336;976;200643;171549;2005525;375288	1.00;0.98;0.98;0.96;0.96;0.96;0.96;0.96;0.90;0.90	based on 5178/5222 ORFs
-11	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;	1;131567;2;1783270;68336;976;200643;171549	1.00;0.99;0.99;0.80;0.80;0.80;0.80;0.80	based on 286/292 ORFs
-12	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Rikenellaceae;Alistipes;uncultured Alistipes sp.*;	1;131567;2;1783270;68336;976;200643;171549;171550;239759;538948;538949*	1.00;0.98;0.98;0.97;0.97;0.97;0.97;0.97;0.93;0.91;0.86;0.86	based on 1587/1640 ORFs
-13	Bacteria;Bacillota;Erysipelotrichia;Erysipelotrichales;Erysipelotrichaceae;Faecalibaculum;Faecalibaculum rodentium;	1;131567;2;1783272;1239;526524;526525;128827;1729679;1702221	1.00;1.00;1.00;0.98;0.98;0.98;0.98;0.98;0.96;0.83	based on 2077/2109 ORFs
-14	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Bacteroidaceae;Bacteroides;	1;131567;2;1783270;68336;976;200643;171549;815;816	1.00;0.97;0.97;0.90;0.90;0.90;0.90;0.90;0.83;0.75	based on 4854/4925 ORFs
-15	Bacteria;Bacillota;Clostridia;Lachnospirales;Lachnospiraceae;Schaedlerella;uncultured Schaedlerella sp.*;	1;131567;2;1783272;1239;186801;3085636;186803;2676048;2676054;2676055*	1.00;0.98;0.98;0.82;0.82;0.81;0.65;0.65;0.45;0.44;0.44	based on 1090/1141 ORFs
-16	Bacteria;Deferribacterota;Deferribacteres;Deferribacterales;Mucispirillaceae;Mucispirillum;Mucispirillum schaedleri;	1;131567;2;200930;68337;191393;2945020;248038;248039	1.00;1.00;1.00;0.92;0.92;0.92;0.92;0.92;0.63	based on 578/591 ORFs
-17	Bacteria;Bacillota;Clostridia;Lachnospirales;Lachnospiraceae;NA;Lachnospiraceae bacterium;	1;131567;2;1783272;1239;186801;3085636;186803;186928;1898203	1.00;0.97;0.97;0.89;0.89;0.87;0.82;0.82;0.81;0.81	based on 1240/1290 ORFs
-18	Bacteria;Bacillota;Clostridia;Lachnospirales;Lachnospiraceae;Schaedlerella;uncultured Schaedlerella sp.*;	1;131567;2;1783272;1239;186801;3085636;186803;2676048;2676054;2676055*	1.00;1.00;1.00;0.97;0.97;0.96;0.38;0.38;0.33;0.32;0.32	based on 4011/4129 ORFs
-19	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;	1;131567;2;1783270;68336;976;200643;171549	1.00;0.98;0.98;0.83;0.83;0.83;0.83;0.83	based on 2891/3061 ORFs
-2	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Bacteroidaceae;	1;131567;2;1783270;68336;976;200643;171549;815	1.00;0.94;0.94;0.88;0.88;0.88;0.88;0.88;0.76	based on 3715/3788 ORFs
-20	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.93;0.93;0.93;0.93;0.93;0.89;0.85;0.85	based on 555/565 ORFs
-21	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.99;0.99;0.99;0.99;0.99;0.92;0.84;0.84	based on 1763/1799 ORFs
-22	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.96;0.96;0.96;0.96;0.96;0.88;0.75;0.75	based on 1958/2023 ORFs
-23	Bacteria;Pseudomonadota;Gammaproteobacteria;Enterobacterales;	1;131567;2;1224;1236;91347	1.00;0.97;0.96;0.94;0.94;0.85	based on 3196/3225 ORFs
-24	Bacteria;Bacillota;Clostridia;NA;NA;NA;Clostridia bacterium;	1;131567;2;1783272;1239;186801;348841;2044939	1.00;0.99;0.99;0.92;0.91;0.90;0.60;0.60	based on 1034/1099 ORFs
-25	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.83;0.83;0.83;0.83;0.83;0.63;0.54;0.54	based on 422/444 ORFs
-26	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;	1;131567;2;1783270;68336;976;200643;171549	1.00;0.97;0.97;0.95;0.95;0.95;0.95;0.93	based on 2609/2661 ORFs
-27	Bacteria;	1;131567;2	1.00;1.00;1.00	based on 1809/1968 ORFs
-28	Bacteria;Verrucomicrobiota;Verrucomicrobiae;Verrucomicrobiales;Akkermansiaceae;Akkermansia;	1;131567;2;1783257;74201;203494;48461;1647988;239934	1.00;0.94;0.94;0.77;0.77;0.77;0.77;0.77;0.69	based on 2249/2269 ORFs
-3	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.92;0.92;0.92;0.92;0.92;0.80;0.73;0.73	based on 1907/1996 ORFs
-4	Bacteria;	1;131567;2	1.00;0.88;0.69	based on 1990/1998 ORFs
-5	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;	1;131567;2;1783270;68336;976;200643;171549;2005473	1.00;1.00;1.00;0.95;0.95;0.95;0.95;0.95;0.87	based on 2480/2522 ORFs
-6	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Rikenellaceae;Alistipes;	1;131567;2;1783270;68336;976;200643;171549;171550;239759	1.00;0.96;0.96;0.92;0.92;0.92;0.92;0.92;0.87;0.86	based on 2650/2678 ORFs
-7	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.96;0.96;0.96;0.96;0.96;0.91;0.89;0.89	based on 2139/2181 ORFs
-8	Bacteria;	1;131567;2	1.00;0.90;0.90	based on 3729/3767 ORFs
-9	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.78;0.78;0.78;0.78;0.78;0.61;0.56;0.56	based on 1774/1840 ORFs
+1	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.82;0.82;0.82;0.82;0.82;0.69;0.64;0.64	based on 2354/2430 ORFs
+10	Bacteria;Verrucomicrobiota;Verrucomicrobiae;Verrucomicrobiales;Akkermansiaceae;Akkermansia;	1;131567;2;1783257;74201;203494;48461;1647988;239934	1.00;0.94;0.94;0.77;0.77;0.77;0.77;0.77;0.69	based on 2248/2270 ORFs
+11	Bacteria;Bacillota;Erysipelotrichia;Erysipelotrichales;Erysipelotrichaceae;Faecalibaculum;Faecalibaculum rodentium;	1;131567;2;1783272;1239;526524;526525;128827;1729679;1702221	1.00;1.00;1.00;0.98;0.98;0.98;0.98;0.98;0.96;0.83	based on 2068/2101 ORFs
+12	Bacteria;	1;131567;2	1.00;0.90;0.90	based on 3734/3772 ORFs
+13	Bacteria;Bacillota;Clostridia;Lachnospirales;Lachnospiraceae;NA;Lachnospiraceae bacterium;	1;131567;2;1783272;1239;186801;3085636;186803;186928;1898203	1.00;0.98;0.98;0.90;0.90;0.89;0.84;0.84;0.83;0.83	based on 1177/1223 ORFs
+14	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Rikenellaceae;Alistipes;uncultured Alistipes sp.*;	1;131567;2;1783270;68336;976;200643;171549;171550;239759;538948;538949*	1.00;0.98;0.98;0.97;0.97;0.97;0.97;0.97;0.93;0.91;0.86;0.86	based on 1593/1645 ORFs
+15	Bacteria;Bacillota;Clostridia;Lachnospirales;Lachnospiraceae;Schaedlerella;uncultured Schaedlerella sp.*;	1;131567;2;1783272;1239;186801;3085636;186803;2676048;2676054;2676055*	1.00;0.96;0.96;0.77;0.77;0.75;0.58;0.58;0.36;0.35;0.35	based on 667/701 ORFs
+16	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.92;0.92;0.92;0.92;0.92;0.79;0.72;0.72	based on 1957/2052 ORFs
+17	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Bacteroidaceae;Bacteroides;	1;131567;2;1783270;68336;976;200643;171549;815;816	1.00;0.97;0.97;0.90;0.90;0.90;0.90;0.90;0.83;0.74	based on 4893/4965 ORFs
+18	Bacteria;Deferribacterota;Deferribacteres;Deferribacterales;Mucispirillaceae;Mucispirillum;Mucispirillum schaedleri;	1;131567;2;200930;68337;191393;2945020;248038;248039	1.00;1.00;1.00;0.94;0.94;0.94;0.94;0.94;0.65	based on 563/576 ORFs
+19	Bacteria;Bacillota;Clostridia;NA;NA;NA;Clostridia bacterium;	1;131567;2;1783272;1239;186801;348841;2044939	1.00;1.00;1.00;0.97;0.95;0.95;0.69;0.69	based on 859/907 ORFs
+2	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.83;0.83;0.83;0.83;0.83;0.63;0.54;0.54	based on 422/444 ORFs
+20	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;	1;131567;2;1783270;68336;976;200643;171549	1.00;0.97;0.97;0.95;0.95;0.95;0.95;0.94	based on 2605/2661 ORFs
+21	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.88;0.88;0.88;0.88;0.88;0.52;0.40;0.40	based on 1834/1887 ORFs
+22	Bacteria;Pseudomonadota;Gammaproteobacteria;Enterobacterales;	1;131567;2;1224;1236;91347	1.00;0.96;0.95;0.93;0.93;0.84	based on 3223/3250 ORFs
+23	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.99;0.99;0.99;0.99;0.99;0.91;0.83;0.83	based on 1773/1807 ORFs
+24	Bacteria;Bacillota;Clostridia;Lachnospirales;Lachnospiraceae;Schaedlerella;uncultured Schaedlerella sp.*;	1;131567;2;1783272;1239;186801;3085636;186803;2676048;2676054;2676055*	1.00;1.00;1.00;0.97;0.97;0.96;0.42;0.42;0.35;0.35;0.35	based on 4377/4507 ORFs
+25	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.96;0.96;0.96;0.96;0.96;0.92;0.90;0.90	based on 2106/2146 ORFs
+26	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Bacteroidaceae;Phocaeicola;	1;131567;2;1783270;68336;976;200643;171549;815;909656	1.00;0.94;0.94;0.88;0.88;0.88;0.88;0.88;0.76;0.30	based on 3701/3775 ORFs
+27	Bacteria;	1;131567;2	1.00;1.00;1.00	based on 1809/1967 ORFs
+3	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;	1;131567;2;1783270;68336;976;200643;171549	1.00;0.98;0.98;0.84;0.84;0.84;0.84;0.84	based on 379/389 ORFs
+4	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;NA;Muribaculaceae bacterium;	1;131567;2;1783270;68336;976;200643;171549;2005473;2006847;2498093	1.00;1.00;1.00;0.96;0.96;0.96;0.96;0.96;0.88;0.75;0.75	based on 1968/2034 ORFs
+5	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;	1;131567;2;1783270;68336;976;200643;171549	1.00;0.98;0.98;0.84;0.84;0.84;0.83;0.83	based on 3027/3210 ORFs
+6	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Rikenellaceae;Alistipes;	1;131567;2;1783270;68336;976;200643;171549;171550;239759	1.00;0.96;0.96;0.92;0.92;0.92;0.92;0.92;0.87;0.86	based on 2650/2677 ORFs
+7	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Tannerellaceae;Parabacteroides;	1;131567;2;1783270;68336;976;200643;171549;2005525;375288	1.00;0.98;0.98;0.96;0.96;0.96;0.96;0.96;0.89;0.89	based on 5207/5252 ORFs
+8	Bacteria;Bacteroidota;Bacteroidia;Bacteroidales;Muribaculaceae;	1;131567;2;1783270;68336;976;200643;171549;2005473	1.00;1.00;1.00;0.96;0.96;0.96;0.96;0.96;0.90	based on 2346/2386 ORFs
+9	Bacteria;	1;131567;2	1.00;0.87;0.69	based on 2023/2031 ORFs
