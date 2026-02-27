@@ -1,0 +1,444 @@
+<!DOCTYPE html><html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Spatial processing using 10X SpaceRanger</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1"><script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.2.1.min.js"></script><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script><link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/fc-5.0.4/fh-4.0.1/r-3.0.3/sc-2.4.3/datatables.min.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script><script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/fc-5.0.4/fh-4.0.1/r-3.0.3/sc-2.4.3/datatables.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><style>
+		
+		#content {
+			transition: all 0.3s;
+			overflow-y: scroll;
+		}
+
+		#content .accordion-header {
+		--bs-accordion-active-color: var(--bs-secondary-text-emphasis);
+		--bs-accordion-active-bg: var(--bs-secondary-bg-subtle);
+		}
+
+
+		@media screen {
+		  .fullscreen {
+		    height: calc(100vh - 90px) !important;
+		  }
+		}
+
+		#sidebar_items > li.nav-item > a.active {
+		border: var(--bs-border-width) solid var(--bs-primary-border-subtle);
+		border-radius: var(--bs-border-radius);
+		background-color: var(--bs-primary-bg-subtle);
+		}
+
+		#sidebar_items > li.nav-item > a {
+		display:block;
+		color: black;
+		}
+
+		table.data-table > caption {
+		display:none;
+		}
+		
+		</style><style>
+				
+				.analysis-header { margin-top:20px; margin-bottom:10px; }
+
+				.date { margin-bottom: 10px; }
+
+				div.citations { display:block; border-top: 1px solid #44639b; background-color:
+				#eee; padding-bottom: 20px; }
+
+				li &gt; div.analysis { font-size: 14pt; font-weight: bold;
+				border-bottom: 1px solid #44639b; display: block; width: 70%;
+				list-style: none; }
+
+				dd.database, dd.method { margin-left: 5px; }
+
+				dl.params { margin-left: 5px; }
+				
+				</style></head>
+   <body>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary" style="height:90px">
+         <div class="container-fluid"><a href="#" class="h3 navbar-brand">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 68.6566" style="height:50px">
+                  <title>University of Illinois Chicago</title>
+                  <g id="full-rgb">
+                     <g id="logoMark">
+                        <rect id="logoMark_PathItem_" data-name="logoMark <PathItem&gt;" x="31.7455" y="24.1714" width="6.7174" height="22.3922" style="fill: #fff"></rect>
+                        <path id="logoMark_PathItem_2" data-name="logoMark <PathItem&gt;" d="M20.9464,37.54a4.7676,4.7676,0,0,1-.757,3.1632,3.24,3.24,0,0,1-2.6327.9214,3.24,3.24,0,0,1-2.6357-.9214,4.7673,4.7673,0,0,1-.7576-3.1632V24.1714H7.4444V37.41c0,3.1288.3308,4.6412,1.2211,6.1589,1.4817,2.4694,5.4315,3.423,8.8912,3.423,3.4544,0,7.4074-.9536,8.8882-3.423.89-1.5177,1.2211-3.03,1.2211-6.1589V24.1714h-6.72Z" style="fill: #fff"></path>
+                        <path id="logoMark_PathItem_3" data-name="logoMark <PathItem&gt;" d="M52.884,41.5255c-2.8642,0-4.3148-2.3059-4.3148-6.16,0-3.8819,1.4506-6.2527,4.3148-6.2527,2.1075,0,3.3256,1.2831,3.8875,3.4554l5.8254-2.7981c-1.1194-2.9308-4.2782-5.9919-9.6123-5.9919-6.9811,0-11.2619,4.709-11.2619,11.5873,0,6.85,4.05,11.5925,11.1294,11.5925,5.103,0,8.2988-2.4688,9.8783-6.06L56.638,38.7266A3.7235,3.7235,0,0,1,52.884,41.5255Z" style="fill: #fff"></path>
+                        <path id="logoMark_CompoundPathItem_" data-name="logoMark <CompoundPathItem&gt;" d="M34.3313,0a34.3283,34.3283,0,1,0,34.33,34.3282A34.3291,34.3291,0,0,0,34.3313,0ZM14.921,40.7031a3.24,3.24,0,0,0,2.6357.9214,3.24,3.24,0,0,0,2.6327-.9214,4.7676,4.7676,0,0,0,.757-3.1632V24.1714h6.72V37.41c0,3.1288-.3315,4.6412-1.2211,6.1589-1.4808,2.4694-5.4338,3.423-8.8882,3.423-3.46,0-7.4095-.9536-8.8912-3.423-.89-1.5177-1.2211-3.03-1.2211-6.1589V24.1714h6.719V37.54A4.7673,4.7673,0,0,0,14.921,40.7031Zm16.8245,5.8605V24.1714h6.7174V46.5636Zm21.1066.3949c-7.08,0-11.1294-4.7424-11.1294-11.5925,0-6.8783,4.2808-11.5873,11.2619-11.5873,5.3341,0,8.4929,3.0611,9.6123,5.9919l-5.8254,2.7981c-.5619-2.1723-1.78-3.4554-3.8875-3.4554-2.8642,0-4.3148,2.3708-4.3148,6.2527,0,3.8536,1.4506,6.16,4.3148,6.16a3.7235,3.7235,0,0,0,3.754-2.7989L62.73,40.8984C61.1509,44.49,57.9551,46.9585,52.8521,46.9585Z" style="fill: #d50032"></path>
+                     </g>
+                  </g>
+               </svg><strong class="d-none d-lg-inline">Research Informatics Core</strong><span class="ms-3">Analysis Report<span class="d-none d-md-inline">: <em>Spatial processing using 10X SpaceRanger</em></span></span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar_list" aria-controls="sidebar_list" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button></div>
+      </nav>
+      <div class="container-fluid fullscreen">
+         <div class="row flex-nowrap" style="height:100%">
+            <div class="col-auto d-print-none bg-secondary-subtle">
+               <nav class="nav navbar-expand-lg">
+                  <div class="d-flex flex-column flex-shrink-0 p-3">
+                     <div id="sidebar_list" class="collapse navbar-collapse collapse-horizontal">
+                        <ul class="nav flex-column mb-auto" id="sidebar_items">
+                           <li role="presentation" class="nav-item analysis"><a class="nav-link active" href="#overview" aria-controls="overview">
+                                 <h4>Overview</h4></a></li>
+                           <li role="presentation" class="nav-item &#xA;&#x9;&#x9;&#x9;analysis&#xA;&#x9;&#x9;"><a href="#analysis_1" class="nav-link" aria-controls="#analysis_1">1
+                                 				.
+                                 				Spatial Transcriptomics Processing
+                                 					:
+                                 					<small>Gene expression samples</small></a></li>
+                           <hr>
+                           <li class="nav-item"><a href="#citations" class="nav-link" aria-controls="citations"><i>Citations</i></a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </nav>
+            </div>
+            <div id="content" class="col ms-3" data-bs-spy="scroll" data-bs-target="#sidebar_items" data-bs-smooth-scroll="true" tabindex="0">
+               <div id="overview">
+                  <div id="header">
+                     <header>
+                        <div class="row header pt-3" id="top">
+                           <div class="col">
+                              <h2 class="title"><strong>Spatial processing using 10X SpaceRanger</strong></h2>
+                              <h4><small class="text-body-secondary">Generated by: </small>George Chlipala
+                              </h4>
+                              <h4 class="date"><small class="text-body-secondary">Report date: </small>February 27, 2026
+                              </h4>
+                           </div>
+                        </div>
+                     </header>
+                     <hr>
+                  </div>
+                  <div style="padding:10px">
+                     <div class="row">
+                        <div class="col">
+                           <h3 id="main_page">Overview</h3>
+                           <div class="alert alert-info alert-dismissible fade show" style="border-bottom:1px solid #44639b"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><p>
+                                 				When you publish manuscripts based on data generated at our
+                                 				facility, we would greatly appreciate an acknowledgement of
+                                 				our
+                                 				efforts. Please cite our facility as follows (for example):
+                                 			
+                              </p>
+                              <blockquote class="blockquote ms-3">
+                                 <p>Basic processing of the raw data were performed by the
+                                    					University of Illinois at Chicago Research Informatics
+                                    					Core (UICRIC).
+                                 </p>
+                              </blockquote>
+                              <p>
+                                 				We adhere to a
+                                 				<a href="https://abrf.org/authorship-guidelines" target="_blank">
+                                    					general policy for acknowledgements and authorship as
+                                    					established by the Association for Biomolecular Resource
+                                    					Facilities (ABRF)
+                                    					<span class="bi bi-box-arrow-up-right"></span></a>
+                                 				,
+                                 				and we support the following statement from the ABRF.
+                                 				
+                                 <blockquote class="blockquote ms-3"><em>
+                                       						The existence of core facilities depends in part on proper
+                                       						acknowledgment in publications. This is an important
+                                       						metric of
+                                       						the value of most core facilities. Proper acknowledgment of
+                                       						core facilities enables them to obtain financial and
+                                       						other support
+                                       						so that they may continue to provide their essential
+                                       						services in the best ways possible. It also helps core
+                                       						personnel to advance
+                                       						in their careers, adding to the overall health of the core
+                                       						facility.
+                                       					</em></blockquote>
+                              </p>
+                              <p>
+                                 				Please
+                                 				<a href="mailto:cribioinfo@uic.edu?subject=Manuscript%20support">
+                                    					contact us
+                                    					<span class="bi bi-envelope"></span></a>
+                                 				for assistance in drafting manuscripts.
+                                 			
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion mt-3" id="main_items">
+                        <div class="accordion-item">
+                           <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#files_panel" aria-expanded="true" aria-controls="files_panel"><strong>Output Files</strong></button></h3>
+                           <div id="files_panel" class="accordion-collapse show collapse">
+                              <div class="accordion-body">
+                                 <table class="table file-table">
+                                    <thead>
+                                       <tr>
+                                          <th data-priority="1">File</th>
+                                          <th data-priority="2">Description</th>
+                                          <th data-priority="3">Type</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td><a href="Visium_HD_3prime_Mouse_Kidney.zip">Visium_HD_3prime_Mouse_Kidney.zip</a></td>
+                                          <td>SpaceRanger output for Visium_HD_3prime_Mouse_Kidney</td>
+                                          <td>result</td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion-item">
+                           <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#samples_panel" aria-expanded="true" aria-controls="samples_panel"><strong>Sample Listing</strong></button></h3>
+                           <div id="samples_panel" class="accordion-collapse show collapse">
+                              <div class="accordion-body">
+                                 <table class="table data-table caption-top">
+                                    <caption>Sample list</caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>OriginalID</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Visium_HD_3prime_Mouse_Kidney</td>
+                                          <td>Visium_HD_3prime_Mouse_Kidney</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" id="analysis_1">
+                  <div>
+                     <div class="page-header analysis-header mt-2">
+                        <ul class="nav nav-underline">
+                           <li class="nav-item">
+                              <h2>Spatial Transcriptomics Processing
+                                 							-
+                                 							<small style="margin-left:5px">Gene expression samples</small></h2>
+                           </li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#figures_1_head">Figures</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#tables_1_head">Tables</a></li>
+                           <li role="presentation" class="nav-item d-print-none"><a class="nav-link" href="#folder_1_head">Additional files</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="accordion">
+                     <div class="accordion-item" style="word-wrap:break-word;">
+                        <h4 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#details_1" aria-expanded="true" aria-controls="details_1"><b>Details</b></button></h4>
+                        <div id="details_1" class="accordion-collapse collapse show">
+                           <div class="accordion-body">
+                              <dl>
+                                 <dt class="method">
+                                    			Method: 
+                                    			Processing of 10X Genomics Visium data with SpaceRanger<span class="citation d-none"><a href="https://www.10xgenomics.com/support/software/space-ranger/latest">https://www.10xgenomics.com/support/software/space-ranger/latest</a></span></dt>
+                                 <dd class="method">
+                                    <p>
+                                       <description>Whole transcriptome is mapped to tissue on a microscope image.</description>
+                                    </p>
+                                 </dd>
+                                 <dt class="database"><span class="ref">Reference sequence database
+                                       							:
+                                       						</span>mm10
+                                 </dt>
+                                 <dd class="database">
+                                    <p>
+                                       <description>CellRanger reference genome for mouse mm10, November 19, 2020.</description>
+                                    </p>
+                                 </dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="figures_1_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#figures_1" aria-expanded="true" aria-controls="figures_1"><b>Figures</b></button></h3>
+                        <div id="figures_1" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_1" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4 class="figure">
+                                    			
+                                    			Figure
+                                    			1
+                                    			.
+                                    			Gene expression (GEX) sample summary
+                                 </h4>
+                                 <dd><img class="img-fluid" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABQAAAALQCAIAAABAH0oBAAAgAElEQVR4nOzdd1gUV9//8bMswgLSFAVUFEVEUWzYK9aoiAajxJbYjSVGYpRojFGjaWosebCXGDTF3mtMBFE0BNutBkFURLEQ0UXpbX9/zHPvj4eyIsKuOO/XH/c1c+bMme8MXte9n5wpCo1GIwAAAAAAeNMZGboAAAAAAAD0gQAMAAAAAJAFAjAAAAAAQBYIwAAAAAAAWSAAAwAAAABk4c0PwMOHD3d2di5qFa/oFa8nfw4AAAAAevOGBOCJEycqFApvb29DF6IPAwcOrFu37gu7bd++vXPnzvb29paWlk2aNJkxY0ZMTMzLDlKC45bR7gAAAADwit6EAJyamvrrr7/WqFHj6NGjd+/e1d1569atsbGxeqnLkGbNmvXuu+926tQpIiIiISFh2bJlJ0+e7Nu3b6kf6BWvp0z+HAAAAABeB29CAN6+ffuzZ892796tUqk2bdpk6HIMLy0tbdmyZW+99daCBQucnJzMzMy6du169uzZd99919ClAQAAAIDBvAkBeP369d27d2/ZsuXQoUM3bdqUm5uro3PBh07XrFlTr149lUrVtGnT48ePz5w5U6FQaLf27du3UaNGCQkJ77zzjqWlpZ2d3ZQpUzIzM/N1iI+P9/HxqVixorOz85YtW4QQcXFx/fr1s7S0dHBwWLx4cb4yzp496+3tbWtrq1KpmjRpsnXr1mIesUWLFrt27bp586biv7Kzs/MNnpKSkpGRUb169byNFSpUmD9/vu5Bpk+fLq0aGRnZ2tr26tXr7NmzunfJdz0vX77cr18/BweHihUrNmvWLDAwMCsrq/i7S1emX79+dnZ2FhYWbdu23bdvn+6RAQAAAKCYyn0AjoyMDAsLmzRpkhBi0qRJcXFxx48fL/7uy5cvnzRp0siRI+/du7d79+6NGzdeuXIlX5+srKwPP/zQ39///v37gYGBa9asWbRoUb4OU6dOnT17dnx8/Pjx40eMGHHixIkJEybMnDkzPj5+2rRpAQEBx44d0/Y/ePBgp06dHBwczp8//+jRoylTpowZMyYwMLA4R4yIiHjnnXdcXFw0/2VsbJyvYDs7Ozc3tz179pw7d67Qsy5qkCVLlkirmZmZ4eHhdnZ2vXr1unPnTjGPm5yc3KNHD1NT03Pnzj1+/DgoKCgmJiY0NLSYuwsh9u3b17FjRwsLi9DQ0EePHi1fvvzHH39MSUnRMTIAAAAAFJemnPv444+dnJyys7Ol1TZt2gwYMCBvh2HDhtWqVavQ1bS0NBsbG19fX+3W1NTUqlWr5r0s0ou1wsLCtC2+vr5OTk75Opw7d05azc3NrVGjhoWFxenTp7UttWrVGjRokLSanZ1do0aNDh065Obmagfx9/e3sbFJS0srzhHzJclCXbhwwdXVVQjh6uo6bNiwwMDAW7du5e1QnEEyMzPNzMy+/fZbHbvkvZ5S3j527Fiho71w96ysLEdHx1atWhXcV/fIAAAAAFAc5XsGODMzc8uWLePHj1cqlVLLpEmTDhw48OjRo+LsfvHiRbVa7ePjo20xMzPr3r17vm62trZt27bVrjZq1OjevXt574K2tbVt3bq1tKxQKOrVq6dUKtu3b69tcXNzu3XrlrR66dKle/fuDRw4MO+N1t27d1er1ZcvXy7mEV+oWbNm169fP3369Lhx44QQ8+bNc3V1/eyzz3TvlZiYOHXqVBcXF1NTU4VCYWJikpaWlvfd0bq5uLhYWFgEBATs2rVLrVYXv1rJxYsXHzx4MHTo0FIfGQAAAABEeb8Fes+ePY8fP54zZ472ydL3338/Kyvrp59+Ks7uiYmJQghpylcr36oQwtHRMe+qlZWVRqN59uxZUR2k537ztWhj28OHD4UQ06ZNMzY2ViqVSqXSyMhIej+zVE9xjlgcRkZG7du3nzFjxtatW+/cudO/f/9vvvnmwIEDRfXXaDS9evXau3fv2rVrExISpAlqGxub4j9qa2dnd+zYsUqVKg0ePLhSpUqenp4rVqwo+IhyURISEoQQ+R5dLpWRAQAAAECU9wC8fv364cOH55vUnjt37oYNG4qze+XKlcV/c5dWvlUhRN6p2kIV7KBjFzs7OyHEunXrsrOzc3JycnJytPdC9+nTp5hHfFnm5uYBAQFCCB3PzUZGRkZERMyePbt79+7W1tYKhUKtVr/sdGv79u3//PNPtVp94sSJpk2b+vv7L1y4sJj7VqlSRQgRHx9f6iMDAAAAgCjXAfjWrVt//vlnr1698rX37t37xo0bISEhLxyhWbNmNjY2hw4d0rakp6f/8ccfpVzo/+Xp6VmtWrXt27eXeAQLC4uMjAwdHRITE+fPn6/RaPI2SsHSxsZG9yCmpqba5aCgoJc6bt6eXbt23bhxo4uLy6lTp4q5e/PmzR0dHX/99deXHRkAAAAAiqMcB+CNGzcKIXr27JmvvWXLlnZ2duvXr3/hCCqVau7cubt37/7uu+8SExNv3749evRoT0/PMin3v4yNjdeuXXvy5MmRI0f+888/aWlpt2/f/vXXX7t27VrMERo1avTgwYO///67qA8+aTSaefPmde7c+dixY8nJyU+ePNm3b99HH31UpUqVkSNHFjWIm5ubm5vb4sWLr127lpSUtHXr1qNHj+a9IfyFxz1w4MCoUaNCQ0OfPn2anJy8bdu2uLi4Ll26FHN3Y2Pj1atXR0REDB06NDIyMiUlJTw83NfXNyUlRffIAAAAAFAc5TUA5+TkbN682dPTU7pvNi8jI6OePXvu2rXr6dOnLxzH399/5cqVGzZsqF69uq+v78iRI+vVq2diYlI2Vf+vvn37nj17Njk5uUuXLjY2Nj169Dhy5EjBbwUXZdKkSQMGDOjZs6dSqSz0O8B2dnbnzp1r3Ljx9OnTHRwcqlWrNn36dB8fn4iIiGrVqhU1iFKpPHDgQM2aNdu3b1+nTp3ff//9l19+yXsz9guP+9Zbb3Xt2nXOnDkuLi7Vq1dftGjRsmXLZs+eXczdhRD9+/cPCQlRq9Xt2rVzcHD4+OOPR44caWFhoXtkAAAAACgORb4bZTFo0KDw8HDp47cAAAAAgDdGeZ0BLiPPnj07ceJE586dDV0IAAAAAKCUyT0AX7161d/f/+rVqykpKZcuXXr77bczMjJmzpxp6LoAAAAAAKVM7gG4QYMGLi4u7733XtWqVbt06WJmZhYaGuru7m7ougAAAAAApYxngAEAAAAAsiD3GWAAAAAAgEwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwYG7qAEsrJyUlJSTF0FQCAEpK+QaBQKAxdCACgJIyMjCpWrGjoKoCXVl4D8Pnz59euXevi4mLoQgAAJZGRkaFUKo2Ny+v/DQGAzEVGRm7ZssXQVQAvrRz/8njrrbf8/PwMXQUAoCSePn1qampqbm5u6EIAACUREBBg6BKAkuAZYAAAAACALBCAAQAAAACyQAAGAAAAAMgCARgAAAAAIAsEYAAAAACALBCAAQAAAACyQAAGAAAAAMgCARgAAAAAIAsEYAAAAACALBCAAQAAAACyQAAGAAAAAMgCARgAAAAAIAsEYAAAAACALBCAAQAAAACyQAAGAAAAAMgCARgAAAAAIAsEYAAAAACALBCAAQAAAACyQAAGAAAAAMgCARgAAAAAIAsEYAAAAACALBCAAQAAAACyQAAGAAAAAMgCARgAAAAAIAsEYAAAAACALBCAAQAAAACyQAAGAAAAAMgCARgAAAAAIAvGhi4A5cY/IxSGLgEAAKBI7j9pDF0CgNcdM8AAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZMG4tAY6e/bsgQMHpOXevXt37NhRR+fNmze/8847lpaW2pbff/89PDzc3t5+6NCh5ubmmZmZu3btio6OtrW19fX1dXJyKq06AQAAAADyVGozwE+ePHFwcBgyZMiQIUMaNGigu3NsbGx2drZ2NTQ0dO/evV27ds3IyFi6dKkQYteuXZGRkT4+Pvb29gsWLCitIgEAAAAAslVqM8BCiBs3bqjValdXV1dXVyFEZmbm/v37IyMjbW1tBw0aZG9vX9SOwcHBw4cPb9u2batWrd5///3U1NTk5ORWrVo1b97c1dVVO7EMAAAAAECJlVoAbtOmTc2aNdPT0w8dOrRq1app06Zt2LAhJyfH29v7wYMH33zzzfLly8+cOXPo0CEhRGxs7DfffGNsbOzo6DhlypTExERHR0chhFKprFKlSmJiop+f39y5c4ODg9Vq9dSpU7VH+frrryMjI4UQlStXbtasmVqtLq36AQAAUK7xy1CfsrKyDF0CUBKlFoArV65cuXJlIUSDBg0++OADIYT0TO/OnTuFEPfv31er1W5ublZWVkKIzZs3+/r6VqxY0czMTAhhamqanp4ujZOenm5qarp3794aNWp07dr1/v37W7ZsadasmbGxsRCifv360pPDWVlZSqWyQoUKpVU/AAAAyjV+GeqTkREv00W5VJq3QEuio6Otra2FEDY2Nt26dZOmdoUQ5ubmJiYmdnZ2QghLS8v69evb2tpKm+rWrfvXX3/Vr1//zp076enpdnZ2165dGzx4cPPmzT08PHbs2KFWq6UdBwwYIO0SHh4eGxtrYWFR6vUDAACgPOKXoT4plUpDlwCURKkF4E2bNsXExKSnpz969GjatGlCiDFjxixbtqxSpUomJiaWlpYeHh5F7fv222/Pnj37woULjx8/Hj9+vJGRUe/evRctWuTk5JSQkODu7i6lXwAAAAAASqzUAnCXLl1atmxpZmZWo0YNlUolhPDw8FizZs3du3dTU1Pz3ZEycuTIvN9AqlKlysqVK+/evVu5cmVp9rhLly4tWrR48OCBpaWldg4ZAAAAAIASK7UAXLt27YKNJiYmLi4uBdudnZ3ztVSoUKFOnTp5WywtLfOGZAAAAAAAXgUPrwMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWCMAAAAAAAFkgAAMAAAAAZIEADAAAAACQBQIwAAAAAEAWjA1dQAnl5uamp6c/f/7c0IUAAADgtcAvQ33Kzs42dAlASZTXAGxkZKRSqSwtLQ1dCAAAAF4L/DLUJ2Pj8pojIHPcAg0AAAAAkAUCMAAAAABAFgjAAAAAAABZIAADAAAAAGSBAAwAAAAAkAUCMAAAAABAFgjAAAAAAABZIAADAAAAAGSBAAwAAAAAkAUCMAAAAABAFgjAAAAAAABZIAADAAAAAGSBAAwAAAAAkAUCMAAAAABAFgjAAAAAAABZIAADAAAAAGSBAAwAAAAAkAUCMAAAAABAFgjAAAAAAABZIAADAAAAAGSBAAwAAAAAkAUCMAAAAABAFgjAAAAAAABZIAADAAAAAGTB2NAFoNyo/nVXQ5cAAAAAACXHDDAAAAAAQBYIwAAAAAAAWSAAAwAAAABkgQAMAAAAAJAFAjAAAAAAQBYIwAAAAAAAWSAAAwAAAABkgQAMAAAAAJAFAjAAAAAAQBYIwAAAAAAAWSAAAwAAAABkgQAMAAAAAJAFAjAAAAAAQBYIwAAAAAAAWSAAAwAAAABkgQAMAAAAAJAFAjAAAAAAQBYIwAAAAAAAWSAAAwAAAABkgQAMAAAAAJAFAjAAAAAAQBYIwAAAAAAAWSAAAwAAAABkgQAMAAAAAJAFAjAAAAAAQBYIwAAAAAAAWSAAAwAAAABkoZQD8KlTp955553Lly/r7jZv3rynT59qVzMzM5cuXTp48GB/f//Y2FghxL///vvZZ58NHDhw3LhxZ86cKd0iAQAAAAAyVJoB+OHDhxcuXPDw8HjZHQ8cOJCamrphw4Z+/fotX75cCLF79+7atWv/8ssv/v7+gYGBpVgkAAAAAECejEtroJycnKCgoMmTJy9evFhqSUhIWLVq1T///GNrazt+/HhPT8+i9r148eKgQYMqVqzYtWvXLVu2qNVqW1vbpKQkaWvlypW1PSMjI58/fy6EiIuLy8nJycrKKq36AQAAUK7xy1CfcnNzDV0CUBKlFoB/+eWXAQMGWFhYaFtWr17dsWPH2bNnP3jw4Kuvvlq9evXBgwc3bNggbR0xYoQQonbt2itWrHj27JmNjY3Ubm1tnZSU1KdPn1mzZg0cONDU1HTWrFnaMZcvX37+/HkhhJubW7du3bQhGXpQwdAFAAAA6MAvQ33KyckxdAlASZROAM7Nzd25c+eOHTuk1QsXLsyZM+fmzZvnz59fsWKF1PjkyZN+/fr169dPCDFv3rypU6fa2tpKm6ysrNRqda1atYQQSUlJVlZWgYGB3bp18/b2vn///vz58wMDA83NzYUQCxcuzMzMFEJcu3btyZMn2hGgB8kPDV0BAABA0fhlqE/GxqU2kQboU+n8wzUyMtq3b5+0PG/ePF9f3yZNmtSpU8fLy6tdu3YmJia6d2/atOmBAwfq1q37119/WVlZ2draJicna7empaVpb2ipUqWKtBAfH69Wq5VKZanUDwAAgPKOX4b6pFAoDF0CUBJl+F9uJk+evHr16tWrV6elpdnY2AQFBRXV08fH586dO2PGjLG3t586daoQYuTIkatWrdq6daulpeXw4cOtra3Lrk4AAAAAgBwoNBqNoWsoifDw8NjYWD8/P0MXIiNJ8d0MXQIAAECRrKv/YegSZCQgIGDRokWGrgJ4aaX8HWAAAAAAAF5PBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIgrGhC0C5YXO8maFLAAAAKJJmlKErAPDaYwYYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwQgAEAAAAAskAABgAAAADIAgEYAAAAACALBGAAAAAAgCwYG7qAEtJoNLm5uTk5OYYuBAAAAK8Ffhnqk0ajMXQJQEmU4wCcnZ2dnp5u6EIAAADwWuCXoT7l5uYaugSgJMprADYyMjIxMbGwsDB0IQAAAHgt8MtQn5RKpaFLAEqCZ4ABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsEIABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsEIABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsEIABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsEIABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsEIABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsEIABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsEIABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsEIABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsEIABAAAAALJAAAYAAAAAyAIBGAAAAAAgCwRgAAAAAIAsvEQAfv78uUajKbtSAAAAAAAoO7oCcGRk5KeffiotT5061crKqlq1apcuXdJLYQAAAAAAlCZdAXjatGk9evQQQkRHR2/cuPHgwYNDhgwJCAjQV20AAAAAAJQaYx3bwsLCdu7cKYQ4duxY//79vb2927dvX7t2bX3VBgAAAABAqdE1A6xSqR4+fCiEOHLkSNeuXYUQmZmZJiYmeioNAAAAAIDSo2sG2Nvbe8CAAZ6enqGhoZs3bxZC/PHHH9JN0QAAAAAAlC+6ZoADAwP79euXnZ194MCBqlWrCiFCQ0Pnzp2rr9oAAAAAACg1umaAzc3NFyxYkLdl1apVZVwPAAAAAABlopAAfO/ePd371KhRo2yKAQAAAACgrBQSgJ2cnHTvo9FoyqYYAAAAAADKSiHPAN/4r8DAwGrVqq1evToiIiIiImL16tWOjo4rV67Uf5UAAAAAALyiQmaA69atKy34+fnt3Lmzbdu20qqnp2fjxo2nTJkyadKkQse6devWf/7zH0dHx1atWikUCh1HDQ4ObtOmjUql0rbExcVdunTJ3t6+devWUsuVK1du3LhhY2PToUMHvr0EAAAAAHhFut4Cff369QYNGuRtadCgwfXr1wvtHBISsnr1arVa/dtvv61Zs0b3UYODg9PS0rSr0dHRs2fPfvTo0W+//RYUFCSEOHHixIoVK54/fx4SEvLll18W92wAAAAAACiCrrdAOzs7L1++fN68edqWFStWODs7F9rZ1dV18eLFQoj4+PivvvpKarx+/fr169dtbGw6duyoVCqLOtDBgweHDRvWq1ev5OTk8ePHDx48ODIycvDgwd27d8/MzBw6dOjLnxcAAAAAAP+HrgC8YsWK/v3779ixo0WLFhqNJiIi4s6dO/v37y+0c7Vq1a5du3bx4sWoqKh33nlHCHHw4MHff//d09MzKioqNDR0zpw5UVFRFy5cEELcv39/z549ZmZmNjY2vXv3jo+P79+/vxCiYsWKlStXfvz4cZ8+fTZu3BgfH3/v3r1hw4Zpj7Ju3bpbt24JIUxNTV1cXJ4/f16K1wIAAADlF78M9Sk7O9vQJQAloesW6B49esTExAwcODA1NTUtLW3QoEExMTHdunXTPaJGo7l9+7YQYv/+/Y0bN65QoULNmjWvX7+ekpKiY5d8y/fv38/MzFQoFMbGxrGxsS91SgAAAAAAFKRrBlgIUa1atfnz5xdnoPv37zds2LBhw4Y5OTl+fn6jRo0SQhgZ/W/A7tu3rxDCzc3Nzc1NCBEVFeXr62trayttrVGjxo0bN1xcXJKTk588eWJnZ7d06dLRo0e7u7sLIcaOHZuQkFC1alUhxPjx46VdwsPDY2NjLS0tS3DOAAAAePPwy1CfjI1fkCOA11Op/cM9fPjw48ePq1WrFhkZ2aRJE6VS2a9fv99//71Zs2ampqYqlcrCwqKofb29vRcuXHj37t1//vmnZ8+eJiYmjRo1WrVqVatWreLj442NjStXrlxadQIAAAAA5OkFAfjXX3/dsWNHXFxc3rv8L126VLDn2LFjIyIi4uLi3n777RYtWggh+vbtW79+/atXr+Z94bPEy8vLzMxMu+rm5rZw4cJLly55eHi0adNGCDFixIiGDRvGxcV5enp+9NFHOl6gBQAAAABAcegKwEuXLv3uu+/GjRu3Z8+eBQsWhIeHHzhwYOLEiUX1b9GihRR9terWrav9qnBeXl5e+Vpq1apVq1Yt7apCoWjZsmXLli2Lcw4AAAAAALyQrpdgrVmzZseOHQsXLhRCfP755/v371+6dGlcXJy+agMAAAAAoNToCsC3b9+WbkhWqVTSa+VHjRoVEhKip9IAAAAAACg9ugJwdna2iYmJEKJmzZrnz58XQkivpNJTaQAAAAAAlJ5ipdkRI0a8++67PXr0CA4O9vX1LeuaAAAAAAAodboC8IMHD6SFWbNm2dvbnz171t/ff8qUKXopDAAAAACA0qQrADs4OEgLCoVizJgxY8aM0UtJAAAAAACUPl3PAAshsrKyzpw5s2XLFmk1MTGx7EsCAAAAIAsbNmyoXr169erV27VrV7NmTTc3tx07drxwr4oVK+7du1cP5eHNo2sGOC4uztvb+8aNGxkZGe+9954QYty4caNGjfLx8dFXeQAAAADeTIsXL/7iiy+CgoIGDRoktdy+ffvgwYPScnh4eGpqqpGRUbVq1erUqWNk9L9Td+fOncvJybl69aqNjY2JiUm7du2EEBqN5vr166mpqfXq1bO0tMx7lOfPn//zzz9OTk7VqlU7e/ZsnTp17O3tpU1ZWVlXrlzJzc318PAwNTXV7hISEuLh4aFUKiMjIx0cHJ4+fWplZeXi4qLtcPHiRUtLy7p165bZtUFZ0RWAP/7447Zt254/f177r2H69OkzZswgAAMAAAB4FYmJiXPnzv3444+16VcIUbt2be0rhwIDA+Pi4nJzc2/evGlra7t79+569eoJIZYvX56Zmfnbbzpu3AAAACAASURBVL+dOHGiUqVKu3fvvnbtmp+fX3JycpUqVW7cuPHFF1988skn0iAHDx4cNmyYvb19dnZ2w4YNz549u3z58uHDhwshQkJChgwZYmpqamxsrFarf/rppz59+kh7devW7d133/3zzz/r1Kkzbty4yMjI4ODgv/76S9r6/Pnzjh07btq0iQBcHum6BTokJOTrr7+WvoQk8fDwkL6HBAAAAAAl9scff6SlpUlZtFBBQUHBwcGnTp2Ki4tr27atNhj/9ttvZmZmCxcuDA4O3r17d0ZGhre394gRI+7cuRMREREWFjZv3rzQ0FAhREpKyujRoz/66KPo6Ohbt245Oztrn+hMS0sbNmzY4MGDb9++fePGjYkTJ77//vtqtVp79CtXrvzzzz9nzpwZOXLk2LFj//7772vXrkmbtm3bZmpq2r9//7K6NChLugJwenq6dKeBQqGQWh48eGBubq6PugAAAAC8ue7duyeEcHZ21tEnKSnp4sWLp0+f9vDwOH36dKF9jhw58vDhw9atW4eGhoaGhiYmJjZs2PDo0aNCiOPHjz9//nzWrFlSz/nz52v3On78eEJCgrbls88+y8zM3L9/v7bD5MmTbW1tpWVXV9dOnTpt2rRJWt20adPw4cPz3jKNckTXLdBeXl5r1qz57LPPpACckpIyY8aM7t2766s2AAAAAG8mMzMzIURSUlJRE2wzZ8784Ycf6tSpU6lSpZSUlNTU1KSkJGtr63zdoqOjjYyM5s6dq21RqVRWVlZCiNjY2OrVq2vHr1SpUqVKlaTlW7duOTo6ap8WVqlUzs7Ot27d0g7i5OSU9yhjx4795JNPvv3221u3bp09e3b16tWvcu4wIF0BeMmSJZ06dTp8+LBGoxk0aJB0I8GZM2f0VRsAAACAN1OzZs2EEBcuXPD29i649cyZM0uXLr18+XKDBg2EECdOnOjRo4dGoynY09zc3MjI6M8//9S+JUvLysrq+fPn2lWNRpOSkiItW1tb590khHj+/HnedJ1vtIEDB06ZMuXgwYNnz55t3rx5kyZNXupk8frQdQt0/fr1r169+tZbb/n4+KSnp3/wwQeXL1/O+/YzAAAAACiBNm3aeHp6zp07NzMzM297UlKSECI2NtbOzk5Kv0KIQ4cO5e1jbm6u3atLly4pKSm7d+/WbtVoNFK4bdGiRUJCwuXLl6X2U6dOZWRkSMutWrVSq9Xa91pdu3btzp07rVq1KqpalUo1fPjw9evXb9myZfTo0a9w3jAwXTPAwcHBXl5ec+bM0Vs1AAAAAGRi27ZtPXv2bNOmzaRJk2rWrBkfH3/q1KmkpKTdu3e3b9/+6dOn06ZN6969e0hIyPr16/Pu6OHhsWXLlkqVKpmbm7dr1+6TTz4ZNWpUVFRUs2bNYmNjg4KCvvzyy549ezZp0mTAgAEDBw6cP39+dnb2vHnzKlSoID3d2ahRoxEjRvj5+S1YsMDY2Hju3Ln9+/dv3769jmrHjRvXpEkTlUo1dOjQsr0uKEu6ZoC7d+9e6G0GAAAAAPCKXFxcrly5Mm7cuBMnTnz//fdhYWHdunXbvn27EMLZ2fnPP/989OjRihUrpNdTde7c2dj4f2fv1q1bV61atUWLFi1ZskQIsWTJkq1bt16/fv2HH36IjIxcuXJlz549pZ5btmwZPnx4UFBQaGjozz//rFKpLCwspE3r16+fMWPGjh07fvnllwkTJvz222/awjp37qx9WlircePG9evX9/X11b4cC+WRQkfErVu37qFDh9zc3PRZUDGFh4fHxsb6+fkZuhAZUfw43dAlAAAAFEkzaomhS5CRgICARYsWGbqKF0tLS5PetiWEiIiIaNmyZUxMTMke6nzw4EHNmjWPHTvWtWvXUq0ReqXrFujPP/985MiRy5Ytc3d3z/s1YJVKVfaFAQAAAMArWbp0qVqt7tSp0/3797/66qtBgwaVIP2mpaWFhYUFBgY2a9aM9Fve6QrAo0aNEkK0bds2Xzv3RQMAAAB4/QUEBKxcuXLTpk1mZmazZ88eN25cCQZ58uTJwoULa9SoId2ejXJNVwCWvnsEAAAAAOVRhQoV/P39/f39X2WQ6tWrnzx5srRKgmHpCsAdOnTQWx0AAAAAAJQpXW+BBgAAAADgjUEABgAAAADIAgEYAAAAACALhQTgvn37Sgtbt27VbzEAAAAAAJSVQl6CdfTo0ZycHKVS+d577w0fPlz/NQEAAAB44/0zQlH8zu4/8SlWlIJCAnC9evW++OKLNm3aCCEOHjxYsIN2ihgAAAAAgPKikAC8atUqf3//FStWCCEGDhxYsEN6enqZ1wUAAAAAb5yQkJDOnTuXr5HfJIU8A+zl5XXp0qXk5GQhRHph9F4kAAAAABQiJycnODg4JydH2xIcHJyZmWnAknTr1q1buRv5TaLrLdBXrlzRWx0AAAAA8LLS0tK6dOmSlpambenSpcuTJ08MWBJeZ7oCcKNGjYQQiYmJZ8+eDQsLS0xM1FdVAAAAAPBKgoODhRDR0dE3btwo2Hjz5k0hRE5OTkRExP3797UdwsLCgoODz58/n5qamncvjUYTFRUVGxuru1EIoVar//7774cPH+ZtjI2NjYqK0mgKf5WXNFRMTIx2qIKDFFpYoSNnZmZeuHAhODj43LlzRV4duSrkGWCttLQ0f3//jRs3SncUKJXKMWPGLF++3MzMTF/lAQAAAEBJdOnSZcCAAXfu3ImNjZ08efL8+fOlxl69ej1+/Dg6OnrmzJn79u3LycmJioravn17r169hBBLlix58uRJSkrK/fv3Dx061LRpU2kvHx+f+Pj427dvT5gw4euvvy6qMTAw8LvvvnNycrp169bkyZPnzJkjhPj000/Xr1/v7Oxcs2bNokrt379/fHz8hAkTxowZU+gghRZWcOR///23devW1tbW1tbWDg4Ov/32mx4udTmiKOo/QgghPvzww2PHji1evLhNmzYKheLs2bPTp0/v1atXYGCgPkssVHh4eGxsrJ+fn6ELkRHFj9MNXQIAAECRNKOWGLoEGQkICFi0aNErDlIqn0FKTk62tLR8/vx5xYoVpRaFQvHgwQMHBweFQnHgwIG+ffvevXvXw8NDrVZLWw8fPty7d+8//vijR48eFy9ebNKkyU8//bR79+59+/ZJI9y4cePhw4eHDh169OjRjz/+KO21devWYcOGJSQkNGrU6MyZM66urgUblUplt27d1q5da2JikpqaOnTo0Js3byYkJHTp0uXq1at2dnZBQUGjR4/Ozs7OdxYKhWLXrl0DBgwQQty6davgIJUrVy5YWGRkZMGR9+7d++OPP2rPBfnomgHetm3b8ePHmzVrJq2+/fbbtWrVeuutt16HAAwAAAAAxsbGQghtpJQWpEYhRO/evYUQTk5O2dnZGRkZpqamQoiePXsKIdzc3Ozt7Zs0aSItJyQkCCHS09Pfeuut27dv16xZMzk5uUqVKtoD+fr6CiGqVq3avn37y5cvu7q6FmzMzc1NSUmRpoKFEE2bNlWr1ZcvX+7UqZOdnZ0Q4p133hk9enShJ6L91mxERETBQSwsLAoWVujIHTp0+Pzzzxs1auTl5TV27FhpohhaugLw8+fPa9WqlbelVq1az549K+OSAAAAAKBYVCpVlSpVoqKiWrduLYSIioqysLCQMqEQQqlUantqb33VNhbcGhISkpOTc+fOHYVCERQUFBQUpO3w6NGj2rVrSws2NjaFNmo0Gnt7+5MnTyoU/39yW5q21fYv6kRMTEykBVtb24KDHDt2rGBhNjY2BUe2s7O7evXq5cuX//jjj27dukVFRWmvBoTuANy8efNFixZ988030qXXaDTffvutp6envmoDAAAAgBcYM2bMBx98MHv2bKVS+d13340dO7bEQ1WtWjUmJmbnzp3p6enz58+Xwq1k8uTJEydO/Ouvv+Lj4zt06FBoo5GRkRBixIgRgwcPNjc3VyqVHTt27Ny587hx4+bMmdOqVavi3Esrfcs33yCFFlboyPfv34+OjhZCkHsLpSsAL1mypFevXrt27WrZsqUQ4u+//3706NHRo0f1VRsAAAAAvMBXX31Vq1atbdu25ebmDh8+fNKkSVK7lCQlHTt2lNKpttHU1LRt27bSspWVVfPmzYUQzZo1W7hw4U8//eTk5LR48eIzZ85oR5g5c+aqVatUKtWff/6pUqmKajx16tTSpUtXrlyZkpJiZmZ25MgRMzOzkydPLly4MCYmZs6cOQUfAM5XqomJScFBCi2s0JEjIiKWLl1qZGTk4OCwa9cuYnA+ul6CJYR49OjR6tWrr127plAo3N3dJ06caG9vr7fidOAlWPrHS7AAAMDrjJdg6dPr8xIs/VAoCslNhTbiNadrBlgIYW9vP2/ePL1UAgAAAACvo7wztLob8ZozMnQBAAAAAPBaCw4OLmYjXnMEYAAAAACALLzgFmgAAAAAKAuGfawX8qQrAAcHB3t5eemrEgAAAAAykhTfrfidrav/UXaVQD503QLdvXt3XmsGAAAAAHgz6ArAzs7O0jeUAQAAAAAo73QF4M8//3zkyJHnzp179uxZeh56Kw4AAAAAYFgqleqNiYG6AvCoUaPOnTvXtm1ba2trszz0VhwAAAAA6GZnZ+fp6al9eNPBweH69eslHs3Y2Dg7O7uUSnsJukPmq1dVKiHWsEm4VP40ul6CFRoa+oqjAwAAAEBZS0xM3L59+7vvvmvoQkqurINlqYz/BswD65oB7lAEvRUHAAAAAC/05ZdfzpkzJ9/04KFDh9zd3S0tLbt27RoTEyM1KhSKZcuWVatWrXr16nv37s03Tt++fXNycipUqKBQKJKTkxUKxZIlS2rUqDFnzhwhhIODg0KhsLS09Pb2TkhIKGrAzMzMYcOGWVlZKRQKZ2dnqduZM2dat25tZmamUCi2bt0q7Zh3cO3kqkKhWLRokaOjY+3ataUB81VV1HktWLDA0dHRycnp5MmTH374YcWKFRs1ahQVFSV10I5fsJK8Cj1HLe0gO3bscHZ2dnR0XLJkibGxsY5r+8LCwsLCWrVqZWFh0bBhwyNHjhQ1VN6L8OTJk4JXuJh0BWAhRFZW1pkzZ7Zs2SKtJiYmvtToAAAAAFDWOnXqVLdu3Y0bN2pbHj58OGzYsO+///7+/ftt2rQZPny4dtPTp0+jo6PXr1//0Ucf5Rvn4MGDSqUyKytLo9FUrFhRCJGYmBgVFbVgwQJpTI1G8/Dhw+bNm3/77bdFDXj8+PEHDx7cvXtXo9HExsYKIR4/fty/f/8pU6Y8efJEo9Foi8k7eF4PHjyIjo5et27d6NGj//3337xVJScnF3Veubm5MTExn376aZ8+fRo3bvzo0aN+/fp99dVXeUcuqpK8163Qc8xX3vjx43/88ceoqKi4uLi8mwq9tjoKe/LkycSJE9euXfv06dPNmzePGzcuNTW10KHyXoSwsLB8V7j4FDo+dBQXF+ft7X3jxo2MjAyp24ABA0aNGuXj4/NSxygL4eHhsbGxfn5+hi5ERhQ/Tjd0CQAAAEXSjFpi6BJkJCAgYNGiRa84SGl9B9jOzi4iIiIpKalv377R0dG1a9cODg6OjIxcvXr18ePHhRBZWVkWFhaJiYmWlpYKhSItLU2lUgkhzM3Nk5KSvv/++1mzZgkhli1b5u/vb2xsnJ6eLs1qKhSKZ8+eWVpaSgeaO3fuhg0bHj58mJub26tXL2m6suCAt27d6ty588CBA728vPr06WNubr5v374ffvjhjz/+zynkG1ylUqnVapVKpVAoEhMTK1WqJITo06fPxIkTfXx8tFXt2bNH93nduXPH09Pz8ePHQogzZ84EBAScOXNGO/6xY8cKVpJXoeeorU1aOHz48E8//bRv3z4hxJMnT6pWrSrNvRe8FNKErY7C9u/f379//7wFXLlypVGjRoUOpb0IUVFR+a5w8f8h6XoG+OOPP27btu358+dNTU2llunTp8+YMeN1CMC5ubmZmZkpKSmGLgQAAACvBX4Z6lNOTo6hS8ivSZMmnTp1+p//+R9pVcc8nxSrhBBGRkY5OTkzZ86cOXOmdqtCocjbWRtQw8LCtm3bdurUqVq1ah0+fPiHH34oakA3N7fw8PA9e/YEBQXNnDnzypUrGo0m37D5Bi+K9iy0u7/wvJRKpbYepVKZ7y9VVCUvPMdCqyqqBvHfS1GhQgXdhWk0Gi8vr5MnTxZnKG3lBa9w8V/VrCsAh4SEXL9+3cTERNvi4eFx/vz5Yg5dphQKhbGxsfaiAAAAQOb4ZahPRkYveJTSIBYsWNCuXbu0tDQhRLt27UaPHn3kyJGOHTt+++23zZs3f2HalFhbW9+8edPNzS1fe1pamrGxsZWV1YMHDxYvXqydIyxUzZo1p06d6uvr6+np+e+//3bo0GHs2LG//vqrr69vcf6hLliw4Msvv/zrr7/++uuvoKCgvFWV+Lwkuisp5jm2a9du7NixISEhzZs3//LLL4t/9ILat28/duzYjRs3Dhky5IUTuXn/NPmucM2aNYt5RF3/cNPT06V/2dqo/eDBg5eaXy47CoXCyMhICT0y9N8cAABAF0P/VpIXHbOIBlSnTp2BAwc+e/ZMCOHg4PDzzz9/8sknDg4OYWFhBd/2VJTp06e3bt1aet1U3vYuXbo0a9asdu3aPXv2bNOmjY4R1qxZI6WVNm3afPzxxzVr1rSzs9u7d+/SpUutra0LffVUPo6Ojq6urmPHjt20aVOVKlXyVlWxYsWSnZdEdyXFPEdHR8c1a9a8//779erVq1SpkrW19UvVkK+egwcPbt68uUqVKtLZ6eisvQhLlizJd4WLf0RdzwD37du3Xbt2n332mVKpzMnJSUlJGTp0qKmp6fbt21/inMoGzwDrH88AAwCA1xnPAOvTa/UM8BtGodCV0V4rz549W7Ro0cWLFw8dOmToWopL1y3QS5Ys6dSp0+HDhzUazaBBg6TPAkuPUAMAAAAA5GngwIG7du2ysLBo06bNunXrDF3OS9AVgOvXr3/16tW1a9dWrlw5PT39gw8+mDRpkr29vd6KAwAAAABZKRfTvzt37jR0CSWkKwALIapWrSp9lxkAAAAAgHLtBQE4JSXll19+iYyMFEK4u7sPHTr0NXkJFgAAAIByTT6P9eL1oSsAR0REeHt75+TkeHh4CCGCgoLmzJlz6NCh5s2b66s8AAAAAG+ml3rHKi85Q6nQ9RmkCRMm9O/f/969eydPnjx58uS9e/d8fHw++OADvRUHAAAAAEBp0TUDfO3ataNHj2q/j6xSqb7++uuX+sgSAAAAAACvCV0zwC4uLg8fPszb8vDhwzp16pRxSQAAAACAV9KzZ8/MzExDV/HaKSQAp//XtGnT3n333cOHD//7778JCQmHDx/28/P75JNP9F8lAAAAAOSTmZnpVYC/v7+ey9AdNbt165aTk6PPeiSnTp3Kzc0Vhk7Chjr9ohRyC7SZmVneVW9v77yro0ePHjVqVNkWBQAAAAAvYmxsPG/ePCFETExMQEDA7t27hRA2NjZ6LuPzzz83Ni7y2dKQkBDDftpXd3llzeCnn08hM8ChL6L/KgEAAAAgHyMjI2nWt0WLFiYmJtJy06ZNhRBeXl6hoaHDhw/ftGmTEGLAgAFeXl4+Pj6LFy/OysqSdvfy8goLCxs6dOiwYcOioqKkxvXr1/fr18/Ly2vw4MFSS2Ji4qefftq7d28vL6/ff/+94OALFy7Mzs6W2k+dOjVkyJBRo0bdvHlTCDFr1qycnJxu3bp5eXmlpaXFxcVNmjTJx8fnyy+/TE9P15Zx4sSJoUOHvvfee3fv3t2xY0ffvn0//PDDpKQkbQEBAQHe3t6TJ0++c+dOwetQ6NlpacuLjo4eOXLkkCFDTp8+3a1bNx0XoWQlFRwq3+kXvLb6p3it4njxhYeHx8bG+vn5GboQGXmp99QDAADoGZ/J0aeAgIBFixa94iCl+BmkS5cu9erVK+8LjBQKRb9+/caPH+/u7l67du2wsLDMzMyUlJS1a9d27NhxxowZUh9fX9/Ro0efPn36999/P3/+fGho6AcffPDNN99YW1urVKo2bdpkZGQ0bdq0Q4cOAwYMMDMza9Cggb29fb7BVSqVWq1WqVQKhaJ3794TJ048d+7c1q1bo6Ojo6OjmzZtevz4caVS2aJFi4YNGw4ePLhDhw6BgYGVKlX69ddfpTIGDBgwevToHTt2nD59un379n5+fmvWrKlXr97333+flZXVvn37IUOGNGzY8PLlyxs3brx27ZpSqcx7+oWenbYqaSE3N9fV1XXs2LGenp6rVq06ceKElIoLXoQSl1RwqCtXrmhPXwgxadKkvNe2+H/9UmSwqXAAAAAAKDurVq2qXr26tJySkrJ58+aHDx8mJiaePn1aiohCiHXr1tnZ2fXp02fFihXSo6o5OTlZWVnu7u5Vq1YVQpw6dUqlUq1fv17H4HmtXLmydu3aPj4+J0+eDA0N7d69u0Kh6Ny5s7Gx8dGjR+3t7b/77jshRPv27e3t7X/66ScTExOpjMqVK9evX79p06abNm1SKpUVK1acO3euVEBMTMy+ffv27dsnhIiLi7t582a9evXyHrSos8srJCSkbt268+fPF0I0atQo7wj5LoIUVktWUr6hPDw8tKcfGhqa79oahK4AfO/evRkzZpw+ffrp06d525OTk8u4KgAAAAB4JdqAGh0d/d5773311Ve1atW6cOHC8ePHtX3s7OyEEEZGRkqlMisrq2PHjgsWLPj5558nTpzYvXv3n3/++cmTJ4UG3UIbhRD29vbaBbVanXeTWq12cHCQlitVqlShQoXnz59XrlxZCCH9r6mpqbW1tZQ/TU1NpXukHz9+XLduXelRZ0m1atXyDqvj7PIdXVubtoxCL4JUQMlKKnQoScFra2Sk65tEZURXAH7//fezs7MXLFig/+fIAQAAAKBU3Lhxo379+mPGjNFoNNu2bdPd2c/Pz8/PLyMjo0aNGrGxsZ6enpMmTbp161YxPwe7Z8+eYcOGJSQknDlzRrpL3MzMLDU11crKqkmTJh9++OHDhw8dHBwOHDhQuXJlKWTq1qJFi+jo6KpVq7q7u7/K2TVu3PiTTz55+vSpra2t9LawEnthSXlpT18UuLYG+cKurgB87ty5O3fuVKlSRW/VAAAAAEDp6tixo7+/f8OGDTMzM2vVqqWj5/79+5cuXSqEuHfvXvPmzWvVqqVUKr/44ovmzZvXr19fpVLNnj27R48eOkbYvn370qVLb9++PWHCBFdXVyFEjx49WrZs6ejoeOTIkcmTJ7u7u9epUyc2NnbLli3FKd7FxeXbb79t3769q6urubm5mZnZkSNHSnB2DRs29PPzq1u3rrOzs6Ojo0qlKs7RS1ZSXtrTnzhx4urVq0Wea1viAl6FrgDs6OiYlpamt1IAAAAAoATq1q2bb1bz5MmT2mUrK6srV65cvXq1Ro0aKpVK+9bivH2OHDliYmLSokWLefPmGRkZOTg4aJ+SnTp16vvvv3/9+vWMjIwGDRrk21EIcfz4celRXiHE3r17o6KiVCqVs7Oz1LJz587//Oc/arXaxMRk/vz5EydOvHfvnpubm6WlZb4yqlSpsmPHDmnZ3d191apV0vKECROGDRt2/fr1lJSUfK+/0nF22qq0C8uXL586dWpmZmZUVJT2hWEFL0KJSyp0KO3pu7i42Nvb57u2+qfrLdDr1q3bvXt3YGCgi4uLQqHQZ1kvxFug9Y+3QAMAgNcZb4HWp9ftLdCvCYXitf7Izty5c0NCQp49e3bnzp3t27drv4QkK7pmgD09PWfOnClN3Of1Ov9RAQAAAMAgXvOgJL0CWuZ0BeDRo0e3bNly3LhxvAQLAAAAAFDe6QrA0dHRJ0+erFSpkt6qAQAAACAT5eKuZrxhdH15qXbt2klJSXorBQAAAACAsqMrAE+cOHH06NFXrlxJS0tLz0NvxQEAAAAAUFp03QL90UcfCSEaN26cr/01f7YbAAAAAICCdAXg0NBQvdUBAAAAAECZ0hWAO3TooLc6AAAAAAAoU7oC8L179wptr1GjRtkUAwAAAABAWdEVgJ2cnApt5xlgAAAAAEC5oysAR0ZGapdzc3Nv3Lgxc+bMqVOnln1VAAAAAACUMl0BuH79+nlX3d3dnZycJk6cOGHChDKuCgAAAACAUqbrO8AF1atX759//imjUgAAAAAAKDsvEYAzMjK+//573oAFAAAAACiPdN0CXbFixbyrqamplpaWv/zySxmXBAAAAABA6dMVgLdu3Zp31dbWtkmTJjY2NmVcEgAAAAAApU9XAH777bf1VgcAAAAAAGWq8ACs+z3Pa9asKZtiAAAAAAAoK4UH4JiYmIKNGo0mLCwsPT2dAAwAAAAAKHcKD8AnTpzI13Ly5MmAgAAhxIwZM8q8KAAAAAAAStuLP4P0n//8p0+fPj169PDw8Lhx48aiRYv0UBYAAP+vvXuPrqq+Ez68k5xciAQCCVfpSIASwAtoAS8UZUSUVqWtBUYrLZSOt3EUdNAKioLTlim4UGZZ6UqpMKiTmZYRFR2qBbFaBkkLCIyIghhAASGQhGAgJCHvH+d987IIIMRAxN/z/HXOvpz93RuXnA/7nAQAoGEdL4C3bNkycuTICy+8MCkpafXq1U8//bRfAgwAAMAZ6ugBXFxcfN9993Xt2nXDhg1/+tOfFixYcO65557myQAAAKABHf07wJ06dTpw4MDdd999ww03RFH09ttvH772kksuOR2jAQAAQMM5egCXlJREUTRt2rRp06bVXVtTU3NqhwIAAICGdvQA/uijj07zHAAAAHBKHT2AO3bseHrHAAAAgFPr838NEgAAAHwFCGAAAACCIIABAAAIggAGAAAgCAIYAACAIDRYAG/evPnBBx8cPnz4fffdt3nz5uNvPGnSpOLi4tqnBw8enD59+o03gbEMQgAAHQlJREFU3jh27NjCwsIoinbt2jVhwoShQ4fecsstS5cubaghAQAACFaDBfCSJUtuuummuXPn9urVa9asWSe174IFC8rLy2fNmjVkyJAnnngiiqLnn38+Jyfn3//938eOHfvkk0821JAAAAAE6+i/B7geRo0aFX+Qm5u7devWKIp27tz51FNPrVu3rkWLFrfeeus3vvGNY+27atWqYcOGNW3a9Morr3zmmWdKSkpatGhRWloaX5uVlVW75a5duw4ePBhFUUlJyaFDh6qrqxtqfgAAzmjeGZ5ONTU1jT0C1EeDBXBcUVHR7373u3vvvTeKopkzZ/bv3//BBx/cvn37z3/+85kzZ7788su1N4dHjhwZRVFOTs6MGTP27t2bmZkZX968efPS0tJvf/vb48ePHzp0aGpq6vjx42tf/6GHHlqxYkUURbm5uQMHDjz8c9QAAITMO8PTqaqqqrFHgPpoyADevHnzr371qzFjxrRt2zaKog8//HDFihUzZsyIr92zZ8+QIUOGDBkSRdGkSZPGjBnTokWL+KpmzZqVlJScc845URSVlpY2a9bsySefHDhw4LXXXrtt27bJkyc/+eST6enpURSNHTu2rKwsiqItW7ZUVlY2b968AecHAODM5Z3h6ZSUlNTYI0B9NFgAr1mzZu7cuQ888EB2dnZ8SadOnQYMGHDZZZelpKQcf99evXotWLCgS5cuy5cvb9asWYsWLfbt21e7dv/+/ZWVlfHH3bt3r11eWFiYnJzcUPMDAHBG887wdEpM9NtkOCM1WAA/99xzH3zwwejRo6Moatu2bV5e3p133jlz5syZM2fu378/MzNz7ty5x9r3+uuv37x5809+8pM2bdqMGTMmiqJRo0Y99dRTzz77bEZGxogRI/x7HgAAAF9Qwhn6/fWCgoLCwsLhw4c39iABSZg9rrFHAAA4ppofP9bYIwTk/vvvnzp1amNPASfNRxcAAAAIggAGAAAgCAIYAACAIAhgAAAAgiCAAQAACIIABgAAIAgCGAAAgCAIYAAAAIIggAEAAAiCAAYAACAIAhgAAIAgCGAAAACCIIABAAAIggAGAAAgCAIYAACAIAhgAAAAgiCAAQAACIIABgAAIAgCGAAAgCAIYAAAAIIggAEAAAiCAAYAACAIAhgAAIAgCGAAAACCIIABAAAIggAGAAAgCAIYAACAIAhgAAAAgiCAAQAACIIABgAAIAgCGAAAgCAIYAAAAIIggAEAAAiCAAYAACAIAhgAAIAgCGAAAACCIIABAAAIggAGAAAgCAIYAACAIAhgAAAAgiCAAQAACIIABgAAIAgCGAAAgCAIYAAAAIIggAEAAAiCAAYAACAIAhgAAIAgCGAAAACCIIABAAAIggAGAAAgCAIYAACAIAhgAAAAghBr7AHq6dChQwcOHCgrK2vsQQAA+FLwzvB0qqqqauwRoD7O1ABOTExMS0vLyMho7EEAAPhS8M7wdIrFztSOIHA+Ag0AAEAQBDAAAABBEMAAAAAEQQADAAAQBAEMAABAEAQwAAAAQRDAAAAABEEAAwAAEAQBDAAAQBAEMAAAAEEQwAAAAARBAAMAABAEAQwAAEAQBDAAAABBEMAAAAAEQQADAAAQBAEMAABAEAQwAAAAQRDAAAAABEEAAwAAEAQBDAAAQBAEMAAAAEEQwAAAAARBAAMAABAEAQwAAEAQBDAAAABBEMAAAAAEQQADAAAQBAEMAABAEAQwAAAAQRDAAAAABEEAAwAAEAQBDAAAQBAEMAAAAEEQwAAAAARBAAMAABAEAQwAAEAQBDAAAABBEMAAAAAEQQADAAAQBAEMAABAEAQwAAAAQRDAAAAABEEAAwAAEAQBDAAAQBAEMAAAAEEQwAAAAARBAAMAABAEAQwAAEAQBDAAAABBEMAAAAAEocECeM+ePWvXrl27dm1paennblxYWFhVVXX4kqqqqk2bNu3du7d2SXl5+QcffLBz586GmhAAAICQxRrqhTZu3PjCCy9s3br19ttv79ev3/E3njNnzpgxY1q0aBF/WlRUNGHChLS0tN27d99+++39+/d/9913f/GLX7Rr1+7TTz/927/929GjRzfUnAAAAISpwQK4b9++ffv2nT59+uELDxw48PHHH2dmZmZnZx9n3/nz5/fr12/kyJGbN29+5JFH+vXrt2TJkptuuum6664rKysbPXq0AAYAAOALarAArmvt2rXTp0/Pzs7evXv3Nddc83d/93dFRUXbt2+PoqisrGz9+vVNmzZt0qRJly5dNm7c+OMf/ziKonPOOSd+H7hXr16LFi1q3779hg0bLrrootrXfP755z/55JMoiiorK1u3bv3ZZ5+duvkBADiDeGd4OlVXVzf2CFAfpzCAn3766eHDh3fo0KGqqurxxx//3ve+9/7777/yyitRFG3fvn3+/PmxWKxdu3Z33XVXRUVFWlpafK+0tLT9+/d36NBh7969+fn5e/fuveGGG2pfc/369e+9914URVlZWVlZWZWVladufgAAziDeGZ5Ohw4dauwRoD5OYQDv2bPnzTffTEhIiKKoQ4cO5eXl/fr1i389eNKkSYd/BzgrK2v79u0dO3asrq7etWtXdnb2P//zP48YMeKiiy6qrKy89dZb+/btG994woQJ8V0KCgoKCwszMzNP3fwAAJxBvDM8nZKTkxt7BKiPBgvgffv2ffTRR8XFxVu2bGnRokWPHj0uvvjimpqaSy65JCUlJTk5+Tj/S7r88sufe+65hISEFStWdO/ePT09vWXLlq+//noURdu2bTt48GCTJk0aak4AAADC1GC/BmnHjh35+fnV1dVr166dN29eFEW33HJL+/btFy5cmJ+fP3/+/MM37tixYyz2/9v7iiuuuP766xctWpSSknLvvfdGUXTbbbe1bNnypZde+uCDDx555JHaD0gDAABA/STU1NQ09gz1Ef8I9PDhwxt7kIAkzB7X2CMAABxTzY8fa+wRAnL//fdPnTq1saeAk9Zgd4ABAADgy0wAAwAAEAQBDAAAQBAEMAAAAEEQwAAAAARBAAMAABAEAQwAAEAQBDAAAABBEMAAAAAEQQADAAAQBAEMAABAEAQwAAAAQRDAAAAABEEAAwAAEAQBDAAAQBAEMAAAAEEQwAAAAARBAAMAABAEAQwAAEAQBDAAAABBEMAAAAAEQQADAAAQBAEMAABAEAQwAAAAQRDAAAAABEEAAwAAEAQBDAAAQBAEMAAAAEEQwAAAAARBAAMAABAEAQwAAEAQBDAAAABBEMAAAAAE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ZhRFO3bsWL9+/YABA3bu3Ll27douXbq88847Z599du/evdetW7d+/foePXp069btZMdLTU296aab4o/Xr18/fvz4nj17durU6YjNYrHY5MmTMzMzoyjKyspatWrV4ZOsXr26ffv2vXv3jqIovrBr166rVq3q27dvLPZ//4o5kbErKiqWLVtWXFz89a9//bzzzjvWzE2bNu3QocPatWsvuOCCNWvWfO1rX/vss8/iq8rKypYtW3bw4MELL7ww/uO1jnoNj3rNT/DoURTV1NQ89dRTO3bsePTRR9PS0vbv31+7avfu3W+//XZGRkazZs0OP/Hc3NyVK1e2bt269s+37uEWLlzYp0+f7Ozs+OssX77829/+9vH/+ACAenAHGOBU6d+//3vvvVdUVBRFUUlJyZo1a6644oooinbv3h3/3OyiRYvy8vLKy8trd6ld9fHHH//5z3+OL/z000/j910//fTTOXPm5OXl7dmzZ8aMGY899tjvfve74uLiyZMnb9y48VhjVFRU5P8/CxYsOOo23bp1O//881esWFF3VUZGRkZGRn5+/m9+85uCgoIhQ4bEJ5k7d+7MmTOLiory8vL+8z//s3bhr3/967179x5+Lp87dnl5+U9/+tM1a9aUlZXl5eXF71Efy+DBgxcuXBhF0R/+8Idvfetb8YWlpaV33XXXO++88/HHH48bN+5///d/j3UN617zEz/6oUOHHnvssZKSkocffjh+J7/2HEtKSu65557169evXbs2Ly+v9qDxC7Jnz57Zs2e/9NJLxzpccXHxf//3f8f3+sMf/lBcXHycKwAA1Js7wACnSnp6+qWXXrpkyZJhw4a98cYbffr0adq06eEbbNmypXfv3jfeeGNKSsoJvmZycvKjjz6alJSUnZ29ZMmS6dOnR1GUmJi4atWqLl26fJFps7Ozj/9l2qqqqpKSkn379tU+nTx5cmpq6nXXXfeP//iPw4cPj6KopqZm0qRJycnJURQd/mrHH/vVV19NTU1t1apVFEXnn3/+q6++OnTo0GON0atXr1mzZhUWFm7duvX888+PL3z11Vd79eo1duzYKIrOOeecefPmHetGbt1rfuJHr6ioKCgomDhxYvwED/faa69dfPHFd955ZxRF8+bNW716dXx5UlLS5MmTk5KSLrjgghdffHHIkCFHPdzgwYPHjRt38803R1G0ZMmSadOmHfOPAQD4AtwBBjiFrrrqqsWLF0dRtHjx4kGDBh2xdsiQIZ988smIESPGjx//7rvvnsgLtm3bNikpKYqijIyMDh06xBdmZGQcfkvzCPGPOsddf/31x9qsqKioefPmR12VlJR000033XHHHTfffPPcuXPjC9u1a5eamhpFUevWrZOTk+N3fc8+++y6cfi5Y2/btq1JkybxhU2bNr3mmmuOcwUSEhIGDhz4s5/97KqrrkpISIgv3LlzZ+2Ht7t06bJr165j7V73mp/40Zs0afLQQw9Nmzat7h/W4QPk5OTUPfFmzZrFP6191MO1bNkyNze3oKCgoKCgW7duLVq0OM4VAADqzR1ggFPovPPOq66ufuGFF8rLy3v27HnE2uzs7IkTJx48eHDZsmVPPPHEb37zm9pV6enp8aSMomjLli2nes7169evWbNm1KhRdVft2LGjVatW8Yqrrq6OP4iiaPv27RUVFampqTt37qysrIx/8bW2SE9Ku3btiouLa7+Q/LkGDRpUUVExcODA2iWtW7fetGlT/PHGjRvj91ePeg3rXvOTOnrPnj3HjRv3L//yLw888MC555571AE++uijepzstdde+/vf/z6Koh/84AcnMgkAUA8CGOAUit+u/Ld/+7dhw4bVjcOlS5du2bLl0KFDH3zwwRE/fapLly5bt27913/91+Tk5Pfee69ly5YNPlv8u8EVFRXbtm1bsWLFj370o7o/ASuKop07d06dOvXcc8/97LPPli1bdvfdd8eXx2KxRx55pGvXrm+//fb3v//9+qVv3ODBgxcvXvzQQw/l5ubGYrH27dvHvyx9LBkZGUcE5DXXXDNmzJhp06ZlZGS8+eabEyZMiI5xDete85M9em0Djx8/vvafA66++uq77747/i8C7777blZW1sme7HnnnZeXl5eSkpKbm3uiFw4AOElJkyZNauwZAL7K2rdvn5aWdvXVV6enp9cuTE9P79y589atW0tLS2OxWM+ePYcPHx6vqfiq5OTkfv367du3r2PHjtdff31GRkbHjh0TEhLOOuus2kzNzMz82te+Fn/cunXrtm3b1j16QkJCWlpa9+7da5ekpqb26NEjISEh/lnltLS0rl273nLLLd/4xjeOOn+bNm169uxZWlraqlWrUaNGxV9q586dmzdvvv3228vKygYMGHD11VfHj3X4eLXn8rljJycnX3311U2aNNm/f39NTU38ZI91LnX7sHv37s2bNx84cODBgwfPOuuskSNHxr8OfdRrWPean9TR46fftm3b3NzcDRs2dO3a9ayzzurcuXNaWtrll1++f//+v/mbv/nud7+bkZGRk5NzxIk3adIk/id7rMNt2LChf//+Rz06ANAgEuK/TREATtzatWvz8/N/8YtfNPYgXxGbNm364x//uHLlyl/96le1vz4KAGhw/pYF+IooLCxctmzZ4UsuvfTSk7qdeOKv0KZNm8O/gtvgvvi5nHFHz8rKmjRpkvoFgFPKX7QAnLTWrVuf0gAOTadOnY76BWwAoGH5CDQAAABB8HuAATgDZGZmzps3r7GnAADObAIYgBP1/vvvDxs2rF27ds2aNbvsssueeeaZ6urqxh4KAOBECWAATkhZWdnAgQNjsdj//M//7NixY8aMGa+//voRPywKAODLTAADcEIKCgo++eSTX/7ylzk5Oenp6X369Jk9e/Y3v/nN+Npu3bolJCQkJiZ26NDhjjvu2Lt3b+2OsVjs4Ycf7t+/f7Nmzc4555xnn3126dKlffr0adKkSY8ePd58883Dt5wyZUp8y5ycnOeee+6ok5SVlf3DP/xDmzZtMjIy+vXr9+c///mUnjgA8JUhgAE4IS1btoyi6LXXXjvq2vXr19fU1FRVVS1atGjNmjX33Xff4WuffvrpX/7yl9u2bfvhD384evTo22677cknn9y1a9fgwYNvvvnmqqqq2i2nTJny05/+dOvWrePHjx85cuRf//rXusf6zne+s2PHjmXLlm3fvn3UqFGDBw/etGlTg54rAPDV5KdAA3Ci7rnnnhkzZnTs2PGyyy674oorbrjhhqysrLqbLVq0aPjw4Xv27Ik/jcVijz/++F133RVFUVFRUatWrfLy8m655ZYoigoLC3NycjZu3Ni5c+f4lvfee+/UqVPjO1533XWZmZnPPvtsFEWZmZmzZs0aOnToW2+9NWjQoN27d5911lnxza688sqBAwc++OCDp/4CAABnNneAAThRjz/++IYNG/7pn/4pISFhwoQJXbt2Xb58eXzVggULLrnkkubNmyckJAwaNKi4uHjfvn21O3bp0iX+IDMzs+7T4uLi2i179+5d+7hPnz7r1q07Yoa//vWvFRUVzZs3T0pKSkpKSkxMXLJkiTvAAMCJEMAAnITOnTvfeeedzzzzzKZNm9q2bfvwww9HUfT+++8PHTp09OjRH374YXV19VtvvRVF0eEfbE5ISDj8RY54eoKr4g4dOtSqVauqqqrq6urq6upDhw7V1NT89re//UJnBQCEQQADUB8ZGRkXXnhh/ObtX/7yl1atWt16663Z2dmJiYkFBQX1ftm//OUvhz/u3r37ERtcdNFFu3btWrFiRb0PAQAESwADcEIWL148YsSIP/3pT3v27Nm7d+/vf//7F1544Tvf+U4URd26dduxY8dLL71UXl6+cOHCn//85/U+yq9//etXXnll7969eXl5CxcuHDt27BEbDBgwYMCAAT/84Q+XLl1aXl6+bt26+++//+WXX/5C5wYAhCHW2AMAcGa44oordu7cOXny5NWrV1dWVubk5Dz66KP33HNPFEW9e/eeNm3aHXfcUVRU1KNHj3Hjxk2YMKF+R3nggQemTJly4403tmzZcs6cOX369Dlig4SEhAULFkycOPHGG2/ctWvX17/+9VGjRg0aNOiLnh4AEAA/BRqAL4tYLPbyyy8PHjy4sQcBAL6afAQaAACAIAhgAAAAguAj0AAAAATBHWAAAACCIIABAAAIggAGAAAgCAIYAACAIAhgAAAAgiCAAQAACML/AWWJyc8zN4F8AAAAAElFTkSuQmCC"></dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="tables_1_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#tables_1" aria-expanded="true" aria-controls="tables_1"><b>Tables</b></button></h3>
+                        <div id="tables_1" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_1" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <h4>
+                                    			Table
+                                    			1
+                                    			.
+                                    			Data processing summary statistics of gene expression samples
+                                 </h4>
+                                 <table id="data_table_1" class="table data-table caption-top">
+                                    <caption>
+                                       			Table
+                                       			1
+                                       			.
+                                       			Data processing summary statistics of gene expression samples
+                                    </caption>
+                                    <thead>
+                                       <tr>
+                                          <th>Sample</th>
+                                          <th>Reads Mapped Confidently to Genome</th>
+                                          <th>Reads Mapped Confidently to Transcriptome</th>
+                                          <th>Total Genes Detected</th>
+                                          <th>Valid Barcodes</th>
+                                          <th>Valid UMI Sequences</th>
+                                          <th>Number of Reads</th>
+                                          <th>Number of Squares Under Tissue 2 µm</th>
+                                          <th>Number of Bins Under Tissue 8 µm</th>
+                                          <th>Number of Bins Under Tissue 16 µm</th>
+                                          <th>Number of Cells</th>
+                                          <th>Median Genes per Cell</th>
+                                          <th>Median UMIs per Cell</th>
+                                          <th>Median Cell Area (μm²)</th>
+                                          <th>Median Nucleus Area (μm²)</th>
+                                          <th>Mean UMIs Under Tissue per Square 2 µm</th>
+                                          <th>Mean UMIs Under Tissue per Bin 8 µm</th>
+                                          <th>Mean UMIs Under Tissue per Bin 16 µm</th>
+                                          <th>Mean Genes Under Tissue per Square 2 µm</th>
+                                          <th>Mean Genes Under Tissue per Bin 8 µm</th>
+                                          <th>Mean Genes Under Tissue per Bin 16 µm</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <td>Visium_HD_3prime_Mouse_Kidney</td>
+                                          <td>0.8216008740353596</td>
+                                          <td>0.7399878736144156</td>
+                                          <td>20957</td>
+                                          <td>0.8791618810312359</td>
+                                          <td>0.9947524507028236</td>
+                                          <td>520565667</td>
+                                          <td>6753403</td>
+                                          <td>423482</td>
+                                          <td>106302</td>
+                                          <td>277215</td>
+                                          <td>238</td>
+                                          <td>310</td>
+                                          <td>84</td>
+                                          <td>24</td>
+                                          <td>20.749393602011363</td>
+                                          <td>331.06829570088036</td>
+                                          <td>1319.5468570676042</td>
+                                          <td>18.52003678737899</td>
+                                          <td>236.8115575160226</td>
+                                          <td>759.6465635641824</td>
+                                       </tr>
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                 </table>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="accordion-item">
+                        <h3 class="accordion-header" id="folders_1_head"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#folders_1" aria-expanded="true" aria-controls="tables_1"><b>Additional files</b></button></h3>
+                        <div id="folders_1" class="accordion-collapse show collapse">
+                           <div class="accordion-body">
+                              <ul class="nav nav-underline d-print-none">
+                                 <li class="nav-item"><a href="#analysis_1" class="nav-link">Current analysis</a></li>
+                                 <li class="nav-item"><a href="#top" class="nav-link">Return to top</a></li>
+                              </ul>
+                              <dl>
+                                 <div class="folder"><a href="report_files/Visium_HD_3prime_Mouse_Kidney_report/Visium_HD_3prime_Mouse_Kidney_summary.html"><span class="glyphicon glyphicon-file"></span> SpaceRanger report for Visium_HD_3prime_Mouse_Kidney</a></div>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <hr>
+               <div class="row">
+                  <div id="citations">
+                     <h2>Citations</h2>
+                     <ol id="citation_list" class="col my-3"></ol>
+                  </div>
+               </div>
+            </div><script type="text/javascript">
+            
+                var citations = [];
+                $(".citation").each(function() {
+                    if ( $(this).hasClass("d-none") ) {
+                        var i = citations.indexOf(this.innerHTML);
+                        if ( i == -1 ) {
+                            citations.push(this.innerHTML);
+                            n = citations.length;
+                        } else {
+                            n = i + 1;
+                        }
+                    var prev = $(this).prev();
+                    prefix = '';
+                    if ( prev != undefined && prev.hasClass('citation') ) {
+                        prefix=',';
+                    }
+                        this.innerHTML = '<sup>' + prefix + '<a href="#cite' + n + '">' + n + "</a></sup>";
+                        $(this).removeClass("d-none");
+                        $(this).show();
+                    }
+                });
+
+                for ( var i = 0; i < citations.length; i++ ) {
+                    var n = i + 1;
+                    $('#citation_list').append('<li id="cite' + n + '">' + citations[i] + "</li>");
+                }
+
+                var curr_table;
+                $(".data-table").DataTable({
+                	paging: false,
+                	order:[], 
+					scrollX: true,
+					scrollCollapse: true,
+					scrollY: '50vh',
+					fixedColumns: true,
+                	buttons: [ 
+						{
+							extend: 'copy',
+							title: null
+						}, 
+                		{
+                    		extend: 'csvHtml5',
+                    		text: 'TSV',
+                    		extension: '.txt',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		fieldBoundary: '',
+                    		fieldSeparator: '\t'
+                		}, 
+						{
+                    		extend: 'excel',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		messageTop: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                		},
+                		{
+                    		extend: 'pdf',
+                    		filename: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                    		messageTop: function (btn, tbl) { return tbl.caption().replace(/\s+/g, " "); },
+                		}], 
+                	layout: { topStart: 'buttons' } 
+                });
+                $(".file-table").DataTable({ paging: false, scrollX: true,
+					scrollCollapse: true,
+					scrollY: '50vh', order:[ [0, 'asc'] ] });
+            
+							</script></div>
+      </div>
+   </body>
+</html>

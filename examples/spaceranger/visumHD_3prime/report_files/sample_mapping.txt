@@ -1,0 +1,2 @@
+Sample	OriginalID
+Visium_HD_3prime_Mouse_Kidney	Visium_HD_3prime_Mouse_Kidney
