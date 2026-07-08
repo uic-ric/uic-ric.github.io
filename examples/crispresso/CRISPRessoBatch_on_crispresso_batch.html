@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CRISPResso2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CRISPResso2: Analysis of genome editing outcomes from deep sequencing data">
+    <meta name="author" content="Kendell Clement and Luca Pinello">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat|Ranga:700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif !important;
+      
+      }
+      @media (max-width:1015px)
+      {
+        #crispresso_h
+        {
+          font-size:5rem;
+          font-weight:300;
+          line-height:1.2;
+        }
+        #left_help_div
+        {
+          display:none
+        }
+        #top_help_div
+        {
+          display:block
+        }
+      }
+      @media (min-width:1015px)
+      {
+        #crispresso_h
+        {
+          font-size:8rem;
+          font-weight:300;
+          line-height:1.2;
+        }
+        #left_help_div
+        {
+          display:block
+        }
+        #top_help_div
+        {
+          display:none
+        }
+      }
+    </style>
+
+
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+    Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+    
+    <link rel="shortcut icon" href="http://crispresso.pinellolab.org/static/favicon.ico" />
+    
+
+
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+<script src="https://cdn.plot.ly/plotly-2.11.1.min.js"></script>
+<style>
+.nav-tabs.amp-header {
+  border-bottom:none !important;
+}
+
+.card-header.amp-header {
+  border-bottom:none !important;
+}
+.nav-tabs.amp-header .nav-link.active {
+  background-color:lightsteelblue;
+  border-bottom:lightsteelblue;
+}
+
+.tab-content.amp-body {
+  background-color:lightsteelblue;
+}
+
+@media print {
+   .tab-content > .tab-pane {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+		margin-bottom: 2em !important;
+		page-break-inside: avoid;
+  }
+  .nav-tabs {
+    display:none !important;
+    visibility:hidden !important;
+  }
+  .tab-content.amp-body {
+    background-color:transparent !important;
+  	border:None !important;
+  }
+}
+@media only screen and (max-width: 600px) {
+	.jumbotron img {
+		width:100%
+	}
+}
+</style>
+
+
+
+  </head>
+
+  <body class="m-2">
+    
+
+  
+  
+  <div class="container">
+      <div class="row pb-2">
+        <div class="col-sm-1"></div>
+        
+          <div class="col-sm-3 crispresso_cup"> <a href='https://crispresso2.pinellolab.org'><img class='img-fluid' src="https://crispresso.pinellolab.partners.org/static/imgs/CRISPResso_justcup.png" width="80%"></a>
+        
+          </div>
+        <div class="col-sm-7" >
+          <a href="https://crispresso2.pinellolab.org" style="text-decoration:none !important; color:rgb(33, 37, 41)"><h1 id='crispresso_h' style="font-family:'Ranga', sans-serif">CRISPResso2 </h1></a>
+          <h3 style="margin-top: -0.5em;padding-right: 2em;">Analysis of genome editing outcomes from deep sequencing data</h3>
+        </div>
+        <div class="col-sm-1">
+        </div>
+      </div>
+
+
+    
+
+      <div id='top_help_div'>
+        <div class="row">
+          <div class="col-sm-1"></div>
+          <div class='col-sm-10 pb-2 crispresso_body_div'>
+           
+          </div>
+          <div class="col-sm-1"></div>
+        </div>
+      </div>
+
+      
+<div class="row">
+<div class="col-sm-1"></div>
+<div class="col-sm-10">
+
+	<div class="jumbotron" style="background:rgba(0,0,0,0.0); padding:0px" >
+		<div id='jumbotron_content' >
+
+          
+            <div class='card text-center mb-2'>
+              <div class='card-header'>
+                <h5 id="CRISPResso2_Batch_Output">CRISPResso Batch Output</h5>
+              </div>
+              <div class='card-body p-0'>
+                <div class="list-group list-group-flush" style="max-height: 25vh; overflow-y: scroll;">
+              
+	      <a href="CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample008.html" class="list-group-item list-group-item-action" id="Sample008">Sample008</a>
+                
+	      <a href="CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample009.html" class="list-group-item list-group-item-action" id="Sample009">Sample009</a>
+                
+	      <a href="CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample007.html" class="list-group-item list-group-item-action" id="Sample007">Sample007</a>
+                
+	      <a href="CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample004.html" class="list-group-item list-group-item-action" id="Sample004">Sample004</a>
+                
+	      <a href="CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample003.html" class="list-group-item list-group-item-action" id="Sample003">Sample003</a>
+                
+	      <a href="CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample006.html" class="list-group-item list-group-item-action" id="Sample006">Sample006</a>
+                
+	      <a href="CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample005.html" class="list-group-item list-group-item-action" id="Sample005">Sample005</a>
+                
+	      <a href="CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample002.html" class="list-group-item list-group-item-action" id="Sample002">Sample002</a>
+                
+	      <a href="CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample001.html" class="list-group-item list-group-item-action" id="Sample001">Sample001</a>
+                
+              </div>
+            </div>
+            </div>
+          
+
+          
+<div class='card text-center mb-2'>
+    <div class="card-header bg-danger d-flex justify-content-center align-items-center" title="Click to expand all error messages" onclick="toggleAllDescriptions()">
+    <!-- Center the title and button -->
+    <h5 id="failed_runs" class="mb-0 text-white">Failed Runs</h5>
+    <button class="btn btn-danger ml-2" id="failedRunToggleAll" >
+        <i class="fas fa-chevron-down" id="failedRunChevronIcon"></i>
+    </button>
+    </div>
+
+    <div class='card-body p-0'>
+      <div class="list-group list-group-flush" style="max-height: 25vh; overflow-y: scroll;">
+        
+        
+        <a href="javascript:void(0)" class="list-group-item list-group-item-action failed-run-name bg-light text-dark"
+        id="failed_run_0" title="Click to expand error message" onclick="toggleDescription(0)">
+          Sample010
+        </a>
+        
+        <div class="list-group-item text-dark failed-run-desc" id="failed_run_desc_0" style="display: none;">
+          CRISPResso failed for this sample! Please check your input files and parameters.
+        </div>
+        
+      </div>
+    </div>
+</div>
+
+<script>
+  // Function to toggle individual descriptions
+  function toggleDescription(index) {
+    var desc = document.getElementById("failed_run_desc_" + index);
+    desc.style.display = desc.style.display === "none" ? "block" : "none";
+    updateChevron();
+  }
+
+  // Function to toggle all descriptions
+  function toggleAllDescriptions() {
+    var descs = document.querySelectorAll('.failed-run-desc');
+    var allHidden = Array.from(descs).every(desc => desc.style.display === "none");
+
+    descs.forEach(desc => {
+      desc.style.display = allHidden ? "block" : "none";
+    });
+
+    updateChevron();
+  }
+
+  // Function to update the chevron direction based on the visibility of the descriptions
+  function updateChevron() {
+    var descs = document.querySelectorAll('.failed-run-desc');
+    var allHidden = Array.from(descs).every(desc => desc.style.display === "none");
+    var failedRunChevronIcon = document.getElementById("failedRunChevronIcon");
+    if (allHidden) {
+      failedRunChevronIcon.classList.remove("fa-chevron-up");
+      failedRunChevronIcon.classList.add("fa-chevron-down");
+    } else {
+      failedRunChevronIcon.classList.remove("fa-chevron-down");
+      failedRunChevronIcon.classList.add("fa-chevron-up");
+    }
+  }
+
+  // Call updateChevron on page load to set the initial chevron direction
+  document.addEventListener('DOMContentLoaded', updateChevron);
+</script>
+
+
+          
+            <div class='card text-center mb-2'>
+              <div class='card-header'>
+                <h5>Nucleotide percentages around guides</h5>
+              </div>
+              <div class='card-body'>
+                
+                  <h5>sgRNA: GGACTTTGCTGGTTGTAATA Amplicon: Reference</h5>
+                  <div id="fig_summary_Nucleotide_percentage_quilt_around_sgRNA_GGACTTTGCTGGTTGTAATA">
+    
+        
+            <a href="CRISPRessoBatch_on_crispresso_batch/Nucleotide_percentage_quilt_around_sgRNA_GGACTTTGCTGGTTGTAATA.pdf"><img src="CRISPRessoBatch_on_crispresso_batch/Nucleotide_percentage_quilt_around_sgRNA_GGACTTTGCTGGTTGTAATA.png" width='70%'></a>
+        
+    
+    <label class="labelpadding">Composition of each base around the guide GGACTTTGCTGGTTGTAATA for the amplicon Reference</label>
+    
+        <p class="m-0"><small>Data: <a href="CRISPRessoBatch_on_crispresso_batch/Nucleotide_frequency_summary.txt">Nucleotide frequencies</a></small></p>
+    
+        <p class="m-0"><small>Data: <a href="CRISPRessoBatch_on_crispresso_batch/MODIFICATION_FREQUENCY_SUMMARY.txt">Modification frequencies</a></small></p>
+    
+    <br>
+</div>
+                
+              </div>
+            </div>
+          
+
+          
+            <div class='card text-center mb-2'>
+              <div class='card-header'>
+                <h5>Nucleotide percentages in the entire amplicon</h5>
+              </div>
+              <div class='card-body'>
+                
+                  <h5></h5>
+                  <div id="fig_summary_Nucleotide_percentage_quilt">
+    
+        
+            <a href="CRISPRessoBatch_on_crispresso_batch/Nucleotide_percentage_quilt.pdf"><img src="CRISPRessoBatch_on_crispresso_batch/Nucleotide_percentage_quilt.png" width='100%'></a>
+        
+    
+    <label class="labelpadding">Composition of each base for the amplicon Reference</label>
+    
+        <p class="m-0"><small>Data: <a href="CRISPRessoBatch_on_crispresso_batch/Nucleotide_frequency_summary.txt">Nucleotide frequencies</a></small></p>
+    
+        <p class="m-0"><small>Data: <a href="CRISPRessoBatch_on_crispresso_batch/MODIFICATION_FREQUENCY_SUMMARY.txt">Modification frequencies</a></small></p>
+    
+    <br>
+</div>
+                
+              </div>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+
+          </div>
+
+        </div>
+
+
+        <div align="center" class='p-3'>
+  
+  <button class='btn btn-primary hidden-print' onclick='window.print();'><i class="fas fa-print"></i> Print</button>
+</div>
+
+
+    
+    
+	</div>
+    <div class="col-sm-1"></div>
+</div>
+
+
+      
+      <div class="row">
+      <div class="col-sm-1"></div>
+      <footer class="col-sm-10 crispresso_body_div screen-only py-5">
+        <p class="text-center">
+      If you like CRISPResso2 please support us by citing it in your work: <br>
+          Clement K, Rees H, Canver MC, Gehrke JM, Farouni R, Hsu JY, Cole MA, Liu DR, Joung JK, Bauer DE, Pinello L.<br>
+          <a href="https://rdcu.be/boxVG" target="_blank">CRISPResso2 provides accurate and rapid genome editing sequence analysis. </a><br>
+          Nat Biotechnol. 2019 Mar; 37(3):224-226. doi: 10.1038/s41587-019-0032-3. PubMed PMID: 30809026.
+        </p>
+        <p class="text-center"><small> &copy; Copyright <a href="http://pinellolab.org">Kendell Clement and Luca Pinello</a></small></p>
+        <p class="text-center">
+          <small>
+        <a href="https://twitter.com/intent/tweet?text=CRISPResso2%20provides%20accurate%20and%20rapid%20genome%20editing%20sequence%20analysis%20%40kendellclement%20%40lucapinello%20%23CRISPR%20%23CRISPResso2"
+          class="twitter-share-button" data-via="kendellclement" data-size="large" data-count="none" data-hashtags="CRISPR" data-url="http://crispresso2.pinellolab.org">Tweet about CRISPresso2!</a>
+        </small>
+        </p>
+
+      </footer>
+      <div class="col-sm-1"></div>
+    </div>
+    
+    </div>
+
+
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+      
+
+
+  </body>
+
+</html>

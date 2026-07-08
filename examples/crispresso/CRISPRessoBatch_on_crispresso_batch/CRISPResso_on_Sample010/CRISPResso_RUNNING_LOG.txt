@@ -1,0 +1,67 @@
+CRISPResso version 2.3.1
+[Command used]:
+/software/EasyBuild/Intel_Xeon_Platinum_8358_CPU__2.60GHz/software/crispresso2/2.3.1/bin/CRISPResso -o /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch --name Sample010 --exclude_bp_from_left 15 --needleman_wunsch_gap_open -20 --exclude_bp_from_right 15 --min_single_bp_quality 0 --conversion_nuc_to T --aln_seed_len 10 --min_paired_end_reads_overlap 10 --max_paired_end_reads_overlap None --needleman_wunsch_gap_extend -2 --quantification_window_size 1 --n_processes 6 --needleman_wunsch_gap_incentive 1 --prime_editing_gap_open_penalty -50 --flash_command None --verbosity 3 --amplicon_name Reference --plot_window_size 20 --quantification_window_center -3 --prime_editing_pegRNA_extension_quantification_window_size 5 --min_average_read_quality 0 --fastp_command fastp --prime_editing_pegRNA_scaffold_min_match_length 1 --max_rows_alleles_around_cut_to_plot 50 --amplicon_seq TAAACTACCAGAAGTATCAGTGCTAAAAGTATCCTTTTCTTTCCTACAGATTCCTCCTTATGGCCAACAAGGCCCCAGCGGGTATGGTCAGCAGGGCCAGACTCCATATTACAACCAGCAAAGTCCTCACCCCCAGCAGCAGCAGCCACCCTACTCTCAGCAACCACCATCCCAGACCCCTCATGCTCAACCTTCATATCAGCAGCAGCCTCAGTCTCAGCCACCACAGCTCCAGTCATCTCAGCCTCCATATTCCCAGCAGCCA --flexiguide_homology 80 --trimmomatic_command None --default_min_aln_score 60 --fastq_r1 Sample010_R1.fastq.gz --aln_seed_count 5 --aln_seed_min 2 --guide_seq GGACTTTGCTGGTTGTAATA --needleman_wunsch_aln_matrix_loc EDNAFULL --config_file None --min_bp_quality_or_N 0 --flexiguide_seq None --conversion_nuc_from C --min_frequency_alleles_around_cut_to_plot 0.2 --fastq_r2 Sample010_R2.fastq.gz --prime_editing_gap_extend_penalty 0
+
+[Execution log]:
+Computing quantification windows
+CRISPRessoPro not installed
+Added 0 guides with flexible matching
+	Original flexiguides: ['None']
+	Found guides: []
+	Mismatch locations: []
+Processing sequences with fastp...
+Read1 before filtering:
+total reads: 6422
+total bases: 980102
+Q20 bases: 968304(98.7962%)
+Q30 bases: 961062(98.0573%)
+
+Read2 before filtering:
+total reads: 6422
+total bases: 980188
+Q20 bases: 946473(96.5604%)
+Q30 bases: 935179(95.4081%)
+
+Merged and filtered:
+total reads: 6352
+total bases: 1784341
+Q20 bases: 1753837(98.2905%)
+Q30 bases: 1740874(97.564%)
+
+Filtering result:
+reads passed filter: 12844
+reads failed due to low quality: 0
+reads failed due to too many N: 0
+reads corrected by overlap analysis: 5209
+bases corrected by overlap analysis: 5309
+
+Duplication rate: 85.3784%
+
+Insert size peak (evaluated by paired-end reads): 282
+
+Read pairs merged: 6352
+% of original read pairs: 98.91%
+% in reads after filtering: 100%
+
+
+JSON report: /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample010/fastp_report.json
+HTML report: /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample010/fastp_report.html
+
+fastp -i Sample010_R1.fastq.gz -I Sample010_R2.fastq.gz --merge --merged_out /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample010/oet.extendedFrags.fastq.gz --unpaired1 /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample010/out.notCombined_1.fastq.gz --unpaired2 /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample010/out.notCombined_2.fastq.gz --overlap_len_require 10 --thread 6 --json /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample010/fastp_report.json --html /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample010/fastp_report.html --disable_adapter_trimming --disable_trim_poly_g --disable_quality_filtering --disable_length_filtering 
+fastp v0.23.4, time used: 1 seconds
+Done!
+Done!
+Aligning sequences...
+Processing reads; N_TOT_READS: 0 N_COMPUTED_ALN: 0 N_CACHED_ALN: 0 N_COMPUTED_NOTALN: 0 N_CACHED_NOTALN: 0
+Finished reads; N_TOT_READS: 6352 N_COMPUTED_ALN: 0 N_CACHED_ALN: 0 N_COMPUTED_NOTALN: 784 N_CACHED_NOTALN: 5568
+Done!
+Quantifying indels/substitutions...
+Done!
+Traceback (most recent call last):
+  File "/software/EasyBuild/Intel_Xeon_Platinum_8358_CPU__2.60GHz/software/crispresso2/2.3.1/lib/python3.12/site-packages/CRISPResso2/CRISPRessoCORE.py", line 3059, in main
+    raise CRISPRessoShared.NoReadsAlignedException('Error: No alignments were found')
+CRISPResso2.CRISPRessoShared.NoReadsAlignedException: Error: No alignments were found
+
+Alignment error, please check your input.
+
+ERROR: Error: No alignments were found

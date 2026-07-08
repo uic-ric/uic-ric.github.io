@@ -1,0 +1,22 @@
+[Command used]:
+/software/EasyBuild/Intel_Xeon_Platinum_8358_CPU__2.60GHz/software/crispresso2/2.3.1/bin/CRISPRessoBatch --batch_settings crispresso_batch.tsv -p 64 --skip_failed -bo crispresso_out -a TAAACTACCAGAAGTATCAGTGCTAAAAGTATCCTTTTCTTTCCTACAGATTCCTCCTTATGGCCAACAAGGCCCCAGCGGGTATGGTCAGCAGGGCCAGACTCCATATTACAACCAGCAAAGTCCTCACCCCCAGCAGCAGCAGCCACCCTACTCTCAGCAACCACCATCCCAGACCCCTCATGCTCAACCTTCATATCAGCAGCAGCCTCAGTCTCAGCCACCACAGCTCCAGTCATCTCAGCCTCCATATTCCCAGCAGCCA -g GGACTTTGCTGGTTGTAATA
+
+[Execution log]:
+Running CRISPResso with 64 processes
+Completed 1/10 runs
+Completed 2/10 runs
+Completed 3/10 runs
+Completed 4/10 runs
+Completed 5/10 runs
+Completed 6/10 runs
+Completed 7/10 runs
+Completed 8/10 runs
+Completed 9/10 runs
+Completed 10/10 runs
+Finished all batches
+Skipping folder '/mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample010'. Cannot find run data status file at '/mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample010/CRISPResso2_info.json'.
+Reporting summary for amplicon: "Reference"
+All guides are equal. Performing comparison of batches for amplicon 'Reference'
+Plotting nucleotide percentage quilt for amplicon Reference, sgRNA GGACTTTGCTGGTTGTAATA
+Plotting nucleotide quilt for Reference
+Analysis Complete!

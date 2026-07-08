@@ -1,0 +1,82 @@
+CRISPResso version 2.3.1
+[Command used]:
+/software/EasyBuild/Intel_Xeon_Platinum_8358_CPU__2.60GHz/software/crispresso2/2.3.1/bin/CRISPResso -o /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch --name Sample007 --exclude_bp_from_left 15 --needleman_wunsch_gap_open -20 --exclude_bp_from_right 15 --min_single_bp_quality 0 --conversion_nuc_to T --aln_seed_len 10 --min_paired_end_reads_overlap 10 --max_paired_end_reads_overlap None --needleman_wunsch_gap_extend -2 --quantification_window_size 1 --n_processes 6 --needleman_wunsch_gap_incentive 1 --prime_editing_gap_open_penalty -50 --flash_command None --verbosity 3 --amplicon_name Reference --plot_window_size 20 --quantification_window_center -3 --prime_editing_pegRNA_extension_quantification_window_size 5 --min_average_read_quality 0 --fastp_command fastp --prime_editing_pegRNA_scaffold_min_match_length 1 --max_rows_alleles_around_cut_to_plot 50 --amplicon_seq TAAACTACCAGAAGTATCAGTGCTAAAAGTATCCTTTTCTTTCCTACAGATTCCTCCTTATGGCCAACAAGGCCCCAGCGGGTATGGTCAGCAGGGCCAGACTCCATATTACAACCAGCAAAGTCCTCACCCCCAGCAGCAGCAGCCACCCTACTCTCAGCAACCACCATCCCAGACCCCTCATGCTCAACCTTCATATCAGCAGCAGCCTCAGTCTCAGCCACCACAGCTCCAGTCATCTCAGCCTCCATATTCCCAGCAGCCA --flexiguide_homology 80 --trimmomatic_command None --default_min_aln_score 60 --fastq_r1 Sample007_R1.fastq.gz --aln_seed_count 5 --aln_seed_min 2 --guide_seq GGACTTTGCTGGTTGTAATA --needleman_wunsch_aln_matrix_loc EDNAFULL --config_file None --min_bp_quality_or_N 0 --flexiguide_seq None --conversion_nuc_from C --min_frequency_alleles_around_cut_to_plot 0.2 --fastq_r2 Sample007_R2.fastq.gz --prime_editing_gap_extend_penalty 0
+
+[Execution log]:
+Computing quantification windows
+CRISPRessoPro not installed
+Added 0 guides with flexible matching
+	Original flexiguides: ['None']
+	Found guides: []
+	Mismatch locations: []
+Processing sequences with fastp...
+Read1 before filtering:
+total reads: 9308
+total bases: 1423509
+Q20 bases: 1371810(96.3682%)
+Q30 bases: 1356685(95.3057%)
+
+Read2 before filtering:
+total reads: 9308
+total bases: 1423486
+Q20 bases: 1381845(97.0747%)
+Q30 bases: 1364735(95.8727%)
+
+Merged and filtered:
+total reads: 9138
+total bases: 2314766
+Q20 bases: 2248479(97.1363%)
+Q30 bases: 2226998(96.2083%)
+
+Filtering result:
+reads passed filter: 18616
+reads failed due to low quality: 0
+reads failed due to too many N: 0
+reads corrected by overlap analysis: 730
+bases corrected by overlap analysis: 1005
+
+Duplication rate: 83.1758%
+
+Insert size peak (evaluated by paired-end reads): 254
+
+Read pairs merged: 9138
+% of original read pairs: 98.1736%
+% in reads after filtering: 100%
+
+
+JSON report: /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample007/fastp_report.json
+HTML report: /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample007/fastp_report.html
+
+fastp -i Sample007_R1.fastq.gz -I Sample007_R2.fastq.gz --merge --merged_out /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample007/oet.extendedFrags.fastq.gz --unpaired1 /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample007/out.notCombined_1.fastq.gz --unpaired2 /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample007/out.notCombined_2.fastq.gz --overlap_len_require 10 --thread 6 --json /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample007/fastp_report.json --html /mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch/CRISPResso_on_Sample007/fastp_report.html --disable_adapter_trimming --disable_trim_poly_g --disable_quality_filtering --disable_length_filtering 
+fastp v0.23.4, time used: 1 seconds
+Done!
+Done!
+Aligning sequences...
+Processing reads; N_TOT_READS: 0 N_COMPUTED_ALN: 0 N_CACHED_ALN: 0 N_COMPUTED_NOTALN: 0 N_CACHED_NOTALN: 0
+Finished reads; N_TOT_READS: 9138 N_COMPUTED_ALN: 1176 N_CACHED_ALN: 7925 N_COMPUTED_NOTALN: 15 N_CACHED_NOTALN: 22
+Done!
+Quantifying indels/substitutions...
+Done!
+Calculating allele frequencies...
+Done!
+Saving processed data...
+Making Plots...
+Plotting read bar plot
+Plotting read class pie chart and bar plot
+Begin processing plots for amplicon Reference
+Plotting nucleotide quilt across amplicon
+Plotting nucleotide distribuition around sgRNA GGACTTTGCTGGTTGTAATA for Reference
+Plotting indel size distribution for Reference
+Plotting frequency deletions/insertions for Reference
+Plotting amplication modifications for Reference
+Plotting modification frequency for Reference
+Plotting quantification window locations for Reference
+Plotting position dependent indel for Reference
+Plotting allele distribution around cut for Reference
+Done!
+Done!
+Removing Intermediate files...
+ Low number of total reads: <10000. Total reads: 9138.
+ >=1.0% of reads have modifications at the start or end. Total reads: 9101, Irregular reads: 195.
+ >=0.2% of substitutions were outside of the quantification window. Total substitutions: 3500, Substitutions outside window: 3500.
+Analysis Complete!

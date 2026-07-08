@@ -1,0 +1,10 @@
+Batch	Reference	total_reads	modified_frameshift	modified_non_frameshift	non_modified_non_frameshift	splicing_sites_modified	splice_sites_unmodified
+Sample008	Reference	7374	0	0	0	0	7374
+Sample009	Reference	8789	0	0	0	0	8789
+Sample007	Reference	9101	0	0	0	0	9101
+Sample004	Reference	11848	0	0	0	0	11848
+Sample003	Reference	10360	0	0	0	0	10360
+Sample006	Reference	11619	0	0	0	0	11619
+Sample005	Reference	11785	0	0	0	0	11785
+Sample002	Reference	11583	0	0	0	0	11583
+Sample001	Reference	14424	0	0	0	0	14424

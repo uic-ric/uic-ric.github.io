@@ -1,0 +1,232 @@
+{
+  "running_info": {
+    "version": "2.3.1",
+    "args": {
+      "_type": "argparse.Namespace",
+      "value": {
+        "amplicon_seq": "TAAACTACCAGAAGTATCAGTGCTAAAAGTATCCTTTTCTTTCCTACAGATTCCTCCTTATGGCCAACAAGGCCCCAGCGGGTATGGTCAGCAGGGCCAGACTCCATATTACAACCAGCAAAGTCCTCACCCCCAGCAGCAGCAGCCACCCTACTCTCAGCAACCACCATCCCAGACCCCTCATGCTCAACCTTCATATCAGCAGCAGCCTCAGTCTCAGCCACCACAGCTCCAGTCATCTCAGCCTCCATATTCCCAGCAGCCA",
+        "amplicon_name": "Reference",
+        "amplicon_min_alignment_score": "",
+        "default_min_aln_score": 60,
+        "expand_ambiguous_alignments": false,
+        "assign_ambiguous_alignments_to_first_reference": false,
+        "guide_seq": "GGACTTTGCTGGTTGTAATA",
+        "guide_name": "",
+        "flexiguide_seq": "None",
+        "flexiguide_homology": 80,
+        "flexiguide_name": "",
+        "discard_guide_positions_overhanging_amplicon_edge": false,
+        "expected_hdr_amplicon_seq": "",
+        "coding_seq": "",
+        "config_file": "None",
+        "min_average_read_quality": 0,
+        "min_single_bp_quality": 0,
+        "min_bp_quality_or_N": 0,
+        "file_prefix": "",
+        "name": "",
+        "suppress_amplicon_name_truncation": false,
+        "output_folder": "",
+        "verbosity": 3,
+        "split_interleaved_input": false,
+        "trim_sequences": false,
+        "trimmomatic_command": "None",
+        "trimmomatic_options_string": "",
+        "flash_command": "None",
+        "fastp_command": "fastp",
+        "fastp_options_string": "",
+        "min_paired_end_reads_overlap": 10,
+        "max_paired_end_reads_overlap": "None",
+        "stringent_flash_merging": false,
+        "force_merge_pairs": false,
+        "quantification_window_size": "1",
+        "quantification_window_center": "-3",
+        "exclude_bp_from_left": 15,
+        "exclude_bp_from_right": 15,
+        "use_legacy_insertion_quantification": false,
+        "ignore_substitutions": false,
+        "ignore_insertions": false,
+        "ignore_deletions": false,
+        "discard_indel_reads": false,
+        "needleman_wunsch_gap_open": -20,
+        "needleman_wunsch_gap_extend": -2,
+        "needleman_wunsch_gap_incentive": 1,
+        "needleman_wunsch_aln_matrix_loc": "EDNAFULL",
+        "aln_seed_count": 5,
+        "aln_seed_len": 10,
+        "aln_seed_min": 2,
+        "plot_histogram_outliers": false,
+        "plot_window_size": 20,
+        "min_frequency_alleles_around_cut_to_plot": 0.2,
+        "expand_allele_plots_by_quantification": false,
+        "allele_plot_pcts_only_for_assigned_reference": false,
+        "quantification_window_coordinates": null,
+        "annotate_wildtype_allele": "",
+        "keep_intermediate": false,
+        "dump": false,
+        "write_detailed_allele_table": false,
+        "fastq_output": false,
+        "bam_output": false,
+        "bowtie2_index": "",
+        "zip_output": false,
+        "max_rows_alleles_around_cut_to_plot": 50,
+        "suppress_report": false,
+        "place_report_in_output_folder": false,
+        "suppress_plots": false,
+        "write_cleaned_report": false,
+        "base_editor_output": false,
+        "conversion_nuc_from": "C",
+        "conversion_nuc_to": "T",
+        "prime_editing_pegRNA_spacer_seq": "",
+        "prime_editing_pegRNA_extension_seq": "",
+        "prime_editing_pegRNA_extension_quantification_window_size": 5,
+        "prime_editing_pegRNA_scaffold_seq": "",
+        "prime_editing_pegRNA_scaffold_min_match_length": 1,
+        "prime_editing_nicking_guide_seq": "",
+        "prime_editing_override_prime_edited_ref_seq": "",
+        "prime_editing_override_sequence_checks": false,
+        "prime_editing_gap_open_penalty": -50,
+        "prime_editing_gap_extend_penalty": 0,
+        "crispresso1_mode": false,
+        "dsODN": "",
+        "auto": false,
+        "debug": false,
+        "no_rerun": false,
+        "n_processes": "64",
+        "bam_input": "",
+        "bam_chr_loc": "",
+        "save_also_png": false,
+        "batch_settings": "crispresso_batch.tsv",
+        "skip_failed": true,
+        "min_reads_for_inclusion": 0,
+        "batch_output_folder": "crispresso_out",
+        "suppress_batch_summary_plots": false,
+        "crispresso_command": "CRISPResso",
+        "disable_guardrails": false,
+        "use_matplotlib": false
+      }
+    },
+    "log_filename": "CRISPRessoBatch_RUNNING_LOG.txt",
+    "command_used": "/software/EasyBuild/Intel_Xeon_Platinum_8358_CPU__2.60GHz/software/crispresso2/2.3.1/bin/CRISPRessoBatch --batch_settings crispresso_batch.tsv -p 64 --skip_failed -bo crispresso_out -a TAAACTACCAGAAGTATCAGTGCTAAAAGTATCCTTTTCTTTCCTACAGATTCCTCCTTATGGCCAACAAGGCCCCAGCGGGTATGGTCAGCAGGGCCAGACTCCATATTACAACCAGCAAAGTCCTCACCCCCAGCAGCAGCAGCCACCCTACTCTCAGCAACCACCATCCCAGACCCCTCATGCTCAACCTTCATATCAGCAGCAGCCTCAGTCTCAGCCACCACAGCTCCAGTCATCTCAGCCTCCATATTCCCAGCAGCCA -g GGACTTTGCTGGTTGTAATA",
+    "report_location": "/mmfs1/projects/rrc_shared/common/practice_data/CRISPresso/gchlip2_20260708_work/crispresso_out/CRISPRessoBatch_on_crispresso_batch.html",
+    "report_filename": "CRISPRessoBatch_on_crispresso_batch.html",
+    "start_time": {
+      "_type": "datetime.datetime",
+      "value": "2026-07-08 12:25:35.802085"
+    },
+    "start_time_string": "2026-07-08 12:25:35",
+    "end_time": {
+      "_type": "datetime.datetime",
+      "value": "2026-07-08 12:25:58.130637"
+    },
+    "end_time_string": "2026-07-08 12:25:58",
+    "running_time": {
+      "_type": "datetime.timedelta",
+      "value": {
+        "days": 0,
+        "seconds": 22,
+        "microseconds": 328552
+      }
+    },
+    "running_time_string": "0:00:22.328552"
+  },
+  "results": {
+    "alignment_stats": {},
+    "general_plots": {
+      "summary_plot_titles": {
+        "Nucleotide_percentage_quilt_around_sgRNA_GGACTTTGCTGGTTGTAATA": "sgRNA: GGACTTTGCTGGTTGTAATA Amplicon: Reference",
+        "Nucleotide_percentage_quilt": ""
+      },
+      "summary_plot_labels": {
+        "Nucleotide_percentage_quilt_around_sgRNA_GGACTTTGCTGGTTGTAATA": "Composition of each base around the guide GGACTTTGCTGGTTGTAATA for the amplicon Reference",
+        "Nucleotide_percentage_quilt": "Composition of each base for the amplicon Reference"
+      },
+      "summary_plot_datas": {
+        "Nucleotide_percentage_quilt_around_sgRNA_GGACTTTGCTGGTTGTAATA": [
+          [
+            "Nucleotide frequencies",
+            "Nucleotide_frequency_summary.txt"
+          ],
+          [
+            "Modification frequencies",
+            "MODIFICATION_FREQUENCY_SUMMARY.txt"
+          ]
+        ],
+        "Nucleotide_percentage_quilt": [
+          [
+            "Nucleotide frequencies",
+            "Nucleotide_frequency_summary.txt"
+          ],
+          [
+            "Modification frequencies",
+            "MODIFICATION_FREQUENCY_SUMMARY.txt"
+          ]
+        ]
+      },
+      "allele_modification_heatmap_plot_names": [],
+      "allele_modification_heatmap_plot_paths": {},
+      "allele_modification_heatmap_plot_titles": {},
+      "allele_modification_heatmap_plot_labels": {},
+      "allele_modification_heatmap_plot_datas": {},
+      "allele_modification_heatmap_plot_divs": {},
+      "allele_modification_line_plot_names": [],
+      "allele_modification_line_plot_paths": {},
+      "allele_modification_line_plot_titles": {},
+      "allele_modification_line_plot_labels": {},
+      "allele_modification_line_plot_datas": {},
+      "allele_modification_line_plot_divs": {},
+      "window_nuc_pct_quilt_plot_names": [
+        "Nucleotide_percentage_quilt_around_sgRNA_GGACTTTGCTGGTTGTAATA"
+      ],
+      "nuc_pct_quilt_plot_names": [
+        "Nucleotide_percentage_quilt"
+      ],
+      "window_nuc_conv_plot_names": [],
+      "nuc_conv_plot_names": []
+    },
+    "batch_names_arr": [
+      "Sample008",
+      "Sample010",
+      "Sample009",
+      "Sample007",
+      "Sample004",
+      "Sample003",
+      "Sample006",
+      "Sample005",
+      "Sample002",
+      "Sample001"
+    ],
+    "batch_input_names": {
+      "Sample008": "Sample008",
+      "Sample010": "Sample010",
+      "Sample009": "Sample009",
+      "Sample007": "Sample007",
+      "Sample004": "Sample004",
+      "Sample003": "Sample003",
+      "Sample006": "Sample006",
+      "Sample005": "Sample005",
+      "Sample002": "Sample002",
+      "Sample001": "Sample001"
+    },
+    "failed_batch_arr": [
+      "Sample010"
+    ],
+    "failed_batch_arr_desc": [
+      "CRISPResso failed for this sample! Please check your input files and parameters."
+    ],
+    "completed_batch_arr": [
+      "Sample008",
+      "Sample009",
+      "Sample007",
+      "Sample004",
+      "Sample003",
+      "Sample006",
+      "Sample005",
+      "Sample002",
+      "Sample001"
+    ],
+    "nucleotide_frequency_summary_filename": "Nucleotide_frequency_summary.txt",
+    "nucleotide_percentage_summary_filename": "Nucleotide_percentage_summary.txt",
+    "modification_frequency_summary_filename": "MODIFICATION_FREQUENCY_SUMMARY.txt",
+    "modification_percentage_summary_filename": "MODIFICATION_PERCENTAGE_SUMMARY.txt"
+  }
+}

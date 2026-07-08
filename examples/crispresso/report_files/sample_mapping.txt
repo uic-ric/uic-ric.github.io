@@ -1,0 +1,11 @@
+Sample	OriginalID
+Sample001	Sample001
+Sample002	Sample002
+Sample003	Sample003
+Sample004	Sample004
+Sample005	Sample005
+Sample006	Sample006
+Sample007	Sample007
+Sample008	Sample008
+Sample009	Sample009
+Sample010	Sample010
