@@ -1,0 +1,5 @@
+Sample	Matrix	H5 file
+Sample1	Sample1_matrix	Sample1_matrix.h5
+Sample2	Sample2_matrix	Sample2_matrix.h5
+Sample3	Sample3_matrix	Sample3_matrix.h5
+Sample4	Sample4_matrix	Sample4_matrix.h5

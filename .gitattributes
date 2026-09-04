@@ -1,0 +1,4 @@
+*.h5 filter=lfs diff=lfs merge=lfs -text
+*.loupe filter=lfs diff=lfs merge=lfs -text
+*.cloupe filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
